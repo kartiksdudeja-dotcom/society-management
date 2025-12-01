@@ -1,0 +1,232 @@
+import React, { useEffect, useState } from "react";
+import API from "../services/api";
+import { FaSearch, FaSave, FaSync, FaCheckCircle } from "react-icons/fa";
+import "./SinkingFundPage.css";
+
+export default function SinkingFundPage() {
+  const [table, setTable] = useState([]);
+  const [filteredTable, setFilteredTable] = useState([]);
+  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("owner");
+
+  // ---------------------
+  // LOAD DATA FROM BACKEND
+  // ---------------------
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const res = await API.get("/sinkingfund/get");
+
+      console.log("Loaded data:", res.data);
+
+      if (Array.isArray(res.data)) {
+        setTable(res.data);
+        setFilteredTable(res.data);
+      } else {
+        setTable([]);
+        setFilteredTable([]);
+      }
+      setMsg("");
+    } catch (err) {
+      console.error("Load error:", err);
+      setMsg("Error loading sinking fund data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ---------------------
+  // SAVE DATA
+  // ---------------------
+  const saveData = async () => {
+    try {
+      setSaving(true);
+      const res = await API.post("/sinkingfund/save", { table });
+
+      console.log("Save response:", res.data);
+
+      setMsg("✓ Saved successfully");
+      setTimeout(() => setMsg(""), 3000);
+    } catch (err) {
+      console.error("Save error:", err);
+      setMsg("✗ Save failed");
+      setTimeout(() => setMsg(""), 3000);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // Search and filter
+  useEffect(() => {
+    let filtered = table.filter((row) => {
+      const searchLower = searchTerm.toLowerCase();
+      return (
+        (row.unit || "").toString().toLowerCase().includes(searchLower) ||
+        (row.owner || "").toLowerCase().includes(searchLower) ||
+        (row.paid || "").toString().toLowerCase().includes(searchLower) ||
+        (row.pending || "").toString().toLowerCase().includes(searchLower)
+      );
+    });
+
+    // Sort
+    if (sortBy === "owner") {
+      filtered.sort((a, b) => (a.owner || "").localeCompare(b.owner || ""));
+    } else if (sortBy === "unit") {
+      filtered.sort((a, b) => (a.unit || "").toString().localeCompare(b.unit || ""));
+    } else if (sortBy === "pending") {
+      filtered.sort((a, b) => (b.pending || 0) - (a.pending || 0));
+    }
+
+    setFilteredTable(filtered);
+  }, [searchTerm, sortBy, table]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  // Calculate totals
+  const totalPaid = table.reduce((sum, row) => sum + (parseFloat(row.paid) || 0), 0);
+  const totalPending = table.reduce((sum, row) => sum + (parseFloat(row.pending) || 0), 0);
+
+  return (
+    <div className="sinking-fund-container">
+      {/* HEADER */}
+      <div className="sinking-header">
+        <div className="header-content">
+          <h1 className="header-title">Sinking Fund</h1>
+          <p className="header-subtitle">Manage society sinking fund collections and payments</p>
+        </div>
+        <div className="header-stats">
+          <div className="stat-card">
+            <span className="stat-label">Total Paid</span>
+            <span className="stat-value paid">₹{totalPaid.toFixed(2)}</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-label">Total Pending</span>
+            <span className="stat-value pending">₹{totalPending.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* CONTROLS */}
+      <div className="sinking-controls">
+        <div className="search-wrapper">
+          <FaSearch className="search-icon" />
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search by unit, owner, or amount..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        <select className="sort-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <option value="owner">Sort by Owner</option>
+          <option value="unit">Sort by Unit</option>
+          <option value="pending">Sort by Pending Amount</option>
+        </select>
+
+        <div className="action-buttons-top">
+          <button
+            className="btn btn-refresh"
+            onClick={loadData}
+            disabled={loading}
+            title="Refresh data"
+          >
+            <FaSync style={{ animation: loading ? "spin 1s linear infinite" : "none" }} />
+            Refresh
+          </button>
+          <button
+            className="btn btn-save-main"
+            onClick={saveData}
+            disabled={saving || table.length === 0}
+            title="Save all changes"
+          >
+            <FaSave />
+            {saving ? "Saving..." : "Save All"}
+          </button>
+        </div>
+      </div>
+
+      {/* MESSAGE */}
+      {msg && (
+        <div className={`message-banner ${msg.includes("✓") ? "success" : "error"}`}>
+          {msg}
+        </div>
+      )}
+
+      {/* TABLE SECTION */}
+      <div className="sinking-table-wrapper">
+        {loading ? (
+          <div className="loading-state">
+            <p>Loading sinking fund data...</p>
+          </div>
+        ) : filteredTable.length === 0 ? (
+          <div className="empty-state">
+            <p>No data found</p>
+            <span>Try adjusting your search criteria</span>
+          </div>
+        ) : (
+          <div className="table-container">
+            <table className="sinking-table">
+              <thead>
+                <tr>
+                  <th className="index-col">#</th>
+                  <th className="unit-col">Unit</th>
+                  <th className="owner-col">Owner</th>
+                  <th className="paid-col">Paid Amount</th>
+                  <th className="pending-col">Pending</th>
+                  <th className="status-col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredTable.map((row, idx) => {
+                  const pendingAmount = parseFloat(row.pending) || 0;
+                  const isPaid = pendingAmount === 0;
+
+                  return (
+                    <tr key={idx} className={isPaid ? "paid-status" : "pending-status"}>
+                      <td className="index-col">{idx + 1}</td>
+                      <td className="unit-col">
+                        <span className="unit-badge">{row.unit}</span>
+                      </td>
+                      <td className="owner-col">{row.owner}</td>
+                      <td className="paid-col">
+                        <span className="amount-badge paid-badge">
+                          ₹{(parseFloat(row.paid) || 0).toFixed(2)}
+                        </span>
+                      </td>
+                      <td className="pending-col">
+                        <span className={`amount-badge ${isPaid ? "paid" : "pending"}`}>
+                          ₹{pendingAmount.toFixed(2)}
+                        </span>
+                      </td>
+                      <td className="status-col">
+                        {isPaid ? (
+                          <span className="status-badge status-paid">
+                            <FaCheckCircle /> Paid
+                          </span>
+                        ) : (
+                          <span className="status-badge status-pending">Pending</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* FOOTER */}
+      <div className="sinking-footer">
+        <p>Showing {filteredTable.length} of {table.length} records</p>
+      </div>
+    </div>
+  );
+}

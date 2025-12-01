@@ -1,0 +1,179 @@
+/* MAIN WRAPPER */
+.bt-wrapper {
+  padding: 25px;
+  color: #1a1a1a;
+  font-family: "Poppins", sans-serif;
+}
+
+/* GLASS CARD (Safari Supported) */
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+
+  /* Blur Fix for iOS + Safari */
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.bt-title {
+  margin: 0 0 10px 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #0d2b45;
+}
+
+/* SELECT + BUTTON */
+.bt-flex-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.bt-select {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  font-size: 15px;
+  background: #ffffff;
+  color: #1a1a1a;
+  outline: none;
+}
+
+.bt-sync-btn {
+  padding: 10px 18px;
+  background: #1976d2;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+.bt-sync-btn:hover {
+  background: #0f5ca7;
+}
+
+/* SUMMARY CARDS ROW */
+.summary-row {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+  border-radius: 14px;
+  font-size: 17px;
+
+  /* Safari Blur Fix */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  color: #1a1a1a;
+}
+
+.summary-card h3 {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.summary-card p {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* Colors */
+.credit-card {
+  background: rgba(199, 249, 204, 0.8);
+}
+
+.debit-card {
+  background: rgba(255, 204, 213, 0.8);
+}
+
+.net-card {
+  background: rgba(204, 229, 255, 0.8);
+}
+
+/* TABLE */
+.bt-table-card {
+  padding: 0;
+}
+
+.bt-scroll {
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.bt-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #1a1a1a;
+}
+
+/* Safari Sticky Header Fix */
+.bt-table thead {
+  background: rgba(255, 255, 255, 0.85);
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.bt-table th {
+  padding: 14px;
+  text-align: left;
+  font-weight: 600;
+  color: #0d2b45;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.bt-table td {
+  padding: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 15px;
+}
+
+.bt-table tr:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* CREDIT/DEBIT COLORS */
+.credit {
+  color: #059669;
+  font-weight: 600;
+}
+
+.debit {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #444;
+}
+
+/* Make narration darker */
+.bt-table td:nth-child(2) {
+  color: #333333 !important;
+  font-weight: 500;
+}

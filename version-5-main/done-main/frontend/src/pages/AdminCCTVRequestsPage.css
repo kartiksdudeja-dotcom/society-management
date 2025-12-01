@@ -1,0 +1,119 @@
+.admin-cctv-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-cctv-page h1 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.admin-cctv-message {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  text-align: center;
+}
+
+.requests-list {
+  display: grid;
+  gap: 15px;
+}
+
+.request-item {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.request-item p {
+  margin: 0;
+  color: #555;
+}
+
+.request-item strong {
+  color: #333;
+}
+
+.status-pending {
+  color: #ffc107; /* Orange */
+  font-weight: bold;
+}
+
+.status-approved {
+  color: #28a745; /* Green */
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: #dc3545; /* Red */
+  font-weight: bold;
+}
+
+.status-expired {
+  color: #6c757d; /* Gray */
+  font-weight: bold;
+}
+
+.request-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.approve-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.approve-btn:hover {
+  background-color: #218838;
+}
+
+.reject-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.reject-btn:hover {
+  background-color: #c82333;
+}
+
+.back-btn {
+  margin-top: 20px;
+  display: block;
+  width: fit-content;
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #5a6268;
+}

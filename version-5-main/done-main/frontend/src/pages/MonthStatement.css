@@ -1,0 +1,490 @@
+/* MonthStatement.css */
+
+.month-statement-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Header */
+.statement-header {
+  margin-bottom: 2rem;
+}
+
+.statement-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+}
+
+.statement-header p {
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Controls Section */
+.controls-section {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 1.5rem;
+  align-items: flex-end;
+}
+
+@media (max-width: 1024px) {
+  .controls-section {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .controls-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Month Selector */
+.month-selector,
+.filter-group,
+.sort-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.month-selector label,
+.filter-group label,
+.sort-group label {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.month-selector select,
+.sort-group select {
+  padding: 0.75rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.month-selector select:hover,
+.sort-group select:hover {
+  border-color: #3498db;
+}
+
+.month-selector select:focus,
+.sort-group select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Filter Buttons */
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #bdc3c7;
+  background-color: white;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  border-color: #3498db;
+  background-color: #ecf0f1;
+}
+
+.filter-btn.active {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+/* Download Button */
+.btn-download {
+  padding: 0.75rem 1.5rem;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-download:hover {
+  background-color: #229954;
+}
+
+.btn-download:active {
+  transform: scale(0.98);
+}
+
+/* Error Message */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #f5c6cb;
+}
+
+/* Loading Message */
+.loading-message {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+  font-size: 1.125rem;
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.card-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.card-value.credit {
+  color: #27ae60;
+}
+
+.card-value.debit {
+  color: #e74c3c;
+}
+
+/* Search Section */
+.search-section {
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Payers Section */
+.payers-section {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.payers-section h2 {
+  margin: 0;
+  padding: 1.5rem;
+  border-bottom: 1px solid #ecf0f1;
+  font-size: 1.25rem;
+  color: #2c3e50;
+}
+
+.payers-list {
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+.no-results {
+  padding: 2rem;
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+/* Payer Row */
+.payer-row {
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.payer-row:last-child {
+  border-bottom: none;
+}
+
+.payer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.payer-header:hover {
+  background-color: #f8f9fa;
+}
+
+.payer-header.expanded {
+  background-color: #f0f7ff;
+  border-bottom: 1px solid #3498db;
+}
+
+.payer-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3498db;
+}
+
+.expand-btn .arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 0.75rem;
+}
+
+.expand-btn .arrow.down {
+  transform: rotate(90deg);
+}
+
+.payer-name {
+  font-weight: 600;
+  color: #2c3e50;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.payer-vpa {
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  font-family: monospace;
+}
+
+.payer-totals {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+.total-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.total-item .label {
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.total-item .value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.total-item .value.credit {
+  color: #27ae60;
+}
+
+.total-item .value.debit {
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .payer-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .payer-info {
+    width: 100%;
+  }
+
+  .payer-totals {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+}
+
+/* Payer Transactions */
+.payer-transactions {
+  background-color: #f8f9fa;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #ecf0f1;
+}
+
+.transactions-container {
+  margin-top: 0.5rem;
+}
+
+.transactions-header {
+  display: grid;
+  grid-template-columns: 120px 1fr 120px 100px;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #bdc3c7;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.txn-date {
+  white-space: nowrap;
+}
+
+.txn-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.txn-amount {
+  text-align: right;
+  font-weight: 600;
+}
+
+.txn-amount.credit {
+  color: #27ae60;
+}
+
+.txn-amount.debit {
+  color: #e74c3c;
+}
+
+.txn-reference {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.transaction-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 120px 100px;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ecf0f1;
+  font-size: 0.9rem;
+  align-items: center;
+}
+
+.transaction-row:hover {
+  background-color: white;
+}
+
+/* Scrollbar Styling */
+.payers-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.payers-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.payers-list::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 4px;
+}
+
+.payers-list::-webkit-scrollbar-thumb:hover {
+  background: #95a5a6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .month-statement-container {
+    padding: 1rem;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .payer-totals {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .statement-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .transactions-header,
+  .transaction-row {
+    grid-template-columns: 100px 1fr 80px;
+  }
+
+  .txn-reference {
+    display: none;
+  }
+}

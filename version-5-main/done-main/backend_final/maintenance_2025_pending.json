@@ -1,0 +1,2216 @@
+[
+  {
+    "unit": "Unit No",
+    "owner": "owner name",
+    "type": "office",
+    "months": {
+      "Jan-2025": "0",
+      "Feb-2025": "0",
+      "Mar-2025": "0",
+      "Apr-2025": "0",
+      "May-2025": "0",
+      "Jun-2025": "0",
+      "Jul-2025": "0",
+      "Aug-2025": "0",
+      "Sep-2025": "0",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 2000,
+      "Feb-2025": 2000,
+      "Mar-2025": 2000,
+      "Apr-2025": 2000,
+      "May-2025": 2000,
+      "Jun-2025": 2000,
+      "Jul-2025": 2000,
+      "Aug-2025": 2000,
+      "Sep-2025": 2000,
+      "Oct-2025": 2000
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 101",
+    "owner": "KIRAN PRAKASH JADHAV",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 102",
+    "owner": "RAJENDRA PANDURANG SONGIRE\nPRATIBHA RAJENDRA SONGIRE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 103",
+    "owner": "PRIYA RAMANI \nVIJAY UDHAVDAS RAMANI",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 104",
+    "owner": "POOJA DUDEJA",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 105",
+    "owner": "HEMANT SHANKAR DHAMAL",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 106",
+    "owner": "HITESH KUMAR SINGH",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 107",
+    "owner": "KAILAS MANGARAM DHANWANI \nKUMARI SNEHA BHARAT DHANWANI",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 2000
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 108",
+    "owner": "NEHA JAIN",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "0",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "0",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 2000,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 2000,
+      "Oct-2025": 2000
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 109",
+    "owner": "PRIYA VISHAL BAFNA",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 110",
+    "owner": "VAISHNAVI NISHIKANT SAWARKAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 111",
+    "owner": "VAISHALI DATTATRAY FULSUNDAR \nPRATHMESH DATTATRAY FULSUNDAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 201",
+    "owner": "GANESH DILIP BHUMKAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 202",
+    "owner": "GANESH DILIP BHUMKAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 203",
+    "owner": "MADHAV NARAYANRAO JADHAV \nGANESH MAROTIRAO BIRADAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "0",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "0",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 2000,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 2000,
+      "Oct-2025": 2000
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 204",
+    "owner": "ANUPAMA PURUSHOTTAM WADJE \nPURUSHOTTAM RAMKRISHNA WADJE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 205",
+    "owner": "BAYAKKA RANGRAO PATIL \nRANGRAO HINDURAO PATIL",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 2000
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 206",
+    "owner": "SNEHAL RAVINDRA PATIL",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 207",
+    "owner": "T SUSANTA KUMAR PATRO",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 208",
+    "owner": "SNEHAL ARJUN ARGULEWAR \nVIVEK KUMAR BARANWAL \n",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 209",
+    "owner": "GANESH DILIP BHUMKAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 210",
+    "owner": "GANESH DILIP BHUMKAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 211",
+    "owner": "GANESH DILIP BHUMKAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -301",
+    "owner": "Prasad Ravindranath Kothawade \nShobha Ravindranath Kothawade",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -302",
+    "owner": "YATIN VIJAY CHAUDHARI",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -303",
+    "owner": "RESHMA ANAND KANKARIYA \nANAND SURESHLAL KANKARIYA",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -304",
+    "owner": "ARVIND PRATAPRAO RANE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -305",
+    "owner": "VINOD MAROTRAO JOJARE \nGEETANJALI VINOD JOJARE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -306",
+    "owner": "S. GOLAKANATH PATRO",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -307",
+    "owner": "S. GOLAKANATH PATRO",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -308",
+    "owner": "AVADHUT PRAKASH KULKARNI",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -309",
+    "owner": "GANESH BHAVARLAL SUTHAR",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -310",
+    "owner": "VIRENDRA MAHENDRA AGARWAL",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office -311",
+    "owner": "VIRENDRA MAHENDRA AGARWAL",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 401",
+    "owner": "YOGESH SHIVAJI PRAKHI",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "0",
+      "Sep-2025": "0",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 2000,
+      "Sep-2025": 2000,
+      "Oct-2025": 2000
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 402",
+    "owner": "ACHYUT SHRINIVAS NAPHADE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 403",
+    "owner": "UNILATERAL TECHNOLOGY PVT. LTD. THROUGH DIRECTOR ASHISH PRAKASH PHARNE \nUNILATERAL TECHNOLOGY PVT. LTD. THROUGH DIRECTOR SUSHANT SUDHAKAR MADAVI",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "0",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "0",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 2000,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 2000,
+      "Oct-2025": 2000
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 404",
+    "owner": "HARSHAL RAJESH SACHADE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 405",
+    "owner": "PRIYANKA HIMANSHU CHORDIYA \nHIMANSHU MULCHAND CHORDIYA",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 406",
+    "owner": "NILESH SADASHIV KANDE \nRUCHI NILESH KANDE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 407",
+    "owner": "PARESH PRAVIN BABEL",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "0",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "0",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "0",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 2000,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 2000,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 2000,
+      "Oct-2025": 2000
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 408",
+    "owner": "KAVITA PATIL \nMOHD KHALIQUE YEZDANI",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 409",
+    "owner": "ANURADHA ROHIT BHOITE (ANURADHA BHARAT BABAR)",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "2000",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 410",
+    "owner": "ARUN SITARAM KANSE \nATUL ARUN KANSE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "0",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 2000,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "office - 411",
+    "owner": "ARUN SITARAM KANSE \nATUL ARUN KANSE",
+    "type": "office",
+    "months": {
+      "Jan-2025": "2000",
+      "Feb-2025": "2000",
+      "Mar-2025": "2000",
+      "Apr-2025": "2000",
+      "May-2025": "2000",
+      "Jun-2025": "2000",
+      "Jul-2025": "2000",
+      "Aug-2025": "0",
+      "Sep-2025": "2000",
+      "Oct-2025": "2000"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 2000,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 1",
+    "owner": "Mahananda Gulabrao Pawar",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "0",
+      "Feb-2025": "0",
+      "Mar-2025": "0",
+      "Apr-2025": "0",
+      "May-2025": "0",
+      "Jun-2025": "0",
+      "Jul-2025": "0",
+      "Aug-2025": "0",
+      "Sep-2025": "0",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 1500,
+      "Feb-2025": 1500,
+      "Mar-2025": 1500,
+      "Apr-2025": 1500,
+      "May-2025": 1500,
+      "Jun-2025": 1500,
+      "Jul-2025": 1500,
+      "Aug-2025": 1500,
+      "Sep-2025": 1500,
+      "Oct-2025": 1500
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 2",
+    "owner": "Mahananda Gulabrao Pawar",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "0",
+      "Feb-2025": "0",
+      "Mar-2025": "0",
+      "Apr-2025": "0",
+      "May-2025": "0",
+      "Jun-2025": "0",
+      "Jul-2025": "0",
+      "Aug-2025": "0",
+      "Sep-2025": "0",
+      "Oct-2025": "0"
+    },
+    "pending": {
+      "Jan-2025": 1500,
+      "Feb-2025": 1500,
+      "Mar-2025": 1500,
+      "Apr-2025": 1500,
+      "May-2025": 1500,
+      "Jun-2025": 1500,
+      "Jul-2025": 1500,
+      "Aug-2025": 1500,
+      "Sep-2025": 1500,
+      "Oct-2025": 1500
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 3",
+    "owner": "VAISHALI SHYAMSUNDER PRATAPWAR",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "1500",
+      "Feb-2025": "1500",
+      "Mar-2025": "1500",
+      "Apr-2025": "1500",
+      "May-2025": "1500",
+      "Jun-2025": "1500",
+      "Jul-2025": "1500",
+      "Aug-2025": "1500",
+      "Sep-2025": "1500",
+      "Oct-2025": "1500"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 4",
+    "owner": "SONAL RAHUL KAWADE",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "1500",
+      "Feb-2025": "1500",
+      "Mar-2025": "1500",
+      "Apr-2025": "1500",
+      "May-2025": "1500",
+      "Jun-2025": "1500",
+      "Jul-2025": "1500",
+      "Aug-2025": "1500",
+      "Sep-2025": "1500",
+      "Oct-2025": "1500"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 5",
+    "owner": "GANESH DILIP BHUMKAR",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "1500",
+      "Feb-2025": "1500",
+      "Mar-2025": "1500",
+      "Apr-2025": "1500",
+      "May-2025": "1500",
+      "Jun-2025": "1500",
+      "Jul-2025": "1500",
+      "Aug-2025": "1500",
+      "Sep-2025": "1500",
+      "Oct-2025": "1500"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 6",
+    "owner": "HARISH SHYAMLAL TEJWANI \nVIREN HARISH TEJWANI",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "1500",
+      "Feb-2025": "1500",
+      "Mar-2025": "1500",
+      "Apr-2025": "1500",
+      "May-2025": "1500",
+      "Jun-2025": "1500",
+      "Jul-2025": "1500",
+      "Aug-2025": "1500",
+      "Sep-2025": "1500",
+      "Oct-2025": "1500"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 7",
+    "owner": "ANAPURNA. HARISH. TEJWANI \nHARISH SHYAMLAL TEJWANI",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "1500",
+      "Feb-2025": "1500",
+      "Mar-2025": "1500",
+      "Apr-2025": "1500",
+      "May-2025": "1500",
+      "Jun-2025": "1500",
+      "Jul-2025": "1500",
+      "Aug-2025": "1500",
+      "Sep-2025": "1500",
+      "Oct-2025": "1500"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 8",
+    "owner": "DEVARAM LAKARAM CHOUDHARY",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "1500",
+      "Feb-2025": "1500",
+      "Mar-2025": "1500",
+      "Apr-2025": "1500",
+      "May-2025": "1500",
+      "Jun-2025": "1500",
+      "Jul-2025": "1500",
+      "Aug-2025": "1500",
+      "Sep-2025": "1500",
+      "Oct-2025": "1500"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  },
+  {
+    "unit": "shop - 9",
+    "owner": "DEVARAM LAKARAM CHOUDHARY",
+    "type": "shop",
+    "months": {
+      "Jan-2025": "1500",
+      "Feb-2025": "1500",
+      "Mar-2025": "1500",
+      "Apr-2025": "1500",
+      "May-2025": "1500",
+      "Jun-2025": "1500",
+      "Jul-2025": "1500",
+      "Aug-2025": "1500",
+      "Sep-2025": "1500",
+      "Oct-2025": "1500"
+    },
+    "pending": {
+      "Jan-2025": 0,
+      "Feb-2025": 0,
+      "Mar-2025": 0,
+      "Apr-2025": 0,
+      "May-2025": 0,
+      "Jun-2025": 0,
+      "Jul-2025": 0,
+      "Aug-2025": 0,
+      "Sep-2025": 0,
+      "Oct-2025": 0
+    },
+    "extra": "",
+    "__v": 0,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1764405297181"
+      }
+    }
+  }
+]

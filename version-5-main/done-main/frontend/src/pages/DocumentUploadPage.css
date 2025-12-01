@@ -1,0 +1,208 @@
+/* DocumentUploadPage.css */
+
+.doc-upload-container {
+  padding: clamp(16px, 3vw, 24px);
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f0f5 0%, #f5fafb 100%);
+  font-family: "Poppins", sans-serif;
+}
+
+.doc-upload-header {
+  margin-bottom: 2rem;
+  animation: slideDown 0.6s ease-out;
+}
+
+.doc-upload-header h1 {
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 700;
+  color: #1a3a3a;
+}
+
+.doc-upload-header p {
+  color: #7a8a99;
+  font-size: clamp(14px, 2.5vw, 16px);
+}
+
+.card-morph {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(249, 252, 255, 0.95) 100%);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  animation: popIn 0.5s ease-out backwards;
+}
+
+.upload-form-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  color: #0f6d57;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(15, 109, 87, 0.1);
+  padding-bottom: 0.75rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #1a3a3a;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.form-group input[type="text"],
+.form-group select {
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(15, 109, 87, 0.15);
+  border-radius: 12px;
+  background-color: #fff;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+}
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: #0f6d57;
+    box-shadow: 0 0 0 3px rgba(15, 109, 87, 0.1);
+}
+
+/* Custom file input */
+.file-input-group input[type="file"] {
+  display: none;
+}
+.file-upload-label {
+  padding: 0.75rem 1rem;
+  border: 1px dashed rgba(15, 109, 87, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  background-color: rgba(15, 109, 87, 0.03);
+  color: #0f6d57;
+  transition: all 0.3s ease;
+}
+.file-upload-label:hover {
+    background-color: rgba(15, 109, 87, 0.08);
+}
+
+
+.btn-submit {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f6d57 0%, #148a6a 100%);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 109, 87, 0.35);
+}
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.success-message { color: #0f6d57; margin-top: 1rem; font-weight: 500; }
+.error-message { color: #e53e3e; margin-top: 1rem; font-weight: 500; }
+
+
+/* Document List Section */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.list-header h2 {
+    font-size: 1.25rem;
+    color: #1a3a3a;
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-wrapper .search-icon {
+    position: absolute;
+    left: 12px;
+    color: #7a8a99;
+}
+.search-wrapper input {
+    padding: 0.6rem 1rem 0.6rem 2.25rem;
+    border: 1px solid rgba(15, 109, 87, 0.15);
+    border-radius: 12px;
+    min-width: 250px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(15, 109, 87, 0.08);
+}
+th {
+  color: #1a3a3a;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.btn-view, .btn-delete {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.btn-view {
+    background-color: #e6f7ff;
+    color: #1890ff;
+    text-decoration: none;
+}
+.btn-view:hover {
+    background-color: #d0ebff;
+}
+.btn-delete {
+    background-color: #fff1f0;
+    color: #ff4d4f;
+}
+.btn-delete:hover {
+    background-color: #ffccc7;
+}
+
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
