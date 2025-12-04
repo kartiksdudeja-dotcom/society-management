@@ -25,8 +25,12 @@ import AboutSocietyPage from "./pages/AboutSocietyPage";
 import DashboardPage from "./pages/DashboardPage";
 import SettingsPage from "./pages/SettingsPage";
 import TasksPage from "./pages/TasksPage";
+import AdminTasksPage from "./pages/AdminTasksPage";
+import ReportProblemPage from "./pages/ReportProblemPage";
+import MyComplaintsPage from "./pages/MyComplaintsPage";
 import BankTransactionsPage from "./pages/BankTransactionsPage";
 import MonthlyMaintenancePage from "./pages/MonthlyMaintenancePage.jsx";
+import MonthlyExpensePage from "./pages/MonthlyExpensePage.jsx";
 
 // COMPONENTS
 import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
@@ -52,13 +56,15 @@ function App() {
       <Routes>
 
         {/* PUBLIC ROUTES */}
+        {/* Root path goes to About Us page first */}
+        <Route path="/" element={<Navigate to="/about" replace />} />
         <Route path="/about" element={<AboutSocietyPage />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<Register />} />
         <Route path="/monthly-collection" element={<MonthlyMaintenancePage />} />
 
-        {/* INSIDE MAIN LAYOUT */}
-        <Route path="/" element={<MainLayout user={user} onLogout={handleLogout} />}>
+        {/* PROTECTED ROUTES - INSIDE MAIN LAYOUT */}
+        <Route path="/app" element={<MainLayout user={user} onLogout={handleLogout} />}>
 
           <Route index element={<Navigate to="dashboard" replace />} />
 
@@ -75,10 +81,15 @@ function App() {
           <Route path="cctv-request" element={<CCTVRequestPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="settings" element={<SettingsPage />} />
-          <Route path="tasks" element={<TasksPage />} />
+          <Route path="tasks" element={<AdminTasksPage />} />
+          <Route path="report-problem" element={<ReportProblemPage />} />
+          <Route path="my-complaints" element={<MyComplaintsPage />} />
 
           {/* BANK TRANSACTIONS */}
           <Route path="bank-transactions" element={<BankTransactionsPage />} />
+          
+          {/* MONTHLY EXPENSE */}
+          <Route path="monthly-expense" element={<MonthlyExpensePage />} />
 
           {/* ADMIN ROUTES */}
           <Route
@@ -101,7 +112,7 @@ function App() {
 
         </Route>
 
-        {/* CATCH ALL */}
+        {/* CATCH ALL - Redirect to About page */}
         <Route path="*" element={<Navigate to="/about" replace />} />
 
       </Routes>

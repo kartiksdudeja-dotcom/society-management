@@ -16,6 +16,11 @@ const BankTransactionSchema = new mongoose.Schema(
 
     reference_no: { type: String },
     narration: { type: String },
+    name: { type: String },      // Owner name from LearnedMapping
+    payerName: { type: String }, // Person who paid (relative/wife etc)
+    relationship: { type: String }, // Relationship to owner
+    flat: { type: String },      // Unit/Office number from LearnedMapping
+    vpa: { type: String },       // VPA/UPI ID extracted from email
 
     date: { type: Date },
 
@@ -28,7 +33,7 @@ const BankTransactionSchema = new mongoose.Schema(
 
     closingBalance: { type: Number },
   },
-  { timestamps: true, strict: true }
+  { timestamps: true, strict: false }
 );
 
 // Ensure unique sparse index exists

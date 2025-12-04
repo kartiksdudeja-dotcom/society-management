@@ -30,7 +30,7 @@ export default function SettingsPage() {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate("/about");
       return;
     }
 

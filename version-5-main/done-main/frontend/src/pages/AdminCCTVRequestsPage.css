@@ -117,3 +117,93 @@
 .back-btn:hover {
   background-color: #5a6268;
 }
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+@media (max-width: 768px) {
+  .admin-cctv-page {
+    padding: 16px;
+    margin: 12px;
+    max-width: none;
+    border-radius: 12px;
+  }
+  
+  .admin-cctv-page h1 {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  
+  .requests-list {
+    gap: 12px;
+  }
+  
+  .request-item {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  
+  .request-item p {
+    font-size: 14px;
+  }
+  
+  .request-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .action-btn {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 15px;
+    min-height: 44px;
+    border-radius: 8px;
+  }
+  
+  .back-btn {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 15px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-cctv-page {
+    padding: 14px;
+    margin: 10px;
+    border-radius: 10px;
+  }
+  
+  .admin-cctv-page h1 {
+    font-size: 20px;
+  }
+  
+  .request-item {
+    padding: 12px;
+  }
+  
+  .request-item p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 400px) {
+  .admin-cctv-page {
+    padding: 12px;
+    margin: 8px;
+  }
+  
+  .admin-cctv-page h1 {
+    font-size: 18px;
+  }
+  
+  .request-item {
+    padding: 10px;
+  }
+  
+  .request-item p {
+    font-size: 12px;
+  }
+}

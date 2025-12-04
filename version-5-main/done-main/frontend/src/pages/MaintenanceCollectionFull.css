@@ -496,6 +496,28 @@
   overflow-x: auto;
   overflow-y: auto;
   flex: 1;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 109, 87, 0.3) transparent;
+}
+
+.table-scroll::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  background: rgba(15, 109, 87, 0.05);
+  border-radius: 3px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background: rgba(15, 109, 87, 0.3);
+  border-radius: 3px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 109, 87, 0.5);
 }
 
 .maintenance-table {

@@ -34,7 +34,7 @@ export default function LoginForm() {
       setMsg("Login successful! Redirecting...");
       
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/app/dashboard");
       }, 1500);
     } catch (err) {
       setMsgType("error");

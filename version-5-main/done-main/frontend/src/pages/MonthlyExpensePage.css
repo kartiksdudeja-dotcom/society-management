@@ -1,0 +1,456 @@
+.me-container {
+  padding: 25px;
+}
+
+.me-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.me-filter {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.me-filter select {
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  background: white;
+}
+
+.me-sync-btn {
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.me-sync-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.me-add-btn {
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.me-total-card {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+.me-total-card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 5px 0;
+  opacity: 0.9;
+}
+
+.me-total-card p {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.me-total-card span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.me-table-box {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  overflow-x: auto;
+}
+
+.me-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.me-table th {
+  background: #f8f8f8;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #555;
+}
+
+.me-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+
+.expense-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.expense-narration {
+  font-size: 11px;
+  color: #888;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.amount-cell {
+  font-weight: 600;
+  color: #f44336;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.category-badge.maintenance { background: #E3F2FD; color: #1976D2; }
+.category-badge.repairs { background: #FFF3E0; color: #F57C00; }
+.category-badge.utilities { background: #E8F5E9; color: #388E3C; }
+.category-badge.salary { background: #F3E5F5; color: #7B1FA2; }
+.category-badge.cleaning { background: #E0F7FA; color: #00838F; }
+.category-badge.security { background: #FFEBEE; color: #C62828; }
+.category-badge.pest-control { background: #FBE9E7; color: #D84315; }
+.category-badge.gardening { background: #E8F5E9; color: #2E7D32; }
+.category-badge.other { background: #ECEFF1; color: #546E7A; }
+
+.source-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.source-badge.bank { background: #E3F2FD; color: #1976D2; }
+.source-badge.manual { background: #FFF8E1; color: #F57F17; }
+
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 40px;
+}
+
+/* Action Buttons */
+.me-edit-btn, .me-delete-btn {
+  background: #f0f0f0;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+  transition: background 0.2s;
+}
+
+.me-edit-btn:hover { background: #e0e0e0; }
+.me-delete-btn:hover { background: #ffcdd2; }
+
+/* Modal Overlay */
+.me-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal */
+.me-modal {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.me-modal h2 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.me-modal-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.me-modal-info p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.me-narration {
+  color: #666;
+  font-size: 12px !important;
+  margin-top: 8px !important;
+  line-height: 1.5;
+}
+
+.me-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.me-modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+.me-modal-form input,
+.me-modal-form select,
+.me-modal-form textarea {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.me-modal-form input:focus,
+.me-modal-form select:focus,
+.me-modal-form textarea:focus {
+  outline: none;
+  border-color: #f44336;
+}
+
+.me-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  justify-content: flex-end;
+}
+
+.me-btn-cancel {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.me-btn-save {
+  padding: 10px 25px;
+  border: none;
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.me-btn-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   RESPONSIVE STYLES
+   ========================================== */
+
+@media (max-width: 768px) {
+  .me-container {
+    padding: 16px;
+  }
+  
+  .me-title {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .me-filter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+  .me-filter select {
+    width: 100%;
+  }
+  
+  .me-sync-btn,
+  .me-add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .me-total-card {
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  
+  .me-total-card p {
+    font-size: 26px;
+  }
+  
+  .me-table-box {
+    padding: 12px;
+    margin: 0 -16px;
+    border-radius: 0;
+  }
+  
+  .me-table th,
+  .me-table td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+  
+  .expense-narration {
+    font-size: 10px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 576px) {
+  .me-container {
+    padding: 12px;
+  }
+  
+  .me-title {
+    font-size: 20px;
+  }
+  
+  .me-filter {
+    gap: 8px;
+  }
+  
+  .me-filter select {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .me-total-card {
+    padding: 14px 16px;
+    border-radius: 12px;
+  }
+  
+  .me-total-card h3 {
+    font-size: 12px;
+  }
+  
+  .me-total-card p {
+    font-size: 22px;
+  }
+  
+  .me-table-box {
+    padding: 10px;
+  }
+  
+  .me-table {
+    min-width: 500px;
+  }
+  
+  .me-table th,
+  .me-table td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+  
+  .expense-name {
+    font-size: 12px;
+  }
+  
+  .category-badge,
+  .source-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  
+  .me-edit-btn,
+  .me-delete-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+  
+  .me-modal {
+    padding: 20px;
+    margin: 10px;
+    border-radius: 12px;
+  }
+  
+  .me-modal h2 {
+    font-size: 18px;
+  }
+  
+  .me-modal-form input,
+  .me-modal-form select,
+  .me-modal-form textarea {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .me-modal-actions {
+    flex-direction: column;
+  }
+  
+  .me-btn-cancel,
+  .me-btn-save {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .me-container {
+    padding: 10px;
+  }
+  
+  .me-title {
+    font-size: 18px;
+  }
+  
+  .me-total-card p {
+    font-size: 20px;
+  }
+  
+  .me-table th,
+  .me-table td {
+    padding: 6px 4px;
+    font-size: 11px;
+  }
+}

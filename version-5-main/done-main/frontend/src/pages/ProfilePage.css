@@ -73,3 +73,67 @@
 .back-btn:hover {
   background-color: #5a6268;
 }
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 16px;
+    margin: 12px;
+    max-width: none;
+    border-radius: 12px;
+  }
+  
+  .profile-page h1 {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="email"] {
+    font-size: 16px; /* Prevent iOS zoom */
+    padding: 12px;
+  }
+  
+  .submit-btn,
+  .back-btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+    min-height: 48px;
+    border-radius: 8px;
+  }
+  
+  .submit-btn {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-page {
+    padding: 14px;
+    margin: 10px;
+    border-radius: 10px;
+  }
+  
+  .profile-page h1 {
+    font-size: 20px;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .profile-page {
+    padding: 12px;
+    margin: 8px;
+  }
+  
+  .profile-page h1 {
+    font-size: 18px;
+  }
+}

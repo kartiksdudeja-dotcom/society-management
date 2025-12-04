@@ -30,7 +30,7 @@ export default function ProfilePage() {
             phoneNumber: fetchedUser.phoneNumber || "",
           });
         } else {
-          navigate("/login"); // Redirect if no user in local storage
+          navigate("/about"); // Redirect if no user in local storage
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);

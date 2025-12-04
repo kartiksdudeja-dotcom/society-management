@@ -10,19 +10,39 @@ export default function BalanceCard({ user }) {
   const [totalCollectionBalance, setTotalCollectionBalance] = useState(0);
   const [maintenanceData, setMaintenanceData] = useState(null);
   const [expenseData, setExpenseData] = useState(null);
+  
+  // Current month's bank data
+  const [currentMonthCollection, setCurrentMonthCollection] = useState(0);
+  const [currentMonthExpenses, setCurrentMonthExpenses] = useState(0);
 
   // Load data once on mount
   useEffect(() => {
     async function loadData() {
       if (!user) return;
       try {
-        const [maintResponse, expenseResponse] = await Promise.all([
+        const now = new Date();
+        const currentMonth = now.getMonth() + 1;
+        const currentYear = now.getFullYear();
+
+        const [maintResponse, expenseResponse, bankResponse, monthlyExpResponse] = await Promise.all([
           API.get("/maintenance/get"),
-          API.get("/expense/get")
+          API.get("/expense/get"),
+          API.get(`/bank?month=${currentMonth}&year=${currentYear}`),
+          API.get(`/monthly-expense/summary?month=${currentMonth}&year=${currentYear}`)
         ]);
 
         setMaintenanceData(maintResponse.data);
         setExpenseData(expenseResponse.data);
+        
+        // Calculate current month collection from bank (credits)
+        const bankData = bankResponse.data.data || [];
+        const credits = bankData.filter(t => t.type === "credit");
+        const creditTotal = credits.reduce((sum, t) => sum + (t.amount || 0), 0);
+        setCurrentMonthCollection(creditTotal);
+        
+        // Current month expenses
+        setCurrentMonthExpenses(monthlyExpResponse.data.total || 0);
+        
         setLoading(false);
       } catch (err) {
         console.error("Error loading balance data:", err);
@@ -152,6 +172,25 @@ export default function BalanceCard({ user }) {
         <div className="detail-item">
           <span className="detail-label">Monthly Expense ({selectedMonth})</span>
           <span className="detail-value">₹{monthlyExpense.toLocaleString()}</span>
+        </div>
+      </div>
+
+      {/* Current Month Summary from Bank */}
+      <div className="current-month-summary">
+        <h4>This Month ({new Date().toLocaleString('default', { month: 'short' })} {new Date().getFullYear()})</h4>
+        <div className="summary-row">
+          <div className="summary-item collection">
+            <span className="summary-label">Collection</span>
+            <span className="summary-value">₹{currentMonthCollection.toLocaleString()}</span>
+          </div>
+          <div className="summary-item expense">
+            <span className="summary-label">Expenses</span>
+            <span className="summary-value">₹{currentMonthExpenses.toLocaleString()}</span>
+          </div>
+          <div className="summary-item net">
+            <span className="summary-label">Net</span>
+            <span className="summary-value">₹{(currentMonthCollection - currentMonthExpenses).toLocaleString()}</span>
+          </div>
         </div>
       </div>
     </div>

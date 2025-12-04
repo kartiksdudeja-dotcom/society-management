@@ -21,15 +21,66 @@
   font-size: 15px;
 }
 
+.mc-total-card {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.mc-total-card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 5px 0;
+  opacity: 0.9;
+}
+
+.mc-total-card p {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.mc-total-card span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
 .mc-table-box {
   background: white;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(76, 175, 80, 0.3) transparent;
+}
+
+.mc-table-box::-webkit-scrollbar {
+  height: 6px;
+}
+
+.mc-table-box::-webkit-scrollbar-track {
+  background: rgba(76, 175, 80, 0.05);
+  border-radius: 3px;
+}
+
+.mc-table-box::-webkit-scrollbar-thumb {
+  background: rgba(76, 175, 80, 0.3);
+  border-radius: 3px;
+}
+
+.mc-table-box::-webkit-scrollbar-thumb:hover {
+  background: rgba(76, 175, 80, 0.5);
 }
 
 .mc-table {
   width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
 }
 
@@ -48,4 +99,340 @@
   text-align: center;
   color: #777;
   padding: 20px;
+}
+
+/* Train Button */
+.mc-train-btn {
+  background: #f0f0f0;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.mc-train-btn:hover {
+  background: #e0e0e0;
+}
+
+/* Modal Overlay */
+.mc-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal */
+.mc-modal {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.mc-modal h2 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+}
+
+.mc-modal-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.mc-modal-info p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.mc-narration {
+  color: #666;
+  font-size: 12px !important;
+  margin-top: 8px !important;
+  line-height: 1.5;
+}
+
+.mc-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mc-modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mc-modal-form input {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.mc-modal-form input:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.mc-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  justify-content: flex-end;
+}
+
+.mc-btn-cancel {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.mc-btn-save {
+  padding: 10px 25px;
+  border: none;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mc-btn-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Payer Info Styles */
+.payer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.relationship-badge {
+  font-size: 11px;
+  color: #ff9800;
+  font-weight: 500;
+}
+
+.self-paid {
+  color: #4CAF50;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* Form Select Styles */
+.mc-modal-form select {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+  background: white;
+  cursor: pointer;
+}
+
+.mc-modal-form select:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+@media (max-width: 992px) {
+  .mc-container {
+    padding: 20px;
+  }
+  
+  .mc-filter {
+    flex-wrap: wrap;
+  }
+  
+  .mc-total-card {
+    padding: 16px 20px;
+  }
+  
+  .mc-total-card p {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mc-container {
+    padding: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  
+  .mc-title {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  
+  .mc-filter {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .mc-filter select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px; /* Prevent iOS zoom */
+  }
+  
+  .mc-total-card {
+    padding: 15px 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .mc-total-card p {
+    font-size: 24px;
+  }
+  
+  .mc-table-box {
+    padding: 12px;
+    border-radius: 12px;
+    margin: 0 -6px;
+  }
+  
+  .mc-table {
+    min-width: 450px;
+  }
+  
+  .mc-table th {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+  
+  .mc-table td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+  
+  /* Scroll hint */
+  .mc-table-box::after {
+    content: '← Scroll →';
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    padding: 8px;
+  }
+  
+  /* Modal mobile */
+  .mc-modal {
+    padding: 20px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .mc-modal h2 {
+    font-size: 18px;
+  }
+  
+  .mc-modal-form input,
+  .mc-modal-form select {
+    font-size: 16px;
+    padding: 14px 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .mc-container {
+    padding: 10px;
+  }
+  
+  .mc-title {
+    font-size: 20px;
+  }
+  
+  .mc-total-card p {
+    font-size: 22px;
+  }
+  
+  .mc-table-box {
+    padding: 10px;
+  }
+  
+  .mc-table {
+    min-width: 400px;
+  }
+  
+  .mc-table th,
+  .mc-table td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+  
+  .mc-train-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .mc-container {
+    padding: 8px;
+  }
+  
+  .mc-title {
+    font-size: 18px;
+  }
+  
+  .mc-total-card {
+    padding: 12px;
+  }
+  
+  .mc-total-card p {
+    font-size: 20px;
+  }
+  
+  .mc-table {
+    min-width: 350px;
+  }
+  
+  .mc-table th,
+  .mc-table td {
+    padding: 6px 4px;
+    font-size: 11px;
+  }
+}
+
+/* Touch-friendly enhancements */
+@media (hover: none) and (pointer: coarse) {
+  .mc-filter select,
+  .mc-train-btn,
+  .mc-btn-cancel,
+  .mc-btn-save,
+  .mc-modal-form input,
+  .mc-modal-form select {
+    min-height: 44px;
+  }
+  
+  .mc-table-box {
+    scroll-snap-type: x proximity;
+  }
 }

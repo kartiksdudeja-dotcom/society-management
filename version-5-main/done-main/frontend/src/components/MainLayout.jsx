@@ -44,7 +44,7 @@ export default function MainLayout() {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate("/about");
       return;
     }
 
@@ -87,7 +87,7 @@ export default function MainLayout() {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setUser(null);
-    navigate("/login");
+    navigate("/about");
   };
 
   if (!user) {
@@ -109,7 +109,7 @@ export default function MainLayout() {
         {/* Profile Circle */}
         <button 
           className="sidebar-profile-circle"
-          onClick={() => handleNav("/settings")}
+          onClick={() => handleNav("/app/settings")}
           title="Click to open profile"
         >
           <img
@@ -139,7 +139,7 @@ export default function MainLayout() {
         {/* TOP BAR */}
         <div className="top-bar">
           <div className="top-bar-left">
-            {location.pathname !== "/dashboard" && (
+            {location.pathname !== "/app/dashboard" && (
               <button className="back-btn" onClick={() => navigate(-1)} title="Go Back">
                 <FaArrowLeft />
               </button>
@@ -154,7 +154,7 @@ export default function MainLayout() {
             <button className="notification-btn">
               <FaBell />
             </button>
-            <button className="user-profile-button" onClick={() => handleNav("/profile")}>
+            <button className="user-profile-button" onClick={() => handleNav("/app/profile")}>
               <div className="user-profile">
                 <img
                   src={profilePic || `https://ui-avatars.com/api/?name=${user.name}&background=0D8ABC&color=fff`}

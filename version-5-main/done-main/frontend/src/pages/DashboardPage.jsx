@@ -15,6 +15,8 @@ import {
   FaCog,
   FaCheckSquare,
   FaRegCreditCard,
+  FaExclamationTriangle,
+  FaBullhorn,
 } from "react-icons/fa";
 import "./DashboardPage.css";
 
@@ -36,7 +38,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate("/about");
       return;
     }
 
@@ -80,7 +82,7 @@ export default function DashboardPage() {
       icon: FaFileUpload,
       title: "Documents",
       description: "Manage and view society documents",
-      path: "/documents",
+      path: "/app/documents",
       color: "card-blue",
     },
     {
@@ -88,7 +90,7 @@ export default function DashboardPage() {
       icon: FaVideo,
       title: "CCTV Request",
       description: "Request access to CCTV cameras",
-      path: "/cctv-request",
+      path: "/app/cctv-request",
       color: "card-green",
     },
     {
@@ -96,57 +98,73 @@ export default function DashboardPage() {
       icon: FaCog,
       title: "Settings",
       description: "Manage your profile and preferences",
-      path: "/settings",
+      path: "/app/settings",
       color: "card-indigo",
     },
     {
-      id: 10,
-      icon: FaCheckSquare,
-      title: "Tasks",
-      description: "Organize and track your tasks",
-      path: "/tasks",
-      color: "card-cyan",
+      id: 14,
+      icon: FaExclamationTriangle,
+      title: "Report Problem",
+      description: "Report issues in the society",
+      path: "/app/report-problem",
+      color: "card-pink",
+    },
+    {
+      id: 15,
+      icon: FaClipboard,
+      title: "My Complaints",
+      description: "Track your reported problems",
+      path: "/app/my-complaints",
+      color: "card-orange",
     },
     ...(isAdmin
       ? [
+          {
+            id: 10,
+            icon: FaBullhorn,
+            title: "Problem Broadcast",
+            description: "Manage all reported problems",
+            path: "/app/tasks",
+            color: "card-red",
+          },
           {
             id: 3,
             icon: FaUsers,
             title: "Members",
             description: "Manage society members",
-            path: "/members",
-            color: "card-pink",
+            path: "/app/members",
+            color: "card-purple",
           },
           {
             id: 4,
             icon: FaTools,
             title: "Maintenance",
             description: "View maintenance collection",
-            path: "/maintenance-collection",
-            color: "card-purple",
+            path: "/app/maintenance-collection",
+            color: "card-teal",
           },
           {
             id: 5,
             icon: FaWallet,
             title: "Sinking Fund",
             description: "Manage sinking fund",
-            path: "/sinking-fund",
-            color: "card-orange",
+            path: "/app/sinking-fund",
+            color: "card-cyan",
           },
           {
             id: 6,
             icon: FaExchangeAlt,
             title: "Collection",
             description: "View collection 2024",
-            path: "/collection/2024",
-            color: "card-teal",
+            path: "/app/collection/2024",
+            color: "card-blue",
           },
           {
             id: 7,
             icon: FaChartBar,
             title: "Expenses",
             description: "Manage expenses 2024",
-            path: "/expense-2024",
+            path: "/app/expense-2024",
             color: "card-yellow",
           },
           {
@@ -154,16 +172,16 @@ export default function DashboardPage() {
             icon: FaVideo,
             title: "Admin CCTV",
             description: "Manage CCTV requests",
-            path: "/admin/cctv-requests",
-            color: "card-red",
+            path: "/app/admin/cctv-requests",
+            color: "card-green",
           },
          {
   id: 11,
   icon: FaRegCreditCard,
   title: "Bank Transactions",
   description: "View HDFC bank statements & transactions",
- path: "/bank-transactions",   // ← FIXED PATH
-        color: "card-blue",
+ path: "/app/bank-transactions",
+        color: "card-indigo",
 },  {
   
   id: 12,
@@ -171,7 +189,15 @@ export default function DashboardPage() {
         title: "Monthly Collection",
         description: "Maintenance collected this month",
         path: "/monthly-collection",
-        color: "card-green",
+        color: "card-teal",
+          },
+          {
+            id: 13,
+            icon: FaWallet,
+            title: "Monthly Expenses",
+            description: "View & manage monthly expenses",
+            path: "/app/monthly-expense",
+            color: "card-orange",
           },
       ]
     : []),

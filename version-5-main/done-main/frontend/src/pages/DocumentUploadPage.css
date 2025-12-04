@@ -153,23 +153,55 @@
     min-width: 250px;
 }
 
+/* Table Container with Horizontal Scroll */
 .table-container {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 109, 87, 0.3) transparent;
 }
+
+.table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: rgba(15, 109, 87, 0.05);
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: rgba(15, 109, 87, 0.3);
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 109, 87, 0.5);
+}
+
 table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
 }
 th, td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid rgba(15, 109, 87, 0.08);
+  white-space: nowrap;
 }
 th {
   color: #1a3a3a;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  background: rgba(15, 109, 87, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .actions {
@@ -206,3 +238,300 @@ th {
 
 @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+/* Tablet - 992px and below */
+@media (max-width: 992px) {
+  .doc-upload-container {
+    padding: clamp(12px, 2.5vw, 20px);
+  }
+  
+  .card-morph {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+  
+  .form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  
+  .list-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-wrapper input {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+/* Mobile - 768px and below */
+@media (max-width: 768px) {
+  .doc-upload-container {
+    padding: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  
+  .doc-upload-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .doc-upload-header h1 {
+    font-size: clamp(20px, 5vw, 26px);
+  }
+  
+  .doc-upload-header p {
+    font-size: 13px;
+  }
+  
+  .card-morph {
+    padding: 1rem;
+    border-radius: 14px;
+    margin-bottom: 1rem;
+  }
+  
+  .upload-form-section h2 {
+    font-size: 1.1rem;
+    gap: 0.5rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .form-group input[type="text"],
+  .form-group select {
+    padding: 0.65rem 0.875rem;
+    font-size: 16px; /* Prevent iOS zoom */
+  }
+  
+  .file-upload-label {
+    padding: 1rem;
+  }
+  
+  .btn-submit {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    font-size: 15px;
+  }
+  
+  /* Table Mobile Styles */
+  .table-container {
+    margin: 0 -1rem;
+    padding: 0;
+    border-radius: 0;
+  }
+  
+  table {
+    min-width: 550px;
+  }
+  
+  th, td {
+    padding: 0.75rem 0.65rem;
+    font-size: 0.85rem;
+  }
+  
+  th {
+    font-size: 0.7rem;
+  }
+  
+  .actions {
+    flex-direction: row;
+    gap: 0.4rem;
+  }
+  
+  .btn-view, .btn-delete {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  
+  /* Scroll hint indicator */
+  .table-container::after {
+    content: '← Scroll →';
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    color: #7a8a99;
+    padding: 8px;
+    background: linear-gradient(to right, transparent, rgba(15, 109, 87, 0.05), transparent);
+  }
+}
+
+/* Small Mobile - 576px and below */
+@media (max-width: 576px) {
+  .doc-upload-container {
+    padding: 10px;
+  }
+  
+  .card-morph {
+    padding: 0.875rem;
+    border-radius: 12px;
+  }
+  
+  .doc-upload-header h1 {
+    font-size: 20px;
+  }
+  
+  .upload-form-section h2 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+  }
+  
+  .form-group input[type="text"],
+  .form-group select {
+    padding: 0.6rem 0.75rem;
+    border-radius: 10px;
+  }
+  
+  .file-upload-label {
+    padding: 0.875rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .list-header h2 {
+    font-size: 1.1rem;
+  }
+  
+  .search-wrapper input {
+    padding: 0.5rem 0.875rem 0.5rem 2rem;
+    font-size: 14px;
+  }
+  
+  /* More compact table for small screens */
+  table {
+    min-width: 500px;
+  }
+  
+  th, td {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  th {
+    font-size: 0.65rem;
+    letter-spacing: 0.3px;
+  }
+  
+  .btn-view, .btn-delete {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+    gap: 0.25rem;
+  }
+  
+  .btn-view svg, .btn-delete svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Extra Small Mobile - 400px and below */
+@media (max-width: 400px) {
+  .doc-upload-container {
+    padding: 8px;
+  }
+  
+  .card-morph {
+    padding: 0.75rem;
+  }
+  
+  .doc-upload-header h1 {
+    font-size: 18px;
+  }
+  
+  .doc-upload-header p {
+    font-size: 12px;
+  }
+  
+  .upload-form-section h2 {
+    font-size: 0.95rem;
+  }
+  
+  .form-group input[type="text"],
+  .form-group select {
+    padding: 0.55rem 0.65rem;
+    font-size: 16px;
+  }
+  
+  .btn-submit {
+    padding: 0.75rem 1rem;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+  
+  table {
+    min-width: 450px;
+  }
+  
+  th, td {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.75rem;
+  }
+  
+  .actions {
+    flex-wrap: nowrap;
+  }
+  
+  .btn-view, .btn-delete {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.65rem;
+  }
+}
+
+/* Touch-friendly enhancements */
+@media (hover: none) and (pointer: coarse) {
+  .btn-submit,
+  .btn-view,
+  .btn-delete,
+  .file-upload-label {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .form-group input[type="text"],
+  .form-group select {
+    min-height: 44px;
+  }
+  
+  .table-container {
+    scroll-snap-type: x proximity;
+  }
+  
+  table tr {
+    scroll-snap-align: start;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+  .doc-upload-container {
+    padding: 8px 16px;
+  }
+  
+  .doc-upload-header {
+    margin-bottom: 1rem;
+  }
+  
+  .card-morph {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+}

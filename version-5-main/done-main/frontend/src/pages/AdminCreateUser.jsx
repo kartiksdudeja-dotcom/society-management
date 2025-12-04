@@ -27,7 +27,7 @@ export default function AdminCreateUser() {
 
       setMsg("User created successfully!");
 
-      setTimeout(() => navigate("/members"), 1200);
+      setTimeout(() => navigate("/app/members"), 1200);
     } catch (err) {
       setMsg(err.response?.data?.message || "Error creating user");
     }

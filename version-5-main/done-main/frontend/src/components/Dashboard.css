@@ -584,6 +584,62 @@
   letter-spacing: -0.3px;
 }
 
+/* Current Month Summary */
+.current-month-summary {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.current-month-summary h4 {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.summary-item {
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.summary-item.collection {
+  background: rgba(76, 175, 80, 0.2);
+}
+
+.summary-item.expense {
+  background: rgba(244, 67, 54, 0.2);
+}
+
+.summary-item.net {
+  background: rgba(33, 150, 243, 0.2);
+}
+
+.summary-label {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.summary-value {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
+
 .balance-footer {
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -997,9 +1053,35 @@
   }
 }
 
+@media (max-width: 992px) {
+  .balance-card {
+    padding: 20px;
+  }
+  
+  .balance-amount {
+    font-size: 28px;
+  }
+  
+  .balance-details-grid {
+    gap: 10px;
+  }
+  
+  .detail-value {
+    font-size: 14px;
+  }
+  
+  .summary-row {
+    gap: 8px;
+  }
+  
+  .summary-value {
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 768px) {
   .sidebar {
-    width: 100%;
+    width: 280px;
     left: 0;
   }
 
@@ -1016,7 +1098,7 @@
   }
 
   .top-bar-right {
-    gap: 12px;
+    gap: 10px;
   }
 
   .date {
@@ -1025,5 +1107,235 @@
 
   .search-box {
     display: none;
+  }
+  
+  .content {
+    padding: 12px 16px;
+  }
+  
+  .balance-card {
+    padding: 16px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .balance-amount {
+    font-size: 26px;
+  }
+  
+  .balance-selectors {
+    gap: 8px;
+  }
+  
+  .selector-group {
+    min-width: 100px;
+  }
+  
+  .balance-details-grid {
+    gap: 8px;
+  }
+  
+  .detail-label {
+    font-size: 9px;
+  }
+  
+  .detail-value {
+    font-size: 13px;
+  }
+  
+  .summary-row {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+  
+  .summary-item {
+    padding: 8px 4px;
+  }
+  
+  .summary-label {
+    font-size: 8px;
+  }
+  
+  .summary-value {
+    font-size: 12px;
+  }
+  
+  .user-profile {
+    padding-left: 10px;
+    gap: 6px;
+  }
+  
+  .profile-pic {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .user-name {
+    font-size: 12px;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 576px) {
+  .top-bar {
+    padding: 10px 12px;
+  }
+  
+  .content {
+    padding: 10px 12px;
+  }
+  
+  .balance-card {
+    padding: 14px;
+    border-radius: 12px;
+  }
+  
+  .balance-header {
+    margin-bottom: 12px;
+  }
+  
+  .balance-amount {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+  
+  .balance-subtitle {
+    font-size: 12px;
+  }
+  
+  .balance-sub {
+    font-size: 11px;
+    margin-bottom: 16px;
+  }
+  
+  .balance-selectors {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .selector-group {
+    min-width: 100%;
+  }
+  
+  .selector-input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .balance-details-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  
+  .detail-label {
+    font-size: 9px;
+  }
+  
+  .detail-value {
+    font-size: 14px;
+  }
+  
+  .current-month-summary {
+    padding: 12px;
+    margin-top: 12px;
+  }
+  
+  .current-month-summary h4 {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  
+  .summary-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .summary-item {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .summary-label {
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+  
+  .summary-value {
+    font-size: 14px;
+  }
+  
+  .balance-footer {
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 14px;
+  }
+  
+  .user-profile-button {
+    border-left: none;
+    padding-left: 0;
+  }
+  
+  .user-profile {
+    border-left: none;
+    padding-left: 0;
+  }
+  
+  .user-name {
+    display: none;
+  }
+  
+  .back-btn {
+    padding: 8px 10px;
+    font-size: 16px;
+  }
+  
+  .menu-toggle {
+    font-size: 18px;
+  }
+  
+  .notification-btn {
+    font-size: 16px;
+  }
+  
+  .sidebar-profile-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .brand-name {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .content {
+    padding: 8px 10px;
+  }
+  
+  .balance-card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  
+  .balance-amount {
+    font-size: 20px;
+  }
+  
+  .detail-value {
+    font-size: 12px;
+  }
+  
+  .summary-value {
+    font-size: 13px;
+  }
+  
+  .top-bar {
+    padding: 8px 10px;
   }
 }

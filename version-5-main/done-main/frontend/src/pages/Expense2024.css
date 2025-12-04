@@ -134,10 +134,33 @@
 
 .table-container {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 109, 87, 0.3) transparent;
+}
+
+.table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: rgba(15, 109, 87, 0.05);
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: rgba(15, 109, 87, 0.3);
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 109, 87, 0.5);
 }
 
 .expense-table {
   width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
   font-size: 14px;
 }
@@ -204,4 +227,214 @@
   font-weight: 700;
   color: #0f6d57;
   font-size: clamp(12px, 1.5vw, 14px);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+/* Tablet - 992px and below */
+@media (max-width: 992px) {
+  .expense-page {
+    padding: clamp(10px, 2vw, 16px);
+  }
+  
+  .expense-table-wrapper {
+    border-radius: 16px;
+  }
+  
+  .month-select {
+    flex-wrap: wrap;
+  }
+  
+  .month-select select {
+    min-width: 140px;
+  }
+}
+
+/* Mobile - 768px and below */
+@media (max-width: 768px) {
+  .expense-page {
+    padding: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  
+  .expense-page h1 {
+    font-size: 22px;
+  }
+  
+  .expense-page h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .expense-table-wrapper {
+    border-radius: 14px;
+    margin: 0 -6px;
+  }
+  
+  .table-container {
+    margin: 0;
+  }
+  
+  .expense-table {
+    min-width: 450px;
+  }
+  
+  .expense-table thead th {
+    padding: 10px 8px;
+    font-size: 11px;
+  }
+  
+  .expense-table td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+  
+  .expense-table tfoot td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+  
+  /* Scroll hint indicator */
+  .table-container::after {
+    content: '← Scroll →';
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    color: #7a8a99;
+    padding: 8px;
+    background: linear-gradient(to right, transparent, rgba(15, 109, 87, 0.05), transparent);
+  }
+}
+
+/* Small Mobile - 576px and below */
+@media (max-width: 576px) {
+  .expense-page {
+    padding: 10px;
+  }
+  
+  .expense-page h1 {
+    font-size: 20px;
+  }
+  
+  .expense-page h2 {
+    font-size: 15px;
+  }
+  
+  .month-select {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .month-select label {
+    font-size: 13px;
+  }
+  
+  .month-select select {
+    width: 100%;
+    min-width: auto;
+    padding: 10px 12px;
+    font-size: 16px; /* Prevent iOS zoom */
+  }
+  
+  .expense-table-wrapper {
+    border-radius: 12px;
+  }
+  
+  .expense-table {
+    min-width: 400px;
+  }
+  
+  .expense-table thead th {
+    padding: 8px 6px;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+  }
+  
+  .expense-table td {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+  
+  .expense-table tfoot td {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+}
+
+/* Extra Small Mobile - 400px and below */
+@media (max-width: 400px) {
+  .expense-page {
+    padding: 8px;
+  }
+  
+  .expense-page h1 {
+    font-size: 18px;
+  }
+  
+  .expense-page h2 {
+    font-size: 14px;
+  }
+  
+  .month-select label {
+    font-size: 12px;
+  }
+  
+  .expense-table {
+    min-width: 350px;
+  }
+  
+  .expense-table thead th {
+    padding: 6px 4px;
+    font-size: 9px;
+  }
+  
+  .expense-table td {
+    padding: 6px 4px;
+    font-size: 10px;
+  }
+  
+  .expense-table tfoot td {
+    padding: 6px 4px;
+    font-size: 10px;
+  }
+}
+
+/* Touch-friendly enhancements */
+@media (hover: none) and (pointer: coarse) {
+  .month-select select {
+    min-height: 44px;
+  }
+  
+  .table-container {
+    scroll-snap-type: x proximity;
+  }
+  
+  .expense-table tbody tr {
+    scroll-snap-align: start;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+  .expense-page {
+    padding: 8px 16px;
+  }
+  
+  .expense-page h1 {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  
+  .expense-page h2 {
+    font-size: 14px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+  
+  .month-select {
+    margin-bottom: 12px;
+  }
 }

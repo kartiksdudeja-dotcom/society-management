@@ -51,121 +51,151 @@ async function authorize() {
 // 2) READ BANK EMAILS (ONLY NEW EMAILS)
 // -------------------------------------------------------
 export async function readBankEmails() {
-  const auth = await authorize();
-  const gmail = google.gmail({ version: "v1", auth });
+  try {
+    const auth = await authorize();
+    const gmail = google.gmail({ version: "v1", auth });
 
-  console.log("🔄 Auto-sync: Checking new bank emails...");
+    console.log("🔄 Auto-sync: Checking new bank emails...");
 
-  // Load previous sync state
-  let state = await SyncState.findOne();
-  let lastHistoryId = state?.lastHistoryId || null;
+    // Load previous sync state
+    let state = await SyncState.findOne();
+    let lastHistoryId = state?.lastHistoryId || null;
 
-  const profile = await gmail.users.getProfile({ userId: "me" });
-  const currentHistoryId = profile.data.historyId;
+    const profile = await gmail.users.getProfile({ userId: "me" });
+    const currentHistoryId = profile.data.historyId;
 
-  // FIRST TIME SYNC
-  if (!lastHistoryId) {
-    console.log("📩 Initial Sync. Fetching Oct–Nov 2025 Emails...");
+    // FIRST TIME SYNC
+    if (!lastHistoryId) {
+      console.log("📩 Initial Sync. Fetching December 2025 Emails...");
 
-    const query =
-      '(from:hdfcbankalerts@hdfcbank.net OR "credited" OR "debited") after:2025/09/30';
+      // Fetch credit/debit emails from December 1, 2025 onwards
+      const query = '("credited" OR "debited") after:2025/11/30';
 
-    let next = null;
-    let total = 0;
+      let next = null;
+      let total = 0;
+      let pageCount = 0;
 
-    do {
-      const res = await gmail.users.messages.list({
-        userId: "me",
-        q: query,
-        maxResults: 500,
-        pageToken: next,
-      });
-
-      if (!res.data.messages) break;
-
-      for (const msg of res.data.messages) {
-        const mail = await gmail.users.messages.get({
+      do {
+        pageCount++;
+        console.log(`📄 Fetching page ${pageCount}...`);
+        
+        const res = await gmail.users.messages.list({
           userId: "me",
-          id: msg.id,
-          format: "full",
+          q: query,
+          maxResults: 100, // Reduced from 500 to avoid rate limits
+          pageToken: next,
         });
 
-        const snippet = mail.data.snippet || "";
+        if (!res.data.messages) {
+          console.log("📭 No more messages found.");
+          break;
+        }
+        
+        console.log(`📧 Found ${res.data.messages.length} messages on page ${pageCount}`);
 
-        // ❗❗ NOW USING AWAIT SO MEMBER MATCHING WORKS ❗❗
-        const txn = await monthlyStatementService.parseTransaction(snippet);
+        for (const msg of res.data.messages) {
+          try {
+            const mail = await gmail.users.messages.get({
+              userId: "me",
+              id: msg.id,
+              format: "full",
+            });
 
-        if (!txn) continue;
+            const snippet = mail.data.snippet || "";
 
-        txn.messageId = msg.id;
+            // ❗❗ NOW USING AWAIT SO MEMBER MATCHING WORKS ❗❗
+            const txn = await monthlyStatementService.parseTransaction(snippet);
 
-        await BankTransaction.updateOne(
-          { messageId: msg.id },
-          { $set: txn },
-          { upsert: true }
-        );
+            if (!txn) continue;
 
-        total++;
+            txn.messageId = msg.id;
+
+            await BankTransaction.updateOne(
+              { messageId: msg.id },
+              { $set: txn },
+              { upsert: true }
+            );
+
+            total++;
+          } catch (msgErr) {
+            console.error(`❌ Error processing message ${msg.id}:`, msgErr.message);
+          }
+        }
+
+        next = res.data.nextPageToken;
+        
+        // Add a small delay between pages to avoid rate limiting
+        if (next) {
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+      } while (next);
+
+      console.log(`🔥 Initial Sync Completed. Saved: ${total} transactions`);
+
+      await SyncState.updateOne(
+        {},
+        { lastHistoryId: currentHistoryId },
+        { upsert: true }
+      );
+
+      return;
+    }
+
+    // -------------------------------------------------------
+    // 3) NEW EMAILS ONLY (History API)
+    // -------------------------------------------------------
+    console.log(`📬 Checking new emails since historyId: ${lastHistoryId}...`);
+    
+    const history = await gmail.users.history.list({
+      userId: "me",
+      startHistoryId: lastHistoryId,
+      historyTypes: ["messageAdded"],
+    });
+
+    let totalNew = 0;
+
+    for (const record of history.data.history || []) {
+      for (const m of record.messages || []) {
+        try {
+          const mail = await gmail.users.messages.get({
+            userId: "me",
+            id: m.id,
+            format: "full",
+          });
+
+          const snippet = mail.data.snippet || "";
+
+          // ❗❗ FIX: use await so name + flat extracted ❗❗
+          const txn = await monthlyStatementService.parseTransaction(snippet);
+
+          if (!txn) continue;
+
+          txn.messageId = m.id;
+
+          await BankTransaction.updateOne(
+            { messageId: m.id },
+            { $set: txn },
+            { upsert: true }
+          );
+
+          totalNew++;
+        } catch (msgErr) {
+          console.error(`❌ Error processing new message ${m.id}:`, msgErr.message);
+        }
       }
+    }
 
-      next = res.data.nextPageToken;
-    } while (next);
+    console.log(`🔥 New Emails Saved: ${totalNew}`);
 
-    console.log(`🔥 Initial Sync Completed. Saved: ${total}`);
-
+    // Save updated historyId
     await SyncState.updateOne(
       {},
       { lastHistoryId: currentHistoryId },
       { upsert: true }
     );
-
-    return;
+  } catch (err) {
+    console.error("❌ Gmail Sync Error:", err.message);
+    console.error(err.stack);
+    // Don't throw - let the server continue running
   }
-
-  // -------------------------------------------------------
-  // 3) NEW EMAILS ONLY (History API)
-  // -------------------------------------------------------
-  const history = await gmail.users.history.list({
-    userId: "me",
-    startHistoryId: lastHistoryId,
-    historyTypes: ["messageAdded"],
-  });
-
-  let totalNew = 0;
-
-  for (const record of history.data.history || []) {
-    for (const m of record.messages || []) {
-      const mail = await gmail.users.messages.get({
-        userId: "me",
-        id: m.id,
-        format: "full",
-      });
-
-      const snippet = mail.data.snippet || "";
-
-      // ❗❗ FIX: use await so name + flat extracted ❗❗
-      const txn = await monthlyStatementService.parseTransaction(snippet);
-
-      if (!txn) continue;
-
-      txn.messageId = m.id;
-
-      await BankTransaction.updateOne(
-        { messageId: m.id },
-        { $set: txn },
-        { upsert: true }
-      );
-
-      totalNew++;
-    }
-  }
-
-  console.log(`🔥 New Emails Saved: ${totalNew}`);
-
-  // Save updated historyId
-  await SyncState.updateOne(
-    {},
-    { lastHistoryId: currentHistoryId },
-    { upsert: true }
-  );
 }
