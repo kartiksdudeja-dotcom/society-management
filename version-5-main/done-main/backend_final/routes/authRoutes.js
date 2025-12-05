@@ -110,7 +110,7 @@ router.put("/make-admin/:email", async (req, res) => {
 router.get("/profile", protect, getUserProfile);
 router.put("/profile", protect, updateUserProfile);
 
-// ---------------- ADMIN LOGIN AS MEMBER ----------------
-router.post("/login-as-member", protect, authorize(["admin"]), loginAsMember);
+// ---------------- ADMIN/MANAGER LOGIN AS MEMBER ----------------
+router.post("/login-as-member", protect, authorize(["admin", "manager"]), loginAsMember);
 
 export default router;

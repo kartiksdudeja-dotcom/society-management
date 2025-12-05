@@ -15,26 +15,26 @@ const router = express.Router();
 
 // MAINTENANCE ROUTES (Protected)
 
-// Dashboard Summary (Admin Only)
-router.get("/summary", protect, authorize(['admin']), getMaintenanceSummary);
+// Dashboard Summary (Admin/Manager)
+router.get("/summary", protect, authorize(['admin', 'manager']), getMaintenanceSummary);
 
 // Logged-in user's own maintenance
 router.get("/my", protect, getUserMaintenance);
 
-// Admin: Get all member maintenance
-router.get("/all", protect, authorize(['admin']), getAllMaintenance);
+// Admin/Manager: Get all member maintenance
+router.get("/all", protect, authorize(['admin', 'manager']), getAllMaintenance);
 
-// Save whole table to MongoDB (Admin Only)
-router.post("/save", protect, authorize(['admin']), saveMaintenance);
+// Save whole table to MongoDB (Admin/Manager)
+router.post("/save", protect, authorize(['admin', 'manager']), saveMaintenance);
 
-// Load table from MongoDB (Admin Only)
-router.get("/get", protect, authorize(['admin']), getMaintenance);
+// Load table from MongoDB (Admin/Manager)
+router.get("/get", protect, authorize(['admin', 'manager']), getMaintenance);
 
 // DEBUG endpoint - check what's in DB
 router.get("/debug", getMaintenanceDebug);
 
-// Serve Excel file (Admin Only)
-router.get("/excel-file", protect, authorize(['admin']), getExcelFile);
+// Serve Excel file (Admin/Manager)
+router.get("/excel-file", protect, authorize(['admin', 'manager']), getExcelFile);
 
 
 export default router;

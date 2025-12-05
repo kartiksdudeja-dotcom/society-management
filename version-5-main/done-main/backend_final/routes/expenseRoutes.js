@@ -4,8 +4,8 @@ import { protect, authorize } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// GET ALL EXPENSE (ADMIN ONLY)
-router.get("/get", protect, authorize(['admin']), async (req, res) => {
+// GET ALL EXPENSE (ADMIN/MANAGER)
+router.get("/get", protect, authorize(['admin', 'manager']), async (req, res) => {
   try {
     const list = await Expense.find();
     res.json(list);
@@ -15,7 +15,7 @@ router.get("/get", protect, authorize(['admin']), async (req, res) => {
 });
 
 // SAVE (overwrite whole year)
-router.post("/save", protect, authorize(['admin']), async (req, res) => {
+router.post("/save", protect, authorize(['admin', 'manager']), async (req, res) => {
   try {
     await Expense.deleteMany({});
     await Expense.insertMany(req.body.data);

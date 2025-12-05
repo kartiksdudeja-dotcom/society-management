@@ -17,14 +17,14 @@ router.post('/request', protect, requestCCTVAccess);
 // User can view their own CCTV requests
 router.get('/my-requests', protect, getUserCCTVRequests);
 
-// Admin can get all CCTV requests
-router.get('/admin/all', protect, authorize(['admin']), getAllCCTVRequests);
+// Admin/Manager can get all CCTV requests
+router.get('/admin/all', protect, authorize(['admin', 'manager']), getAllCCTVRequests);
 
-// Admin can approve a CCTV request
-router.put('/admin/approve/:id', protect, authorize(['admin']), approveCCTVRequest);
+// Admin/Manager can approve a CCTV request
+router.put('/admin/approve/:id', protect, authorize(['admin', 'manager']), approveCCTVRequest);
 
-// Admin can reject a CCTV request
-router.put('/admin/reject/:id', protect, authorize(['admin']), rejectCCTVRequest);
+// Admin/Manager can reject a CCTV request
+router.put('/admin/reject/:id', protect, authorize(['admin', 'manager']), rejectCCTVRequest);
 
 // Start CCTV view session (after approval)
 router.post('/view/start/:id', protect, startCCTVViewSession); 

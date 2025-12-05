@@ -6,7 +6,7 @@ import { protect, authorize } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // GET monthly totals (Apr–Dec)
-router.get("/2024", protect, authorize(['admin']), async (req, res) => {
+router.get("/2024", protect, authorize(['admin', 'manager']), async (req, res) => {
   try {
     const maint = await Maintenance.find();
 
