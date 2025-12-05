@@ -22,13 +22,23 @@ dotenv.config({ path: path.join(__dirname, ".env") });
 
 const app = express();
 
-// CORS
+// CORS - Allow both localhost and production domains
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://society-management-git-main-kartiksdudeja-dotcoms-projects.vercel.app",
+      "https://society-management-hwk4ohbp8-kartiksdudeja-dotcoms-projects.vercel.app",
+      "https://icontowersociety.vercel.app"
+    ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+// Handle preflight requests
+app.options("*", cors());
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
