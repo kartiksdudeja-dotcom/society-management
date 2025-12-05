@@ -1,8 +1,12 @@
 import axios from "axios";
 
 // Use environment variable for production, fallback to Render URL for production
+const baseURL = process.env.REACT_APP_API_URL || "https://society-management-k98t.onrender.com/api";
+
+console.log("API Base URL:", baseURL);
+
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "https://society-management-k98t.onrender.com/api",
+  baseURL: baseURL,
   withCredentials: true,
 });
 
