@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../services/api";
-import { FaSearch, FaSave, FaSync, FaCheckCircle } from "react-icons/fa";
+import { FaSearch, FaSave, FaSync, FaCheckCircle, FaEdit, FaTimes, FaCheck } from "react-icons/fa";
 import "./SinkingFundPage.css";
 
 export default function SinkingFundPage() {
@@ -11,6 +11,8 @@ export default function SinkingFundPage() {
   const [saving, setSaving] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("owner");
+  const [editingIdx, setEditingIdx] = useState(null);
+  const [editData, setEditData] = useState({ paid: "", pending: "" });
 
   // ---------------------
   // LOAD DATA FROM BACKEND
@@ -90,6 +92,36 @@ export default function SinkingFundPage() {
   // Calculate totals
   const totalPaid = table.reduce((sum, row) => sum + (parseFloat(row.paid) || 0), 0);
   const totalPending = table.reduce((sum, row) => sum + (parseFloat(row.pending) || 0), 0);
+
+  // Start editing a row
+  const startEdit = (idx, row) => {
+    setEditingIdx(idx);
+    setEditData({ paid: row.paid || "", pending: row.pending || "" });
+  };
+
+  // Cancel editing
+  const cancelEdit = () => {
+    setEditingIdx(null);
+    setEditData({ paid: "", pending: "" });
+  };
+
+  // Save edit for a single row
+  const saveEdit = (idx) => {
+    const updatedTable = [...table];
+    const rowIndex = table.findIndex((r) => r.unit === filteredTable[idx].unit);
+    if (rowIndex !== -1) {
+      updatedTable[rowIndex] = {
+        ...updatedTable[rowIndex],
+        paid: parseFloat(editData.paid) || 0,
+        pending: parseFloat(editData.pending) || 0
+      };
+      setTable(updatedTable);
+      setMsg("✓ Row updated (click Save All to persist)");
+      setTimeout(() => setMsg(""), 3000);
+    }
+    setEditingIdx(null);
+    setEditData({ paid: "", pending: "" });
+  };
 
   return (
     <div className="sinking-fund-container">
@@ -181,12 +213,14 @@ export default function SinkingFundPage() {
                   <th className="paid-col">Paid Amount</th>
                   <th className="pending-col">Pending</th>
                   <th className="status-col">Status</th>
+                  <th className="actions-col">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredTable.map((row, idx) => {
                   const pendingAmount = parseFloat(row.pending) || 0;
                   const isPaid = pendingAmount === 0;
+                  const isEditing = editingIdx === idx;
 
                   return (
                     <tr key={idx} className={isPaid ? "paid-status" : "pending-status"}>
@@ -196,14 +230,32 @@ export default function SinkingFundPage() {
                       </td>
                       <td className="owner-col">{row.owner}</td>
                       <td className="paid-col">
-                        <span className="amount-badge paid-badge">
-                          ₹{(parseFloat(row.paid) || 0).toFixed(2)}
-                        </span>
+                        {isEditing ? (
+                          <input
+                            type="number"
+                            className="edit-input"
+                            value={editData.paid}
+                            onChange={(e) => setEditData({ ...editData, paid: e.target.value })}
+                          />
+                        ) : (
+                          <span className="amount-badge paid-badge">
+                            ₹{(parseFloat(row.paid) || 0).toFixed(2)}
+                          </span>
+                        )}
                       </td>
                       <td className="pending-col">
-                        <span className={`amount-badge ${isPaid ? "paid" : "pending"}`}>
-                          ₹{pendingAmount.toFixed(2)}
-                        </span>
+                        {isEditing ? (
+                          <input
+                            type="number"
+                            className="edit-input"
+                            value={editData.pending}
+                            onChange={(e) => setEditData({ ...editData, pending: e.target.value })}
+                          />
+                        ) : (
+                          <span className={`amount-badge ${isPaid ? "paid" : "pending"}`}>
+                            ₹{pendingAmount.toFixed(2)}
+                          </span>
+                        )}
                       </td>
                       <td className="status-col">
                         {isPaid ? (
@@ -212,6 +264,34 @@ export default function SinkingFundPage() {
                           </span>
                         ) : (
                           <span className="status-badge status-pending">Pending</span>
+                        )}
+                      </td>
+                      <td className="actions-col">
+                        {isEditing ? (
+                          <div className="action-buttons">
+                            <button
+                              className="btn-icon btn-save"
+                              onClick={() => saveEdit(idx)}
+                              title="Save changes"
+                            >
+                              <FaCheck />
+                            </button>
+                            <button
+                              className="btn-icon btn-cancel"
+                              onClick={cancelEdit}
+                              title="Cancel"
+                            >
+                              <FaTimes />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            className="btn-icon btn-edit"
+                            onClick={() => startEdit(idx, row)}
+                            title="Edit"
+                          >
+                            <FaEdit />
+                          </button>
                         )}
                       </td>
                     </tr>

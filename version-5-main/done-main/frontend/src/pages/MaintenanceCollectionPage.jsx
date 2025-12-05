@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { FaDownload, FaSave, FaSync, FaFileExcel, FaBars, FaTimes, FaCheckCircle } from "react-icons/fa";
+import API from "../services/api";
 import "./MaintenanceCollectionFull.css";
 
-const FILE_PATH_LOCAL = "/mnt/data/maintenance-2024.xlsx";
-const FILE_URL_BACKEND = "http://localhost:5000/api/maintenance/excel-file";
-const SAVE_URL = "http://localhost:5000/api/maintenance/save";
-const LOAD_URL = "http://localhost:5000/api/maintenance/get";
+// Use API service for proper URL
 
 function OverlayMenu({ open, onClose, onOpenTable, onLoadSaved, onSaveServer, onExportCSV }) {
   return (
@@ -97,13 +95,11 @@ export default function MaintenanceCollectionFull() {
     try {
       // Request excel file from backend - fallback file currently serves 2024
       // We include year param in case backend later supports year-specific excel files
-      const resp = await fetch(FILE_URL_BACKEND + (year ? `?year=${year}` : ""), {
-        headers: { Authorization: "Bearer " + token },
+      const resp = await API.get(`/maintenance/excel-file?year=${year}`, {
+        responseType: 'arraybuffer'
       });
 
-      if (!resp.ok) throw new Error("Backend fetch failed");
-
-      const ab = await resp.arrayBuffer();
+      const ab = resp.data;
       const wb = XLSX.read(ab, { type: "array" });
       const ws = wb.Sheets[wb.SheetNames[0]];
       const json = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false });
@@ -201,30 +197,11 @@ export default function MaintenanceCollectionFull() {
 
       setMessage("Saving...");
       // Save for selected year only to avoid replacing other-year data
-      const resp = await fetch(SAVE_URL + `?year=${selectedYear}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token
-        },
-        body: JSON.stringify({ table })
-      });
+      const resp = await API.post(`/maintenance/save?year=${selectedYear}`, { table });
 
-      if (!resp.ok) {
-        // try to read json error, fall back to text
-        try {
-          const errJson = await resp.json();
-          throw new Error(errJson.message || JSON.stringify(errJson));
-        } catch (e) {
-          const txt = await resp.text();
-          throw new Error(txt || `HTTP ${resp.status}`);
-        }
-      }
-
-      const data = await resp.json();
-      setMessage(data.message || "Saved successfully.");
+      setMessage(resp.data.message || "Saved successfully.");
     } catch (err) {
-      setMessage("Save error: " + err.message);
+      setMessage("Save error: " + (err.response?.data?.message || err.message));
     }
   }
 
@@ -235,16 +212,9 @@ export default function MaintenanceCollectionFull() {
       setLoading(true);
       setMessage(`Loading saved DB for ${year}...`);
       // pass the year to backend which has year-aware filtering
-      const resp = await fetch(LOAD_URL + `?year=${year}`, {
-        headers: { Authorization: "Bearer " + token }
-      });
+      const resp = await API.get(`/maintenance/get?year=${year}`);
 
-      if (!resp.ok) {
-        const text = await resp.text();
-        throw new Error(text || `HTTP ${resp.status}`);
-      }
-
-      const data = await resp.json();
+      const data = resp.data;
       const arr =
         Array.isArray(data)
           ? data
@@ -270,7 +240,7 @@ export default function MaintenanceCollectionFull() {
         setMessage(`Loaded ${arr.length} records from DB for ${year}.`);
       }
     } catch (err) {
-      setMessage("DB load error: " + err.message);
+      setMessage("DB load error: " + (err.response?.data?.message || err.message));
     } finally {
       setLoading(false);
     }

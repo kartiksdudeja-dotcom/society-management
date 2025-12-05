@@ -118,13 +118,14 @@ export default function MembersPage() {
       const payload = {
         name: editData.name || "",
         email: editData.email || "",
-        FlatNumber: editData.FlatNumber || editData.flat_number || editData.s_no || "",
+        flatNumber: editData.FlatNumber || editData.flat_number || editData.s_no || "",
+        role: editData.role || "user",
       };
       const res = await API.put(`/admin/update-user/${editId}`, payload);
       alert("User updated successfully");
 
       // Update the member in the list
-      setMembers(members.map((m) => (m._id === editId ? { ...m, ...payload } : m)));
+      setMembers(members.map((m) => (m._id === editId ? { ...m, ...payload, FlatNumber: payload.flatNumber } : m)));
       setEditId(null);
       setEditData({});
     } catch (err) {
@@ -279,6 +280,7 @@ export default function MembersPage() {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Flat Number</th>
+                  <th>Role</th>
                   <th className="actions-col">Actions</th>
                 </tr>
               </thead>
@@ -330,6 +332,25 @@ export default function MembersPage() {
                       ) : (
                         <span className="flat-badge">
                           {m.FlatNumber || m.flat_number || m.s_no || "—"}
+                        </span>
+                      )}
+                    </td>
+
+                    {/* ROLE */}
+                    <td className="role-col">
+                      {editId === m._id ? (
+                        <select
+                          className="edit-select"
+                          value={editData.role || "user"}
+                          onChange={(e) => setEditData({ ...editData, role: e.target.value })}
+                        >
+                          <option value="user">Member</option>
+                          <option value="manager">Manager</option>
+                          <option value="admin">Admin</option>
+                        </select>
+                      ) : (
+                        <span className={`role-badge role-${m.role || 'user'}`}>
+                          {m.role === 'admin' ? 'Admin' : m.role === 'manager' ? 'Manager' : 'Member'}
                         </span>
                       )}
                     </td>
