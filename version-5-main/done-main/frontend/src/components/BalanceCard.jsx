@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import API from "../services/api";
+import ICONTOWERQR from "../assets/ICONTOWERQR.jpg";
 
 export default function BalanceCard({ user }) {
   const [loading, setLoading] = useState(true);
@@ -10,30 +11,40 @@ export default function BalanceCard({ user }) {
   const [totalCollectionBalance, setTotalCollectionBalance] = useState(0);
   const [maintenanceData, setMaintenanceData] = useState(null);
   const [expenseData, setExpenseData] = useState(null);
+  const [showQR, setShowQR] = useState(false);
   
   // Current month's bank data
   const [currentMonthCollection, setCurrentMonthCollection] = useState(0);
   const [currentMonthExpenses, setCurrentMonthExpenses] = useState(0);
 
-  // Member personal maintenance data
-  const [memberPaid, setMemberPaid] = useState(0);
-  const [memberPending, setMemberPending] = useState(0);
-  const [memberMonthsPaid, setMemberMonthsPaid] = useState([]);
-  const [memberMonthsPending, setMemberMonthsPending] = useState([]);
+  // Member payment status from Monthly Collection (Bank)
+  const [currentMonthPaid, setCurrentMonthPaid] = useState(false);
+  const [currentMonthAmount, setCurrentMonthAmount] = useState(0);
+  const [memberUnitType, setMemberUnitType] = useState("office");
+  const [monthlyDues, setMonthlyDues] = useState(2000);
 
   // Check if user is admin or manager
   const role = (user?.role || "user").toString().trim().toLowerCase();
   const isAdminOrManager = role === "admin" || role === "manager" || role === "1";
   
-  // Check if admin is also a member (has a flat number in email like 104@icontower.com)
-  const flatNumber = getFlatFromEmail(user?.email);
-  const isAdminWithFlat = isAdminOrManager && flatNumber && user?.email !== 'admin@icontower.com';
-
   // Get flat number from email (e.g., 104@icontower.com -> 104)
   function getFlatFromEmail(email) {
     if (!email) return null;
     const match = email.match(/^(\d+)@/);
     return match ? match[1] : null;
+  }
+  
+  // Check if admin is also a member (has a flat number in email)
+  const flatNumber = getFlatFromEmail(user?.email);
+  const isAdminWithFlat = isAdminOrManager && flatNumber && user?.email !== 'admin@icontower.com';
+
+  // Determine unit type and monthly dues
+  function getUnitTypeAndDues(flatNum) {
+    const num = parseInt(flatNum);
+    if (num >= 1 && num <= 9) {
+      return { type: "shop", dues: 1500 };
+    }
+    return { type: "office", dues: 2000 };
   }
 
   // Load data once on mount
@@ -44,6 +55,14 @@ export default function BalanceCard({ user }) {
         const now = new Date();
         const currentMonth = now.getMonth() + 1;
         const currentYear = now.getFullYear();
+        const userFlat = getFlatFromEmail(user?.email);
+
+        // Get unit type and dues for this user
+        if (userFlat) {
+          const { type, dues } = getUnitTypeAndDues(userFlat);
+          setMemberUnitType(type);
+          setMonthlyDues(dues);
+        }
 
         // For admin/manager, load full data
         if (isAdminOrManager) {
@@ -66,86 +85,39 @@ export default function BalanceCard({ user }) {
           // Current month expenses
           setCurrentMonthExpenses(monthlyExpResponse.data.total || 0);
 
-          // If admin also has a flat, calculate their personal maintenance too
-          if (isAdminWithFlat) {
-            const allData = maintResponse.data || [];
-            const memberRecord = allData.find(record => {
-              const recordUnit = String(record.unit || "").replace(/\D/g, '');
-              return recordUnit === flatNumber;
+          // If admin also has a flat, check if they paid this month in Monthly Collection
+          if (isAdminWithFlat && flatNumber) {
+            const memberPayment = credits.find(t => {
+              const txnFlat = String(t.flat || "").replace(/\D/g, '');
+              return txnFlat === flatNumber;
             });
-
-            if (memberRecord) {
-              const months = memberRecord.months || {};
-              const pending = memberRecord.pending || {};
-              
-              let totalPaid = 0;
-              let totalPending = 0;
-              const paidMonths = [];
-              const pendingMonths = [];
-
-              Object.entries(months).forEach(([month, amount]) => {
-                const amt = parseFloat(String(amount).replace(/,/g, '')) || 0;
-                if (amt > 0) {
-                  totalPaid += amt;
-                  paidMonths.push(month);
-                }
-              });
-
-              Object.entries(pending).forEach(([month, amount]) => {
-                const amt = parseFloat(String(amount).replace(/,/g, '')) || 0;
-                if (amt > 0) {
-                  totalPending += amt;
-                  pendingMonths.push(month);
-                }
-              });
-
-              setMemberPaid(totalPaid);
-              setMemberPending(totalPending);
-              setMemberMonthsPaid(paidMonths);
-              setMemberMonthsPending(pendingMonths);
+            
+            if (memberPayment) {
+              setCurrentMonthPaid(true);
+              setCurrentMonthAmount(memberPayment.amount || 0);
+            } else {
+              setCurrentMonthPaid(false);
+              setCurrentMonthAmount(0);
             }
           }
         } else {
-          // For regular members, load their personal maintenance data
-          const maintResponse = await API.get(`/maintenance/get?year=${currentYear}`);
-          const allData = maintResponse.data || [];
+          // For regular members, check Monthly Collection (bank) for their payment
+          const bankResponse = await API.get(`/bank?month=${currentMonth}&year=${currentYear}`);
+          const bankData = bankResponse.data.data || [];
+          const credits = bankData.filter(t => t.type === "credit");
           
-          // Find this member's record by flat number
-          const userFlat = getFlatFromEmail(user?.email);
-          const memberRecord = allData.find(record => {
-            const recordUnit = String(record.unit || "").replace(/\D/g, '');
-            return recordUnit === userFlat;
+          // Check if this member's flat appears in this month's payments
+          const memberPayment = credits.find(t => {
+            const txnFlat = String(t.flat || "").replace(/\D/g, '');
+            return txnFlat === userFlat;
           });
-
-          if (memberRecord) {
-            const months = memberRecord.months || {};
-            const pending = memberRecord.pending || {};
-            
-            let totalPaid = 0;
-            let totalPending = 0;
-            const paidMonths = [];
-            const pendingMonths = [];
-
-            Object.entries(months).forEach(([month, amount]) => {
-              const amt = parseFloat(String(amount).replace(/,/g, '')) || 0;
-              if (amt > 0) {
-                totalPaid += amt;
-                paidMonths.push(month);
-              }
-            });
-
-            Object.entries(pending).forEach(([month, amount]) => {
-              const amt = parseFloat(String(amount).replace(/,/g, '')) || 0;
-              if (amt > 0) {
-                totalPending += amt;
-                pendingMonths.push(month);
-              }
-            });
-
-            setMemberPaid(totalPaid);
-            setMemberPending(totalPending);
-            setMemberMonthsPaid(paidMonths);
-            setMemberMonthsPending(pendingMonths);
+          
+          if (memberPayment) {
+            setCurrentMonthPaid(true);
+            setCurrentMonthAmount(memberPayment.amount || 0);
+          } else {
+            setCurrentMonthPaid(false);
+            setCurrentMonthAmount(0);
           }
         }
         
@@ -159,125 +131,157 @@ export default function BalanceCard({ user }) {
     loadData();
   }, [user, isAdminOrManager, isAdminWithFlat, flatNumber]);
 
-  // Recalculate when year/month changes (no API calls needed)
+  // Recalculate when year/month changes (for admin view)
   useMemo(() => {
-    if (!maintenanceData || !expenseData) return;
-
-    const parseAmount = (value) => {
-      if (!value) return 0;
-      const cleaned = String(value).replace(/,/g, '').trim();
-      const n = Number(cleaned);
-      return isNaN(n) ? 0 : n;
-    };
-
-    let yearlyMaintTotal = 0;
-    let monthlyExpTotal = 0;
-    let totalMaint = 0;
-    let totalExp = 0;
-
-    // Calculate maintenance
-    if (Array.isArray(maintenanceData)) {
-      maintenanceData.forEach((row) => {
-        const months = row.months || {};
-        Object.entries(months).forEach(([month, amount]) => {
-          const parsedAmount = parseAmount(amount);
-          totalMaint += parsedAmount;
-          if (month.includes(selectedYear)) {
-            yearlyMaintTotal += parsedAmount;
-          }
-        });
-      });
-    }
-
-    // Calculate expenses
-    if (Array.isArray(expenseData) && expenseData[0]) {
-      const expenseDoc = expenseData[0];
-      Object.keys(expenseDoc).forEach(key => {
-        if (key !== '_id' && key !== '__v' && expenseDoc[key] && expenseDoc[key].total) {
-          totalExp += parseAmount(expenseDoc[key].total);
+    if (!isAdminOrManager || !maintenanceData) return;
+    
+    // Calculate yearly maintenance total
+    const yearData = maintenanceData.filter(record => {
+      const months = record.months || {};
+      return Object.keys(months).some(key => key.includes(selectedYear));
+    });
+    
+    let yearTotal = 0;
+    yearData.forEach(record => {
+      const months = record.months || {};
+      Object.entries(months).forEach(([key, value]) => {
+        if (key.includes(selectedYear)) {
+          yearTotal += parseFloat(String(value || '').replace(/,/g, '')) || 0;
         }
       });
+    });
+    setYearlyMaintenance(yearTotal);
     
-      const expenseMonthKey = selectedMonth.toUpperCase();
-      if (selectedYear === '2024' && expenseDoc[expenseMonthKey] && expenseDoc[expenseMonthKey].total) {
-        monthlyExpTotal = parseAmount(expenseDoc[expenseMonthKey].total);
-      }
+    // Calculate monthly expense for selected month
+    if (expenseData) {
+      const monthIndex = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 
+                         'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'].indexOf(selectedMonth);
+      const monthData = expenseData.filter(exp => {
+        const expDate = new Date(exp.date);
+        return expDate.getMonth() === monthIndex && expDate.getFullYear().toString() === selectedYear;
+      });
+      const monthTotal = monthData.reduce((sum, exp) => sum + (exp.amount || 0), 0);
+      setMonthlyExpense(monthTotal);
     }
-
-    setTotalCollectionBalance(totalMaint - totalExp);
-    setYearlyMaintenance(yearlyMaintTotal);
-    setMonthlyExpense(monthlyExpTotal);
-  }, [selectedYear, selectedMonth, maintenanceData, expenseData]);
+    
+    // Calculate total collection balance
+    let totalBalance = 0;
+    maintenanceData.forEach(record => {
+      const months = record.months || {};
+      Object.values(months).forEach(value => {
+        totalBalance += parseFloat(String(value || '').replace(/,/g, '')) || 0;
+      });
+    });
+    setTotalCollectionBalance(totalBalance);
+    
+  }, [maintenanceData, expenseData, selectedYear, selectedMonth, isAdminOrManager]);
 
   if (loading) {
     return (
-      <div className="balance-card loading-skeleton">
-        <div className="balance-header">
-          <div className="skeleton-bar" style={{ width: '120px', height: '16px' }}></div>
-          <button className="more-btn">⋮</button>
-        </div>
-        <div className="balance-amount">
-          <div className="skeleton-bar" style={{ width: '180px', height: '36px' }}></div>
-        </div>
-        <div className="balance-selectors">
-          <div className="skeleton-bar" style={{ width: '100%', height: '40px', marginBottom: '12px' }}></div>
-        </div>
+      <div className="balance-card loading">
+        <div className="loading-spinner"></div>
+        <span>Loading...</span>
       </div>
     );
   }
 
-  // Member view - show their personal maintenance status
+  // Member View - Check Monthly Collection (Bank) for paid status
   if (!isAdminOrManager) {
-    const flatNumber = getFlatFromEmail(user?.email);
+    const now = new Date();
+    const currentMonthName = now.toLocaleString('default', { month: 'long' });
+    
     return (
       <div className="balance-card member-view">
         <div className="balance-header">
-          <span className="balance-label">My Maintenance Status</span>
-          <span className="flat-badge">Flat: {flatNumber || 'N/A'}</span>
+          <span className="balance-label">Your Maintenance Status</span>
+          <span className="flat-badge">Unit {flatNumber || "N/A"}</span>
         </div>
         
+        {/* Current Month Status Banner */}
+        <div className={`status-banner ${currentMonthPaid ? 'paid' : 'pending'}`}>
+          {currentMonthPaid ? (
+            <>
+              <span className="status-icon">✓</span>
+              <span className="status-text">{currentMonthName} Paid - ₹{currentMonthAmount.toLocaleString()}</span>
+            </>
+          ) : (
+            <>
+              <span className="status-icon">⚠️</span>
+              <span className="status-text">{currentMonthName} Pending - ₹{monthlyDues.toLocaleString()} Due</span>
+            </>
+          )}
+        </div>
+
+        {/* Monthly Rate Info */}
+        <div className="monthly-rate-info">
+          <span>Monthly Maintenance:</span>
+          <strong>₹{monthlyDues.toLocaleString()}/month</strong>
+          <span className="rate-type">({memberUnitType === "shop" ? "Shop Rate" : "Office Rate"})</span>
+        </div>
+        
+        {/* Payment Summary */}
         <div className="member-summary">
-          <div className="member-stat paid">
-            <span className="stat-icon">✓</span>
+          <div className={`member-stat ${currentMonthPaid ? 'paid' : 'pending'}`}>
+            <span className="stat-icon">{currentMonthPaid ? '✓' : '⏳'}</span>
             <div className="stat-content">
-              <span className="stat-label">Total Paid</span>
-              <span className="stat-value">₹{memberPaid.toLocaleString()}</span>
-            </div>
-          </div>
-          <div className="member-stat pending">
-            <span className="stat-icon">⏳</span>
-            <div className="stat-content">
-              <span className="stat-label">Pending</span>
-              <span className="stat-value">₹{memberPending.toLocaleString()}</span>
+              <span className="stat-label">{currentMonthName} Status</span>
+              <span className="stat-value">{currentMonthPaid ? 'PAID' : 'PENDING'}</span>
             </div>
           </div>
         </div>
 
-        {memberMonthsPending.length > 0 && (
+        {currentMonthPaid && (
+          <div className="all-clear-badge">
+            <span>🎉 {currentMonthName} maintenance cleared! Thank you!</span>
+          </div>
+        )}
+
+        {!currentMonthPaid && (
           <div className="pending-months-alert">
             <span className="alert-icon">⚠️</span>
             <div className="alert-content">
-              <strong>Pending Months:</strong>
-              <span>{memberMonthsPending.slice(0, 3).join(', ')}{memberMonthsPending.length > 3 ? ` +${memberMonthsPending.length - 3} more` : ''}</span>
+              <strong>Please pay your dues:</strong>
+              <span>₹{monthlyDues.toLocaleString()} for {currentMonthName}</span>
             </div>
           </div>
         )}
 
-        {memberPending === 0 && memberPaid > 0 && (
-          <div className="all-clear-badge">
-            <span>🎉 All dues cleared!</span>
-          </div>
-        )}
+        {/* QR Code Section */}
+        <div className="qr-section">
+          <button 
+            className="qr-toggle-btn"
+            onClick={() => setShowQR(!showQR)}
+          >
+            {showQR ? '✕ Hide QR' : '📱 Pay via UPI - Show QR'}
+          </button>
+          
+          {showQR && (
+            <div className="qr-modal-overlay" onClick={() => setShowQR(false)}>
+              <div className="qr-modal" onClick={(e) => e.stopPropagation()}>
+                <button className="qr-close-btn" onClick={() => setShowQR(false)}>✕</button>
+                <h3>Scan to Pay Maintenance</h3>
+                <div className="qr-container animated">
+                  <img src={ICONTOWERQR} alt="Icon Tower Payment QR" className="qr-image" />
+                </div>
+                <p className="qr-hint">Icon Tower Society Bank Account</p>
+                <p className="qr-amount">Amount: ₹{monthlyDues.toLocaleString()}</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
 
   // Admin/Manager view - show full society data
+  const now = new Date();
+  const currentMonthName = now.toLocaleString('default', { month: 'long' });
+  
   return (
     <div className="balance-card">
       <div className="balance-header">
-        <span className="balance-label">Balance details</span>
-        {isAdminWithFlat && <span className="flat-badge-small">Flat: {flatNumber}</span>}
+        <span className="balance-label">Society Balance</span>
+        {isAdminWithFlat && <span className="flat-badge-small">Your Unit: {flatNumber}</span>}
         <button className="more-btn">⋮</button>
       </div>
       <div className="balance-amount">₹{totalCollectionBalance.toLocaleString()}</div>
@@ -285,19 +289,12 @@ export default function BalanceCard({ user }) {
       {/* Show personal maintenance status for admins who are also members */}
       {isAdminWithFlat && (
         <div className="admin-personal-status">
-          <div className="personal-stat paid">
-            <span className="stat-label">My Paid</span>
-            <span className="stat-value">₹{memberPaid.toLocaleString()}</span>
+          <div className={`personal-stat ${currentMonthPaid ? 'paid' : 'pending'}`}>
+            <span className="stat-label">Your {currentMonthName}</span>
+            <span className="stat-value">
+              {currentMonthPaid ? `✓ Paid ₹${currentMonthAmount.toLocaleString()}` : `⚠️ Pending ₹${monthlyDues.toLocaleString()}`}
+            </span>
           </div>
-          <div className="personal-stat pending">
-            <span className="stat-label">My Pending</span>
-            <span className="stat-value">₹{memberPending.toLocaleString()}</span>
-          </div>
-          {memberPending === 0 && memberPaid > 0 && (
-            <div className="personal-stat clear">
-              <span>✓ Dues Clear</span>
-            </div>
-          )}
         </div>
       )}
       
@@ -365,6 +362,29 @@ export default function BalanceCard({ user }) {
             <span className="summary-value">₹{(currentMonthCollection - currentMonthExpenses).toLocaleString()}</span>
           </div>
         </div>
+      </div>
+
+      {/* QR Code Section for Admin */}
+      <div className="qr-section">
+        <button 
+          className="qr-toggle-btn"
+          onClick={() => setShowQR(!showQR)}
+        >
+          {showQR ? '✕ Hide QR' : '📱 Show Payment QR'}
+        </button>
+        
+        {showQR && (
+          <div className="qr-modal-overlay" onClick={() => setShowQR(false)}>
+            <div className="qr-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="qr-close-btn" onClick={() => setShowQR(false)}>✕</button>
+              <h3>Society Payment QR</h3>
+              <div className="qr-container animated">
+                <img src={ICONTOWERQR} alt="Icon Tower Payment QR" className="qr-image" />
+              </div>
+              <p className="qr-hint">Icon Tower Society Bank Account</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -995,3 +995,166 @@
 .overlay-nav::-webkit-scrollbar-thumb:hover {
   background: rgba(15, 109, 87, 0.4);
 }
+
+/* ================================
+   ENHANCED RESPONSIVE - MOBILE & TABLET
+   ================================ */
+
+/* Force horizontal scroll on all screen sizes */
+.maintenance-table-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+/* Table should not shrink below readable size */
+.maintenance-table {
+  min-width: 1200px; /* Ensures table is scrollable on smaller screens */
+  width: 100%;
+}
+
+/* Mobile scroll indicator */
+.scroll-indicator {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 109, 87, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  animation: scrollPulse 2s ease-in-out infinite;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.8; transform: translateY(-50%) translateX(0); }
+  50% { opacity: 1; transform: translateY(-50%) translateX(-5px); }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .maintenance-table {
+    min-width: 1000px;
+  }
+  
+  .scroll-indicator {
+    display: block;
+  }
+}
+
+/* Mobile landscape */
+@media (max-width: 768px) {
+  .maintenance-container {
+    padding: 12px;
+  }
+  
+  .maintenance-table {
+    min-width: 900px;
+  }
+  
+  .maintenance-table-wrapper {
+    max-height: 60vh;
+  }
+  
+  .header-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .stat-box {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 576px) {
+  .maintenance-container {
+    padding: 8px;
+  }
+  
+  .maintenance-table {
+    min-width: 800px;
+    font-size: 11px;
+  }
+  
+  .maintenance-table-wrapper {
+    max-height: 55vh;
+    border-radius: 12px;
+  }
+  
+  .table-scroll {
+    scrollbar-width: thin;
+  }
+  
+  .maintenance-table thead th {
+    padding: 8px 6px;
+    font-size: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  
+  .maintenance-table td {
+    padding: 6px 4px;
+  }
+  
+  .cell-input {
+    padding: 4px;
+    font-size: 10px;
+    min-width: 50px;
+  }
+  
+  .maintenance-controls {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+  
+  .scroll-indicator {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 400px) {
+  .maintenance-table {
+    min-width: 700px;
+  }
+  
+  .maintenance-table thead th,
+  .maintenance-table td {
+    padding: 5px 3px;
+  }
+  
+  .cell-input {
+    min-width: 45px;
+    font-size: 9px;
+  }
+  
+  .btn {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+  
+  .btn svg {
+    display: none;
+  }
+}

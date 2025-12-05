@@ -393,6 +393,7 @@ export default function MaintenanceCollectionFull() {
             </div>
 
             <div className="maintenance-table-wrapper">
+              <div className="scroll-indicator">← Scroll →</div>
               <div className="table-scroll">
                 <table className="maintenance-table">
                   <thead>
