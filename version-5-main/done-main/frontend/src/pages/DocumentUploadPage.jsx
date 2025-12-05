@@ -75,7 +75,9 @@ export default function DocumentUploadPage() {
       if (isAdmin) setHouseNumber("");
       e.target.reset(); // Reset file input
     } catch (err) {
-      setError("Upload failed. Please try again.");
+      console.error("Upload error:", err);
+      const errorMsg = err.response?.data?.error || err.response?.data?.message || "Upload failed. Please try again.";
+      setError(errorMsg);
     } finally {
       setIsLoading(false);
     }

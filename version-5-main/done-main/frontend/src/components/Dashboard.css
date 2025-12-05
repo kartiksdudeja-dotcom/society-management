@@ -1057,6 +1057,36 @@
   margin-top: 8px;
 }
 
+/* UPI Pay Button */
+.upi-pay-btn {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #5f2eea 0%, #9747ff 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 0 4px 15px rgba(95, 46, 234, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse-upi 2s infinite;
+}
+
+.upi-pay-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(95, 46, 234, 0.5);
+}
+
+@keyframes pulse-upi {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(95, 46, 234, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(95, 46, 234, 0.6);
+  }
+}
+
 /* Mobile responsiveness for member view */
 @media (max-width: 576px) {
   .member-summary {

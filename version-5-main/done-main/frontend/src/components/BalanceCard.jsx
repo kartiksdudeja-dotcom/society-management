@@ -265,6 +265,15 @@ export default function BalanceCard({ user }) {
                 </div>
                 <p className="qr-hint">Icon Tower Society Bank Account</p>
                 <p className="qr-amount">Amount: ₹{monthlyDues.toLocaleString()}</p>
+                
+                {/* UPI Deep Link - Opens payment app directly on mobile */}
+                <a 
+                  href={`upi://pay?pa=icontower@icici&pn=Icon%20Tower%20Society&am=${monthlyDues}&cu=INR&tn=Maintenance%20${flatNumber}`}
+                  className="upi-pay-btn"
+                >
+                  📲 Tap to Pay ₹{monthlyDues.toLocaleString()}
+                </a>
+                <p className="upi-note">Works on mobile with GPay, PhonePe, Paytm</p>
               </div>
             </div>
           )}
@@ -382,6 +391,12 @@ export default function BalanceCard({ user }) {
                 <img src={ICONTOWERQR} alt="Icon Tower Payment QR" className="qr-image" />
               </div>
               <p className="qr-hint">Icon Tower Society Bank Account</p>
+              <a 
+                href="upi://pay?pa=icontowersociety@okaxis&pn=Icon%20Tower%20Society&cu=INR"
+                className="upi-pay-btn"
+              >
+                💳 Pay Now via UPI
+              </a>
             </div>
           </div>
         )}

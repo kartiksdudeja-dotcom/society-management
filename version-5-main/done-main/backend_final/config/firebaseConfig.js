@@ -15,10 +15,19 @@ const serviceAccountPath = path.join(__dirname, "../service-account.json");
 let bucket = null; // Initialize bucket to null
 
 try {
-  // Load service account
-  const serviceAccount = JSON.parse(
-    fs.readFileSync(serviceAccountPath, "utf8")
-  );
+  let serviceAccount;
+  
+  // Try environment variable first (for Render deployment)
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    console.log("🔑 Loading Firebase credentials from environment variable...");
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  } else if (fs.existsSync(serviceAccountPath)) {
+    // Fallback to file (for local development)
+    console.log("🔑 Loading Firebase credentials from service-account.json...");
+    serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+  } else {
+    throw new Error("No Firebase credentials found. Set FIREBASE_SERVICE_ACCOUNT env var or provide service-account.json");
+  }
 
   const bucketName = process.env.FIREBASE_BUCKET;
 
@@ -30,6 +39,7 @@ try {
       storageBucket: bucketName,
     });
     bucket = admin.storage().bucket();
+    console.log("✅ Firebase Storage initialized successfully!");
   }
 } catch (error) {
   console.error("❌ ERROR: Failed to initialize Firebase Admin SDK:", error.message);
