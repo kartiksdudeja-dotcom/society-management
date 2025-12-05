@@ -33,6 +33,9 @@ export default function MembersPage() {
 
   const role = (user?.role || "").toString().trim().toLowerCase();
   const isAdmin = role === "admin" || role === "1" || role === "manager";
+  
+  // Debug log
+  console.log("User role:", role, "isAdmin:", isAdmin, "user:", user);
 
   // Load members on mount
   useEffect(() => {
