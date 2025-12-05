@@ -648,6 +648,248 @@
   align-items: flex-start;
 }
 
+/* ================================
+   MEMBER VIEW - BALANCE CARD
+   ================================ */
+
+.balance-card.member-view {
+  background: linear-gradient(135deg, #1a3a3a 0%, #0f6d57 100%);
+}
+
+.balance-card.member-view .balance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.balance-card.member-view .flat-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.member-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.member-stat {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.member-stat:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.member-stat.paid {
+  background: rgba(76, 175, 80, 0.25);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.member-stat.pending {
+  background: rgba(255, 152, 0, 0.25);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.member-stat .stat-icon {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+}
+
+.member-stat .stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.member-stat .stat-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.member-stat .stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.pending-months-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(244, 67, 54, 0.2);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.pending-months-alert .alert-icon {
+  font-size: 20px;
+}
+
+.pending-months-alert .alert-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pending-months-alert .alert-content strong {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.pending-months-alert .alert-content span {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.all-clear-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  background: rgba(76, 175, 80, 0.25);
+  border: 1px solid rgba(76, 175, 80, 0.4);
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.all-clear-badge span {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+/* Mobile responsiveness for member view */
+@media (max-width: 576px) {
+  .member-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .member-stat {
+    padding: 14px;
+  }
+
+  .member-stat .stat-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .member-stat .stat-value {
+    font-size: 18px;
+  }
+}
+
+/* ================================
+   ADMIN WITH FLAT - PERSONAL STATUS
+   ================================ */
+
+.flat-badge-small {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  margin-right: auto;
+  margin-left: 12px;
+}
+
+.admin-personal-status {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+}
+
+.personal-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  min-width: 100px;
+}
+
+.personal-stat.paid {
+  background: rgba(76, 175, 80, 0.25);
+}
+
+.personal-stat.pending {
+  background: rgba(255, 152, 0, 0.25);
+}
+
+.personal-stat.clear {
+  background: rgba(76, 175, 80, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+}
+
+.personal-stat.clear span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #a5d6a7;
+}
+
+.personal-stat .stat-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.personal-stat .stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
+
+@media (max-width: 480px) {
+  .admin-personal-status {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .personal-stat {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 .account-label {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.6);

@@ -31,7 +31,7 @@ export default function DashboardPage() {
 
   const navigate = useNavigate();
   const role = (user?.role || "").toString().trim().toLowerCase();
-  const isAdmin = role === "admin" || role === "1";
+  const isAdmin = role === "admin" || role === "manager" || role === "1";
 
   const [maintenanceSummary, setMaintenanceSummary] = useState(null);
   const [loading, setLoading] = useState(true);

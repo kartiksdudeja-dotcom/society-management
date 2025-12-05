@@ -15,6 +15,27 @@ export default function BalanceCard({ user }) {
   const [currentMonthCollection, setCurrentMonthCollection] = useState(0);
   const [currentMonthExpenses, setCurrentMonthExpenses] = useState(0);
 
+  // Member personal maintenance data
+  const [memberPaid, setMemberPaid] = useState(0);
+  const [memberPending, setMemberPending] = useState(0);
+  const [memberMonthsPaid, setMemberMonthsPaid] = useState([]);
+  const [memberMonthsPending, setMemberMonthsPending] = useState([]);
+
+  // Check if user is admin or manager
+  const role = (user?.role || "user").toString().trim().toLowerCase();
+  const isAdminOrManager = role === "admin" || role === "manager" || role === "1";
+  
+  // Check if admin is also a member (has a flat number in email like 104@icontower.com)
+  const flatNumber = getFlatFromEmail(user?.email);
+  const isAdminWithFlat = isAdminOrManager && flatNumber && user?.email !== 'admin@icontower.com';
+
+  // Get flat number from email (e.g., 104@icontower.com -> 104)
+  function getFlatFromEmail(email) {
+    if (!email) return null;
+    const match = email.match(/^(\d+)@/);
+    return match ? match[1] : null;
+  }
+
   // Load data once on mount
   useEffect(() => {
     async function loadData() {
@@ -24,24 +45,109 @@ export default function BalanceCard({ user }) {
         const currentMonth = now.getMonth() + 1;
         const currentYear = now.getFullYear();
 
-        const [maintResponse, expenseResponse, bankResponse, monthlyExpResponse] = await Promise.all([
-          API.get("/maintenance/get"),
-          API.get("/expense/get"),
-          API.get(`/bank?month=${currentMonth}&year=${currentYear}`),
-          API.get(`/monthly-expense/summary?month=${currentMonth}&year=${currentYear}`)
-        ]);
+        // For admin/manager, load full data
+        if (isAdminOrManager) {
+          const [maintResponse, expenseResponse, bankResponse, monthlyExpResponse] = await Promise.all([
+            API.get("/maintenance/get"),
+            API.get("/expense/get"),
+            API.get(`/bank?month=${currentMonth}&year=${currentYear}`),
+            API.get(`/monthly-expense/summary?month=${currentMonth}&year=${currentYear}`)
+          ]);
 
-        setMaintenanceData(maintResponse.data);
-        setExpenseData(expenseResponse.data);
-        
-        // Calculate current month collection from bank (credits)
-        const bankData = bankResponse.data.data || [];
-        const credits = bankData.filter(t => t.type === "credit");
-        const creditTotal = credits.reduce((sum, t) => sum + (t.amount || 0), 0);
-        setCurrentMonthCollection(creditTotal);
-        
-        // Current month expenses
-        setCurrentMonthExpenses(monthlyExpResponse.data.total || 0);
+          setMaintenanceData(maintResponse.data);
+          setExpenseData(expenseResponse.data);
+          
+          // Calculate current month collection from bank (credits)
+          const bankData = bankResponse.data.data || [];
+          const credits = bankData.filter(t => t.type === "credit");
+          const creditTotal = credits.reduce((sum, t) => sum + (t.amount || 0), 0);
+          setCurrentMonthCollection(creditTotal);
+          
+          // Current month expenses
+          setCurrentMonthExpenses(monthlyExpResponse.data.total || 0);
+
+          // If admin also has a flat, calculate their personal maintenance too
+          if (isAdminWithFlat) {
+            const allData = maintResponse.data || [];
+            const memberRecord = allData.find(record => {
+              const recordUnit = String(record.unit || "").replace(/\D/g, '');
+              return recordUnit === flatNumber;
+            });
+
+            if (memberRecord) {
+              const months = memberRecord.months || {};
+              const pending = memberRecord.pending || {};
+              
+              let totalPaid = 0;
+              let totalPending = 0;
+              const paidMonths = [];
+              const pendingMonths = [];
+
+              Object.entries(months).forEach(([month, amount]) => {
+                const amt = parseFloat(String(amount).replace(/,/g, '')) || 0;
+                if (amt > 0) {
+                  totalPaid += amt;
+                  paidMonths.push(month);
+                }
+              });
+
+              Object.entries(pending).forEach(([month, amount]) => {
+                const amt = parseFloat(String(amount).replace(/,/g, '')) || 0;
+                if (amt > 0) {
+                  totalPending += amt;
+                  pendingMonths.push(month);
+                }
+              });
+
+              setMemberPaid(totalPaid);
+              setMemberPending(totalPending);
+              setMemberMonthsPaid(paidMonths);
+              setMemberMonthsPending(pendingMonths);
+            }
+          }
+        } else {
+          // For regular members, load their personal maintenance data
+          const maintResponse = await API.get(`/maintenance/get?year=${currentYear}`);
+          const allData = maintResponse.data || [];
+          
+          // Find this member's record by flat number
+          const userFlat = getFlatFromEmail(user?.email);
+          const memberRecord = allData.find(record => {
+            const recordUnit = String(record.unit || "").replace(/\D/g, '');
+            return recordUnit === userFlat;
+          });
+
+          if (memberRecord) {
+            const months = memberRecord.months || {};
+            const pending = memberRecord.pending || {};
+            
+            let totalPaid = 0;
+            let totalPending = 0;
+            const paidMonths = [];
+            const pendingMonths = [];
+
+            Object.entries(months).forEach(([month, amount]) => {
+              const amt = parseFloat(String(amount).replace(/,/g, '')) || 0;
+              if (amt > 0) {
+                totalPaid += amt;
+                paidMonths.push(month);
+              }
+            });
+
+            Object.entries(pending).forEach(([month, amount]) => {
+              const amt = parseFloat(String(amount).replace(/,/g, '')) || 0;
+              if (amt > 0) {
+                totalPending += amt;
+                pendingMonths.push(month);
+              }
+            });
+
+            setMemberPaid(totalPaid);
+            setMemberPending(totalPending);
+            setMemberMonthsPaid(paidMonths);
+            setMemberMonthsPending(pendingMonths);
+          }
+        }
         
         setLoading(false);
       } catch (err) {
@@ -51,7 +157,7 @@ export default function BalanceCard({ user }) {
     }
 
     loadData();
-  }, [user]);
+  }, [user, isAdminOrManager, isAdminWithFlat, flatNumber]);
 
   // Recalculate when year/month changes (no API calls needed)
   useMemo(() => {
@@ -120,13 +226,80 @@ export default function BalanceCard({ user }) {
     );
   }
 
+  // Member view - show their personal maintenance status
+  if (!isAdminOrManager) {
+    const flatNumber = getFlatFromEmail(user?.email);
+    return (
+      <div className="balance-card member-view">
+        <div className="balance-header">
+          <span className="balance-label">My Maintenance Status</span>
+          <span className="flat-badge">Flat: {flatNumber || 'N/A'}</span>
+        </div>
+        
+        <div className="member-summary">
+          <div className="member-stat paid">
+            <span className="stat-icon">✓</span>
+            <div className="stat-content">
+              <span className="stat-label">Total Paid</span>
+              <span className="stat-value">₹{memberPaid.toLocaleString()}</span>
+            </div>
+          </div>
+          <div className="member-stat pending">
+            <span className="stat-icon">⏳</span>
+            <div className="stat-content">
+              <span className="stat-label">Pending</span>
+              <span className="stat-value">₹{memberPending.toLocaleString()}</span>
+            </div>
+          </div>
+        </div>
+
+        {memberMonthsPending.length > 0 && (
+          <div className="pending-months-alert">
+            <span className="alert-icon">⚠️</span>
+            <div className="alert-content">
+              <strong>Pending Months:</strong>
+              <span>{memberMonthsPending.slice(0, 3).join(', ')}{memberMonthsPending.length > 3 ? ` +${memberMonthsPending.length - 3} more` : ''}</span>
+            </div>
+          </div>
+        )}
+
+        {memberPending === 0 && memberPaid > 0 && (
+          <div className="all-clear-badge">
+            <span>🎉 All dues cleared!</span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Admin/Manager view - show full society data
   return (
     <div className="balance-card">
       <div className="balance-header">
         <span className="balance-label">Balance details</span>
+        {isAdminWithFlat && <span className="flat-badge-small">Flat: {flatNumber}</span>}
         <button className="more-btn">⋮</button>
       </div>
       <div className="balance-amount">₹{totalCollectionBalance.toLocaleString()}</div>
+      
+      {/* Show personal maintenance status for admins who are also members */}
+      {isAdminWithFlat && (
+        <div className="admin-personal-status">
+          <div className="personal-stat paid">
+            <span className="stat-label">My Paid</span>
+            <span className="stat-value">₹{memberPaid.toLocaleString()}</span>
+          </div>
+          <div className="personal-stat pending">
+            <span className="stat-label">My Pending</span>
+            <span className="stat-value">₹{memberPending.toLocaleString()}</span>
+          </div>
+          {memberPending === 0 && memberPaid > 0 && (
+            <div className="personal-stat clear">
+              <span>✓ Dues Clear</span>
+            </div>
+          )}
+        </div>
+      )}
       
       <div className="balance-selectors">
         <div className="selector-group">
