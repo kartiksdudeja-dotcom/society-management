@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// Use environment variable for production, fallback to localhost for development
+// Use environment variable for production, fallback to Render URL for production
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
-  withCredentials: true,   // ⭐ REQUIRED
+  baseURL: process.env.REACT_APP_API_URL || "https://society-management-k98t.onrender.com/api",
+  withCredentials: true,
 });
 
 API.interceptors.request.use((config) => {
