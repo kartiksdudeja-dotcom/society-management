@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../services/api";
-import { FaTrash, FaEdit, FaSave, FaSearch, FaPlus, FaArrowLeft, FaLock } from "react-icons/fa";
+import { FaTrash, FaEdit, FaSave, FaSearch, FaPlus, FaArrowLeft, FaLock, FaTimes, FaKey, FaUserPlus } from "react-icons/fa";
 import "./MembersPage.css";
 
 export default function MembersPage() {
@@ -11,6 +11,18 @@ export default function MembersPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("name");
+  
+  // Add User Modal State
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newUser, setNewUser] = useState({ name: "", email: "", password: "", FlatNumber: "", role: "user" });
+  const [addingUser, setAddingUser] = useState(false);
+  
+  // Password Reset Modal State
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordUserId, setPasswordUserId] = useState(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  
   const [user, setUser] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("user") || "null");
@@ -20,7 +32,7 @@ export default function MembersPage() {
   });
 
   const role = (user?.role || "").toString().trim().toLowerCase();
-  const isAdmin = role === "admin" || role === "1";
+  const isAdmin = role === "admin" || role === "1" || role === "manager";
 
   // Load members on mount
   useEffect(() => {
@@ -145,6 +157,64 @@ export default function MembersPage() {
     }
   };
 
+  // Add New User
+  const handleAddUser = async (e) => {
+    e.preventDefault();
+    if (!newUser.name || !newUser.email || !newUser.password) {
+      alert("Name, email and password are required");
+      return;
+    }
+    if (newUser.password.length < 6) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+
+    try {
+      setAddingUser(true);
+      const response = await API.post("/admin/create-user", newUser);
+      setMembers([...members, response.data.user]);
+      setShowAddModal(false);
+      setNewUser({ name: "", email: "", password: "", FlatNumber: "", role: "user" });
+      alert("User created successfully!");
+    } catch (err) {
+      alert("Failed to create user: " + (err.response?.data?.message || err.message));
+    } finally {
+      setAddingUser(false);
+    }
+  };
+
+  // Reset Password
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    if (!newPassword || newPassword.length < 6) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      await API.put(`/admin/update-password/${passwordUserId}`, { newPassword });
+      setShowPasswordModal(false);
+      setPasswordUserId(null);
+      setNewPassword("");
+      setConfirmPassword("");
+      alert("Password updated successfully!");
+    } catch (err) {
+      alert("Failed to update password: " + (err.response?.data?.message || err.message));
+    }
+  };
+
+  // Open password reset modal
+  const openPasswordModal = (userId) => {
+    setPasswordUserId(userId);
+    setNewPassword("");
+    setConfirmPassword("");
+    setShowPasswordModal(true);
+  };
+
   return (
     <div className="members-container">
       {/* HEADER */}
@@ -153,7 +223,12 @@ export default function MembersPage() {
           <h1 className="header-title">Members Directory</h1>
           <p className="header-subtitle">Manage all society members and their information</p>
         </div>
-        <div className="header-stats">
+        <div className="header-actions">
+          {isAdmin && (
+            <button className="btn btn-add-user" onClick={() => setShowAddModal(true)}>
+              <FaUserPlus /> Add User
+            </button>
+          )}
           <div className="stat-badge">
             <span className="stat-number">{filteredMembers.length}</span>
             <span className="stat-label">Members</span>
@@ -279,13 +354,22 @@ export default function MembersPage() {
                         ) : (
                           <>
                             {isAdmin && (
-                              <button
-                                className="btn btn-login"
-                                onClick={() => handleLoginAsMember(m._id)}
-                                title="Login as this member"
-                              >
-                                <FaLock />
-                              </button>
+                              <>
+                                <button
+                                  className="btn btn-login"
+                                  onClick={() => handleLoginAsMember(m._id)}
+                                  title="Login as this member"
+                                >
+                                  <FaLock />
+                                </button>
+                                <button
+                                  className="btn btn-password"
+                                  onClick={() => openPasswordModal(m._id)}
+                                  title="Reset password"
+                                >
+                                  <FaKey />
+                                </button>
+                              </>
                             )}
                             <button
                               className="btn btn-edit"
@@ -320,6 +404,127 @@ export default function MembersPage() {
       <div className="members-footer">
         <p>Showing {filteredMembers.length} of {members.length} members</p>
       </div>
+
+      {/* ADD USER MODAL */}
+      {showAddModal && (
+        <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3><FaUserPlus /> Add New User</h3>
+              <button className="modal-close" onClick={() => setShowAddModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+            <form onSubmit={handleAddUser} className="modal-form">
+              <div className="form-group">
+                <label>Name *</label>
+                <input
+                  type="text"
+                  value={newUser.name}
+                  onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+                  placeholder="Enter full name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Email *</label>
+                <input
+                  type="email"
+                  value={newUser.email}
+                  onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                  placeholder="Enter email address"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Password *</label>
+                <input
+                  type="password"
+                  value={newUser.password}
+                  onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                  placeholder="Minimum 6 characters"
+                  required
+                  minLength={6}
+                />
+              </div>
+              <div className="form-group">
+                <label>Flat Number</label>
+                <input
+                  type="text"
+                  value={newUser.FlatNumber}
+                  onChange={(e) => setNewUser({ ...newUser, FlatNumber: e.target.value })}
+                  placeholder="e.g., A-101"
+                />
+              </div>
+              <div className="form-group">
+                <label>Role</label>
+                <select
+                  value={newUser.role}
+                  onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+                >
+                  <option value="user">Member</option>
+                  <option value="manager">Manager</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <div className="modal-actions">
+                <button type="button" className="btn btn-cancel" onClick={() => setShowAddModal(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-save" disabled={addingUser}>
+                  {addingUser ? "Creating..." : "Create User"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* PASSWORD RESET MODAL */}
+      {showPasswordModal && (
+        <div className="modal-overlay" onClick={() => setShowPasswordModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3><FaKey /> Reset Password</h3>
+              <button className="modal-close" onClick={() => setShowPasswordModal(false)}>
+                <FaTimes />
+              </button>
+            </div>
+            <form onSubmit={handleResetPassword} className="modal-form">
+              <div className="form-group">
+                <label>New Password *</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Minimum 6 characters"
+                  required
+                  minLength={6}
+                />
+              </div>
+              <div className="form-group">
+                <label>Confirm Password *</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Re-enter password"
+                  required
+                  minLength={6}
+                />
+              </div>
+              <div className="modal-actions">
+                <button type="button" className="btn btn-cancel" onClick={() => setShowPasswordModal(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-save">
+                  Update Password
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
