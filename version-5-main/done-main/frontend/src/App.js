@@ -24,7 +24,6 @@ import ProfilePage from "./pages/ProfilePage";
 import AboutSocietyPage from "./pages/AboutSocietyPage";
 import DashboardPage from "./pages/DashboardPage";
 import SettingsPage from "./pages/SettingsPage";
-import TasksPage from "./pages/TasksPage";
 import AdminTasksPage from "./pages/AdminTasksPage";
 import ReportProblemPage from "./pages/ReportProblemPage";
 import MyComplaintsPage from "./pages/MyComplaintsPage";
