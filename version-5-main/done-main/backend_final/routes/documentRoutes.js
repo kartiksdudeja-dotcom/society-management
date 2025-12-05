@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import uploadFileToFirebase from "../utils/firebaseStorage.js";
+import bucket from "../config/firebaseConfig.js";
 import Document from "../models/Document.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -70,7 +71,7 @@ router.get("/", protect, async (req, res) => {
   try {
     let documents;
     // If admin, fetch all documents and populate user info
-    if (req.user.role === 'admin') {
+    if (req.user.role === 'admin' || req.user.role === 'manager') {
       documents = await Document.find().sort({ uploadedAt: -1 }).populate('user', 'name flatNumber');
     } else {
       // If regular user, fetch only their documents
@@ -80,6 +81,51 @@ router.get("/", protect, async (req, res) => {
   } catch (error) {
     console.error("Get documents route error:", error);
     res.status(500).json({ error: "Server error." });
+  }
+});
+
+/**
+ * @route   DELETE /api/documents/:id
+ * @desc    Delete a document
+ * @access  Private (Admin/Manager only)
+ */
+router.delete("/:id", protect, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Find the document
+    const document = await Document.findById(id);
+    
+    if (!document) {
+      return res.status(404).json({ error: "Document not found." });
+    }
+    
+    // Check if user is admin/manager or the owner
+    if (req.user.role !== 'admin' && req.user.role !== 'manager' && document.user.toString() !== req.user.id) {
+      return res.status(403).json({ error: "Not authorized to delete this document." });
+    }
+    
+    // Delete from Firebase Storage if URL exists
+    if (document.driveLink && document.driveLink.includes('storage.googleapis.com')) {
+      try {
+        const urlParts = document.driveLink.split('/');
+        const filePath = urlParts.slice(4).join('/'); // Get path after bucket name
+        if (bucket) {
+          await bucket.file(filePath).delete();
+        }
+      } catch (firebaseErr) {
+        console.error("Error deleting from Firebase:", firebaseErr);
+        // Continue with database deletion even if Firebase delete fails
+      }
+    }
+    
+    // Delete from database
+    await Document.findByIdAndDelete(id);
+    
+    res.json({ message: "Document deleted successfully." });
+  } catch (error) {
+    console.error("Delete document error:", error);
+    res.status(500).json({ error: "Server error during deletion." });
   }
 });
 

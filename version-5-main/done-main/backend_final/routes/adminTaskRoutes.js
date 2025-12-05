@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", protect, authorize(['admin', 'manager']), async (req, res) => {
   try {
     const tasks = await AdminTask.find().sort({ createdAt: -1 });
-    res.json(tasks);
+    res.json({ tasks });
   } catch (err) {
     console.error("Error fetching admin tasks:", err);
     res.status(500).json({ message: "Error fetching tasks" });
@@ -29,7 +29,7 @@ router.post("/", protect, authorize(['admin', 'manager']), async (req, res) => {
     });
     
     await task.save();
-    res.status(201).json(task);
+    res.status(201).json({ task, message: "Task created successfully" });
   } catch (err) {
     console.error("Error creating admin task:", err);
     res.status(500).json({ message: "Error creating task" });

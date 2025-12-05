@@ -82,8 +82,17 @@ export default function DocumentUploadPage() {
   };
   
   const handleDelete = async (id) => {
-    // Note: This is a placeholder. You need a backend route for deletion.
-    alert(`Deletion functionality for document ID: ${id} is not yet implemented on the backend.`);
+    if (!window.confirm("Are you sure you want to delete this document?")) return;
+    
+    try {
+      await API.delete(`/documents/${id}`);
+      setDocuments(documents.filter(doc => doc._id !== id));
+      setMessage("Document deleted successfully!");
+      setError("");
+    } catch (err) {
+      console.error("Delete error:", err);
+      setError("Failed to delete document. Please try again.");
+    }
   }
 
   return (

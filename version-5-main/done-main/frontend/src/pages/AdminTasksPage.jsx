@@ -28,7 +28,7 @@ import "./AdminTasksPage.css";
 export default function TasksPage() {
   const storedUser = JSON.parse(localStorage.getItem("user") || "null");
   const role = (storedUser?.role || "").toString().trim().toLowerCase();
-  const isAdmin = role === "admin" || role === "1";
+  const isAdmin = role === "admin" || role === "manager" || role === "1";
   const navigate = useNavigate();
 
   // Tab state: "problems" or "mytasks"
@@ -43,14 +43,9 @@ export default function TasksPage() {
   const [filter, setFilter] = useState("all");
   const [counts, setCounts] = useState({ pending: 0, inProgress: 0, completed: 0, total: 0 });
 
-  // Personal Task List states
-  const [myTasks, setMyTasks] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("adminTasks") || "[]");
-    } catch {
-      return [];
-    }
-  });
+  // Personal Task List states - Now using API/MongoDB instead of localStorage
+  const [myTasks, setMyTasks] = useState([]);
+  const [myTasksLoading, setMyTasksLoading] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDesc, setNewTaskDesc] = useState("");
   const [taskFilter, setTaskFilter] = useState("all");
@@ -75,13 +70,26 @@ export default function TasksPage() {
   useEffect(() => {
     if (activeTab === "problems") {
       fetchTasks();
+    } else if (activeTab === "mytasks") {
+      fetchMyTasks();
     }
   }, [filter, activeTab]);
 
-  // Save personal tasks to localStorage
-  useEffect(() => {
-    localStorage.setItem("adminTasks", JSON.stringify(myTasks));
-  }, [myTasks]);
+  // Fetch personal tasks from MongoDB via API
+  const fetchMyTasks = async () => {
+    try {
+      setMyTasksLoading(true);
+      const response = await API.get("/admin-tasks");
+      // Response is array of tasks, wrap in object format
+      const tasksData = Array.isArray(response.data) ? response.data : (response.data.tasks || []);
+      setMyTasks(tasksData);
+    } catch (err) {
+      console.error("Error fetching my tasks:", err);
+      setMyTasks([]);
+    } finally {
+      setMyTasksLoading(false);
+    }
+  };
 
   const fetchTasks = async () => {
     try {
@@ -165,41 +173,56 @@ export default function TasksPage() {
     }
   };
 
-  // Personal Task Functions
-  const addMyTask = (e) => {
+  // Personal Task Functions - Now using API/MongoDB
+  const addMyTask = async (e) => {
     e.preventDefault();
     if (!newTaskTitle.trim()) return;
-    const now = new Date();
-    const newTask = {
-      id: Date.now(),
-      title: newTaskTitle,
-      description: newTaskDesc,
-      completed: false,
-      createdAt: now.toLocaleString(),
-      completedAt: null
-    };
-    setMyTasks([newTask, ...myTasks]);
-    setNewTaskTitle("");
-    setNewTaskDesc("");
+    try {
+      const response = await API.post("/admin-tasks", {
+        title: newTaskTitle.trim(),
+        description: newTaskDesc.trim()
+      });
+      // Add to state - response.data.task is the new task
+      const newTask = response.data.task || response.data;
+      setMyTasks([newTask, ...myTasks]);
+      setNewTaskTitle("");
+      setNewTaskDesc("");
+    } catch (err) {
+      console.error("Error creating task:", err);
+      alert("Failed to create task");
+    }
   };
 
-  const toggleMyTask = (id) => {
-    const now = new Date().toLocaleString();
-    setMyTasks(
-      myTasks.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              completed: !task.completed,
-              completedAt: !task.completed ? now : null
-            }
-          : task
-      )
-    );
+  const toggleMyTask = async (id, currentStatus) => {
+    const newStatus = currentStatus === "done" ? "pending" : "done";
+    try {
+      await API.put(`/admin-tasks/${id}`, { status: newStatus });
+      setMyTasks(
+        myTasks.map((task) =>
+          task._id === id
+            ? {
+                ...task,
+                status: newStatus,
+                completedAt: newStatus === "done" ? new Date().toISOString() : null
+              }
+            : task
+        )
+      );
+    } catch (err) {
+      console.error("Error updating task:", err);
+      alert("Failed to update task");
+    }
   };
 
-  const deleteMyTask = (id) => {
-    setMyTasks(myTasks.filter((task) => task.id !== id));
+  const deleteMyTask = async (id) => {
+    if (!window.confirm("Delete this task?")) return;
+    try {
+      await API.delete(`/admin-tasks/${id}`);
+      setMyTasks(myTasks.filter((task) => task._id !== id));
+    } catch (err) {
+      console.error("Error deleting task:", err);
+      alert("Failed to delete task");
+    }
   };
 
   const formatDate = (dateString) => {
@@ -257,15 +280,15 @@ export default function TasksPage() {
   };
 
   const filteredMyTasks = myTasks.filter((task) => {
-    if (taskFilter === "active") return !task.completed;
-    if (taskFilter === "completed") return task.completed;
+    if (taskFilter === "active") return task.status !== "done";
+    if (taskFilter === "completed") return task.status === "done";
     return true;
   });
 
   const myTaskCounts = {
     total: myTasks.length,
-    active: myTasks.filter((t) => !t.completed).length,
-    completed: myTasks.filter((t) => t.completed).length
+    active: myTasks.filter((t) => t.status !== "done").length,
+    completed: myTasks.filter((t) => t.status === "done").length
   };
 
   if (!isAdmin) {
@@ -274,8 +297,8 @@ export default function TasksPage() {
         <div className="tasks-container">
           <div className="empty-state">
             <FaExclamationTriangle className="empty-icon" />
-            <h2>Admin Only Area</h2>
-            <p>Task management is only available to administrators.</p>
+            <h2>Admin/Manager Only Area</h2>
+            <p>Task management is only available to administrators and managers.</p>
             <button className="back-btn" onClick={() => navigate("/app/my-complaints")}>
               View My Complaints
             </button>
@@ -663,31 +686,39 @@ export default function TasksPage() {
 
             {/* My Tasks List */}
             <div className="my-tasks-list">
-              {filteredMyTasks.length === 0 ? (
+              {myTasksLoading ? (
+                <div className="empty-state">
+                  <FaSpinner className="spin" style={{ fontSize: 32 }} />
+                  <p>Loading tasks...</p>
+                </div>
+              ) : filteredMyTasks.length === 0 ? (
                 <div className="empty-state">
                   <FaClipboardList className="empty-icon" />
                   <p>No tasks yet. Add one above!</p>
                 </div>
               ) : (
                 filteredMyTasks.map((task) => (
-                  <div key={task.id} className={`my-task-item ${task.completed ? "completed" : ""}`}>
+                  <div key={task._id} className={`my-task-item ${task.status === "done" ? "completed" : ""}`}>
                     <button
                       className="task-checkbox"
-                      onClick={() => toggleMyTask(task.id)}
+                      onClick={() => toggleMyTask(task._id, task.status)}
                     >
-                      {task.completed ? <FaCheckCircle /> : <FaCircle />}
+                      {task.status === "done" ? <FaCheckCircle /> : <FaCircle />}
                     </button>
                     <div className="my-task-content">
                       <h4 className="my-task-title">{task.title}</h4>
                       {task.description && <p className="my-task-desc">{task.description}</p>}
+                      {task.createdByName && (
+                        <span className="task-creator">By: {task.createdByName}</span>
+                      )}
                       <div className="my-task-dates">
-                        <span>Created: {task.createdAt}</span>
-                        {task.completedAt && <span className="done-date">✓ Done: {task.completedAt}</span>}
+                        <span>Created: {formatDate(task.createdAt)}</span>
+                        {task.completedAt && <span className="done-date">✓ Done: {formatDate(task.completedAt)}</span>}
                       </div>
                     </div>
                     <button
                       className="my-task-delete"
-                      onClick={() => deleteMyTask(task.id)}
+                      onClick={() => deleteMyTask(task._id)}
                     >
                       <FaTrash />
                     </button>

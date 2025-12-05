@@ -3,12 +3,18 @@ import api from "../services/api";
 import "./BankTransactionsPage.css";
 
 export default function BankTransactionsPage() {
-  const [month, setMonth] = useState("2025-11");
+  const [month, setMonth] = useState("2025-12");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(100);
 
   const [totalCredit, setTotalCredit] = useState(0);
   const [totalDebit, setTotalDebit] = useState(0);
+
+  // Zoom controls
+  const zoomIn = () => setZoomLevel(prev => Math.min(prev + 10, 150));
+  const zoomOut = () => setZoomLevel(prev => Math.max(prev - 10, 50));
+  const resetZoom = () => setZoomLevel(100);
 
   const months = [
     { label: "October 2025", value: "2025-10" },
@@ -143,10 +149,20 @@ async function loadData() {
 
       {/* TABLE */}
       <div className="bt-table-card glass-card">
+        {/* Zoom Controls */}
+        <div className="table-controls">
+          <div className="scroll-hint">← Scroll to see all columns →</div>
+          <div className="zoom-controls">
+            <button className="zoom-btn" onClick={zoomOut} title="Zoom Out">−</button>
+            <span className="zoom-level">{zoomLevel}%</span>
+            <button className="zoom-btn" onClick={zoomIn} title="Zoom In">+</button>
+            <button className="zoom-btn reset" onClick={resetZoom} title="Reset">↺</button>
+          </div>
+        </div>
         {loading && <div className="bt-loading">Loading...</div>}
 
         <div className="bt-scroll">
-          <table className="bt-table">
+          <table className="bt-table" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
             <thead>
               <tr>
                 <th>Date</th>

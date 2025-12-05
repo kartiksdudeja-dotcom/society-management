@@ -63,7 +63,13 @@ export default function MaintenanceCollectionFull() {
   const [message, setMessage] = useState("");
   const [selectedYear, setSelectedYear] = useState("2024");
   const [searchTerm, setSearchTerm] = useState("");
+  const [zoomLevel, setZoomLevel] = useState(100); // Zoom percentage
   const token = localStorage.getItem("token");
+
+  // Zoom controls
+  const zoomIn = () => setZoomLevel(prev => Math.min(prev + 10, 150));
+  const zoomOut = () => setZoomLevel(prev => Math.max(prev - 10, 50));
+  const resetZoom = () => setZoomLevel(100);
 
   useEffect(() => {
     // On mount, load DB data for the default selected year (2024)
@@ -393,9 +399,18 @@ export default function MaintenanceCollectionFull() {
             </div>
 
             <div className="maintenance-table-wrapper">
-              <div className="scroll-indicator">← Scroll →</div>
+              {/* Zoom Controls */}
+              <div className="table-controls">
+                <div className="scroll-indicator">← Scroll to see all columns →</div>
+                <div className="zoom-controls">
+                  <button className="zoom-btn" onClick={zoomOut} title="Zoom Out">−</button>
+                  <span className="zoom-level">{zoomLevel}%</span>
+                  <button className="zoom-btn" onClick={zoomIn} title="Zoom In">+</button>
+                  <button className="zoom-btn reset" onClick={resetZoom} title="Reset Zoom">↺</button>
+                </div>
+              </div>
               <div className="table-scroll">
-                <table className="maintenance-table">
+                <table className="maintenance-table" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
                   <thead>
                     <tr>
                       <th className="col-unit">Unit</th>

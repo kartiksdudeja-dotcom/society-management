@@ -13,6 +13,12 @@ export default function SinkingFundPage() {
   const [sortBy, setSortBy] = useState("owner");
   const [editingIdx, setEditingIdx] = useState(null);
   const [editData, setEditData] = useState({ paid: "", pending: "" });
+  const [zoomLevel, setZoomLevel] = useState(100);
+
+  // Zoom controls
+  const zoomIn = () => setZoomLevel(prev => Math.min(prev + 10, 150));
+  const zoomOut = () => setZoomLevel(prev => Math.max(prev - 10, 50));
+  const resetZoom = () => setZoomLevel(100);
 
   // ---------------------
   // LOAD DATA FROM BACKEND
@@ -193,6 +199,16 @@ export default function SinkingFundPage() {
 
       {/* TABLE SECTION */}
       <div className="sinking-table-wrapper">
+        {/* Zoom Controls */}
+        <div className="table-controls">
+          <div className="scroll-hint">← Scroll to see all columns →</div>
+          <div className="zoom-controls">
+            <button className="zoom-btn" onClick={zoomOut} title="Zoom Out">−</button>
+            <span className="zoom-level">{zoomLevel}%</span>
+            <button className="zoom-btn" onClick={zoomIn} title="Zoom In">+</button>
+            <button className="zoom-btn reset" onClick={resetZoom} title="Reset">↺</button>
+          </div>
+        </div>
         {loading ? (
           <div className="loading-state">
             <p>Loading sinking fund data...</p>
@@ -204,7 +220,7 @@ export default function SinkingFundPage() {
           </div>
         ) : (
           <div className="table-container">
-            <table className="sinking-table">
+            <table className="sinking-table" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
               <thead>
                 <tr>
                   <th className="index-col">#</th>
