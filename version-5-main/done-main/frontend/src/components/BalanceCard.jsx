@@ -23,6 +23,16 @@ export default function BalanceCard({ user }) {
   const [memberUnitType, setMemberUnitType] = useState("office");
   const [monthlyDues, setMonthlyDues] = useState(2000);
 
+  // Payment proof upload states
+  const [showProofUpload, setShowProofUpload] = useState(false);
+  const [proofFile, setProofFile] = useState(null);
+  const [proofLoading, setProofLoading] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState({
+    transactionId: "",
+    paymentMode: "NEFT",
+    paymentDate: new Date().toISOString().split("T")[0],
+  });
+
   // Check if user is admin or manager
   const role = (user?.role || "user").toString().trim().toLowerCase();
   const isAdminOrManager = role === "admin" || role === "manager" || role === "1";
@@ -46,6 +56,43 @@ export default function BalanceCard({ user }) {
     }
     return { type: "office", dues: 2000 };
   }
+
+  // Submit payment proof
+  const handleProofSubmit = async () => {
+    if (!proofFile) {
+      alert("Please select a payment proof image");
+      return;
+    }
+
+    setProofLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("proofImage", proofFile);
+      formData.append("flat", flatNumber || user?.email?.split("@")[0]);
+      formData.append("ownerName", user?.name || "");
+      formData.append("amount", monthlyDues);
+      formData.append("monthYear", `${selectedMonth}-${selectedYear}`);
+      formData.append("paymentDetails", JSON.stringify(paymentDetails));
+
+      const response = await API.post("/payment-verifications/submit", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      alert("✅ Payment proof submitted successfully! Manager will review it soon.");
+      setShowProofUpload(false);
+      setProofFile(null);
+      setPaymentDetails({
+        transactionId: "",
+        paymentMode: "NEFT",
+        paymentDate: new Date().toISOString().split("T")[0],
+      });
+    } catch (error) {
+      console.error("Error submitting proof:", error);
+      alert("❌ " + (error.response?.data?.error || "Failed to submit payment proof"));
+    } finally {
+      setProofLoading(false);
+    }
+  };
 
   // Load data once on mount
   useEffect(() => {
@@ -243,6 +290,76 @@ export default function BalanceCard({ user }) {
               <strong>Please pay your dues:</strong>
               <span>₹{monthlyDues.toLocaleString()} for {currentMonthName}</span>
             </div>
+          </div>
+        )}
+
+        {/* Payment Proof Upload Option */}
+        {!currentMonthPaid && (
+          <div className="payment-proof-section">
+            <button 
+              className="proof-upload-btn"
+              onClick={() => setShowProofUpload(!showProofUpload)}
+            >
+              {showProofUpload ? '✕ Hide Upload' : '📸 Upload Payment Proof'}
+            </button>
+
+            {showProofUpload && (
+              <div className="proof-upload-modal">
+                <h4>Upload Payment Screenshot</h4>
+                <p className="proof-info">Already paid? Upload your payment screenshot and manager will verify & approve it.</p>
+                
+                <div className="form-group">
+                  <label>Payment Screenshot *</label>
+                  <input 
+                    type="file" 
+                    accept="image/*,application/pdf"
+                    onChange={(e) => setProofFile(e.target.files?.[0] || null)}
+                    className="file-input"
+                  />
+                  {proofFile && <span className="file-name">✓ {proofFile.name}</span>}
+                </div>
+
+                <div className="form-group">
+                  <label>Transaction ID (optional)</label>
+                  <input 
+                    type="text"
+                    placeholder="UTR/Transaction ID from receipt"
+                    value={paymentDetails.transactionId}
+                    onChange={(e) => setPaymentDetails({...paymentDetails, transactionId: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Payment Mode</label>
+                  <select
+                    value={paymentDetails.paymentMode}
+                    onChange={(e) => setPaymentDetails({...paymentDetails, paymentMode: e.target.value})}
+                  >
+                    <option>NEFT</option>
+                    <option>UPI</option>
+                    <option>IMPS</option>
+                    <option>Cheque</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Payment Date</label>
+                  <input 
+                    type="date"
+                    value={paymentDetails.paymentDate}
+                    onChange={(e) => setPaymentDetails({...paymentDetails, paymentDate: e.target.value})}
+                  />
+                </div>
+
+                <button 
+                  className="submit-proof-btn"
+                  onClick={handleProofSubmit}
+                  disabled={proofLoading || !proofFile}
+                >
+                  {proofLoading ? '⏳ Uploading...' : '✓ Submit for Verification'}
+                </button>
+              </div>
+            )}
           </div>
         )}
 

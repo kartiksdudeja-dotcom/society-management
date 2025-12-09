@@ -30,6 +30,7 @@ import MyComplaintsPage from "./pages/MyComplaintsPage";
 import BankTransactionsPage from "./pages/BankTransactionsPage";
 import MonthlyMaintenancePage from "./pages/MonthlyMaintenancePage.jsx";
 import MonthlyExpensePage from "./pages/MonthlyExpensePage.jsx";
+import PaymentVerificationPage from "./pages/PaymentVerificationPage";
 
 // COMPONENTS
 import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
@@ -89,6 +90,9 @@ function App() {
           
           {/* MONTHLY EXPENSE */}
           <Route path="monthly-expense" element={<MonthlyExpensePage />} />
+
+          {/* PAYMENT VERIFICATION */}
+          <Route path="payment-verification" element={<PaymentVerificationPage />} />
 
           {/* ADMIN ROUTES */}
           <Route

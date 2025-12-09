@@ -107,6 +107,7 @@ import unitRoutes from "./routes/unitRoutes.js";
 import monthlyExpenseRoutes from "./routes/monthlyExpenseRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import adminTaskRoutes from "./routes/adminTaskRoutes.js";
+import paymentVerificationRoutes from "./routes/paymentVerificationRoutes.js";
 import { readBankEmails } from "./services/gmailReader.js";
 
 // Serve uploaded files statically
@@ -125,6 +126,7 @@ app.use("/api/unit", unitRoutes);
 app.use("/api/monthly-expense", monthlyExpenseRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/admin-tasks", adminTaskRoutes);
+app.use("/api/payment-verifications", paymentVerificationRoutes);
 
 
 // Cron

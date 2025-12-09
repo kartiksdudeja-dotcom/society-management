@@ -17,6 +17,7 @@ import {
   FaRegCreditCard,
   FaExclamationTriangle,
   FaBullhorn,
+  FaRegCheckCircle,
 } from "react-icons/fa";
 import "./DashboardPage.css";
 
@@ -198,6 +199,14 @@ export default function DashboardPage() {
             description: "View & manage monthly expenses",
             path: "/app/monthly-expense",
             color: "card-orange",
+          },
+          {
+            id: 16,
+            icon: FaRegCheckCircle,
+            title: "Payment Verification",
+            description: "Review payment proofs from members",
+            path: "/app/payment-verification",
+            color: "card-green",
           },
       ]
     : []),
