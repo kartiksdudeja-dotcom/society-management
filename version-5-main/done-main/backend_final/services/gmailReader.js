@@ -111,9 +111,13 @@ export async function readBankEmails() {
             // ❗❗ NOW USING AWAIT SO MEMBER MATCHING WORKS ❗❗
             const txn = await monthlyStatementService.parseTransaction(snippet);
 
-            if (!txn) continue;
+            if (!txn) {
+              console.log(`⏭️ Skipped: ${snippet.substring(0, 100)}...`);
+              continue;
+            }
 
             txn.messageId = msg.id;
+            console.log(`✅ Parsed: ${txn.name} - ₹${txn.amount} (${txn.type})`);
 
             // 🔥 Process payment intelligently (split, sinking fund, interest)
             const processedTxns = await processPayment(txn);
@@ -125,6 +129,7 @@ export async function readBankEmails() {
                 { $set: processedTxn },
                 { upsert: true }
               );
+              console.log(`💾 Saved: ${processedTxn.name} (${processedTxn.flat}) - ₹${processedTxn.amount}`);
             }
 
             total += processedTxns.length;
@@ -179,9 +184,13 @@ export async function readBankEmails() {
           // ❗❗ FIX: use await so name + flat extracted ❗❗
           const txn = await monthlyStatementService.parseTransaction(snippet);
 
-          if (!txn) continue;
+          if (!txn) {
+            console.log(`⏭️ Skipped new: ${snippet.substring(0, 100)}...`);
+            continue;
+          }
 
           txn.messageId = m.id;
+          console.log(`✅ New parsed: ${txn.name} - ₹${txn.amount} (${txn.type})`);
 
           // 🔥 Process payment intelligently (split, sinking fund, interest)
           const processedTxns = await processPayment(txn);
@@ -193,6 +202,7 @@ export async function readBankEmails() {
               { $set: processedTxn },
               { upsert: true }
             );
+            console.log(`💾 Saved new: ${processedTxn.name} (${processedTxn.flat}) - ₹${processedTxn.amount}`);
           }
 
           totalNew += processedTxns.length;

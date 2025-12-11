@@ -12,11 +12,18 @@ function extractVPA(narration) {
   return vpa ? vpa[1].toLowerCase() : null;
 }
 
-// Extract name from narration (capital letters after VPA)
+// Extract name from narration (capital letters after VPA or from NEFT)
 function extractName(narration) {
   if (!narration) return null;
 
-  // Get the capital letters block after VPA (the actual sender name from bank)
+  // For NEFT transactions: extract name between IFSC and "Icon tower"
+  // Format: NEFT Cr-ICIC0SF0002-HARISH SHAMLAL TEJWANI-Icon tower
+  const neftMatch = narration.match(/NEFT\s+Cr-[A-Z0-9]+-([A-Z\s]+)-Icon\s+tower/i);
+  if (neftMatch) {
+    return neftMatch[1].trim();
+  }
+
+  // For UPI transactions: get the capital letters block after VPA
   const caps = narration.match(/[A-Z][A-Z ]{4,}/);
   if (caps) return caps[0].trim();
 
