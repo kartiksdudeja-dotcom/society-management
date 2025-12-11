@@ -28,6 +28,7 @@ export default function BalanceCard({ user }) {
   const [showProofUpload, setShowProofUpload] = useState(false);
   const [proofFile, setProofFile] = useState(null);
   const [proofLoading, setProofLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
   const [paymentDetails, setPaymentDetails] = useState({
     transactionId: "",
     paymentMode: "NEFT",
@@ -82,6 +83,7 @@ export default function BalanceCard({ user }) {
       alert("✅ Payment proof submitted successfully! Manager will review it soon.");
       setShowProofUpload(false);
       setProofFile(null);
+      setImagePreview(null);
       setPaymentDetails({
         transactionId: "",
         paymentMode: "NEFT",
@@ -331,13 +333,68 @@ export default function BalanceCard({ user }) {
                 
                 <div className="form-group">
                   <label>Payment Screenshot *</label>
-                  <input 
-                    type="file" 
-                    accept="image/*,application/pdf"
-                    onChange={(e) => setProofFile(e.target.files?.[0] || null)}
-                    className="file-input"
-                  />
-                  {proofFile && <span className="file-name">✓ {proofFile.name}</span>}
+                  
+                  {/* Image Preview */}
+                  {imagePreview && (
+                    <div className="image-preview-container">
+                      <img src={imagePreview} alt="Payment proof preview" className="image-preview" />
+                      <button 
+                        className="remove-image-btn"
+                        onClick={() => {
+                          setProofFile(null);
+                          setImagePreview(null);
+                        }}
+                      >
+                        ✕ Remove
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* File Upload Options */}
+                  {!imagePreview && (
+                    <div className="upload-options">
+                      <label className="upload-btn camera-btn">
+                        <input 
+                          type="file" 
+                          accept="image/*"
+                          capture="environment"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              setProofFile(file);
+                              const reader = new FileReader();
+                              reader.onloadend = () => setImagePreview(reader.result);
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          style={{display: 'none'}}
+                        />
+                        📷 Take Photo
+                      </label>
+                      
+                      <label className="upload-btn gallery-btn">
+                        <input 
+                          type="file" 
+                          accept="image/*,application/pdf"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              setProofFile(file);
+                              if (file.type.startsWith('image/')) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => setImagePreview(reader.result);
+                                reader.readAsDataURL(file);
+                              }
+                            }
+                          }}
+                          style={{display: 'none'}}
+                        />
+                        🖼️ Choose from Gallery
+                      </label>
+                    </div>
+                  )}
+                  
+                  {proofFile && !imagePreview && <span className="file-name">✓ {proofFile.name}</span>}
                 </div>
 
                 <div className="form-group">
