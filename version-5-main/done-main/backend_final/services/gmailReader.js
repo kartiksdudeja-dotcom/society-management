@@ -37,7 +37,16 @@ async function authorize() {
     throw new Error("❌ No Gmail token found in database. Please authenticate via /auth/google");
   }
 
-  OAuth2.setCredentials(token);
+  console.log("✅ Token loaded from MongoDB");
+
+  // Convert MongoDB document to plain object for setCredentials
+  OAuth2.setCredentials({
+    access_token: token.access_token,
+    refresh_token: token.refresh_token,
+    scope: token.scope,
+    token_type: token.token_type,
+    expiry_date: token.expiry_date
+  });
 
   return OAuth2;
 }

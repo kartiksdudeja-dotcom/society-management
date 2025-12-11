@@ -77,7 +77,15 @@ export async function getGmailService() {
 
   if (!token) throw new Error("No Gmail token — Authenticate at /auth/google");
 
-  auth.setCredentials(token);
+  // Convert MongoDB document to plain object for setCredentials
+  auth.setCredentials({
+    access_token: token.access_token,
+    refresh_token: token.refresh_token,
+    scope: token.scope,
+    token_type: token.token_type,
+    expiry_date: token.expiry_date
+  });
+  
   return google.gmail({ version: "v1", auth });
 }
 
