@@ -4,6 +4,7 @@ import User from "../models/User.js";
 import BankTransaction from "../models/BankTransaction.js";
 import MonthlyExpense from "../models/MonthlyExpense.js";
 import uploadFileToFirebase from "../utils/firebaseStorage.js";
+import { protect, authorize } from "../middleware/authMiddleware.js";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -34,7 +35,7 @@ const upload = multer({
  * POST /payment-verifications/submit
  * Body: { flat, ownerName, amount, monthYear, paymentDetails (optional), file }
  */
-router.post("/submit", upload.single("proofImage"), async (req, res) => {
+router.post("/submit", protect, upload.single("proofImage"), async (req, res) => {
   try {
     const { flat, ownerName, amount, monthYear, paymentDetails } = req.body;
     const userId = req.user?._id;
@@ -88,7 +89,7 @@ router.post("/submit", upload.single("proofImage"), async (req, res) => {
  * Get user's pending payment verifications
  * GET /payment-verifications/my-submissions
  */
-router.get("/my-submissions", async (req, res) => {
+router.get("/my-submissions", protect, async (req, res) => {
   try {
     const userId = req.user?._id;
 
@@ -111,7 +112,7 @@ router.get("/my-submissions", async (req, res) => {
  * Get all pending payment verifications (Manager/Admin only)
  * GET /payment-verifications/pending
  */
-router.get("/pending", async (req, res) => {
+router.get("/pending", protect, authorize(['admin', 'manager']), async (req, res) => {
   try {
     const role = (req.user?.role || "user").toString().trim().toLowerCase();
     const isManagerOrAdmin = role === "admin" || role === "manager" || role === "1";
@@ -136,7 +137,7 @@ router.get("/pending", async (req, res) => {
  * POST /payment-verifications/:id/approve
  * Body: { notes (optional) }
  */
-router.post("/:id/approve", async (req, res) => {
+router.post("/:id/approve", protect, authorize(['admin', 'manager']), async (req, res) => {
   try {
     const role = (req.user?.role || "user").toString().trim().toLowerCase();
     const isManagerOrAdmin = role === "admin" || role === "manager" || role === "1";
@@ -206,7 +207,7 @@ router.post("/:id/approve", async (req, res) => {
  * POST /payment-verifications/:id/reject
  * Body: { rejectionReason }
  */
-router.post("/:id/reject", async (req, res) => {
+router.post("/:id/reject", protect, authorize(['admin', 'manager']), async (req, res) => {
   try {
     const role = (req.user?.role || "user").toString().trim().toLowerCase();
     const isManagerOrAdmin = role === "admin" || role === "manager" || role === "1";
@@ -253,7 +254,7 @@ router.post("/:id/reject", async (req, res) => {
  * Get all payment verifications (filter by status)
  * GET /payment-verifications?status=pending|approved|rejected
  */
-router.get("/", async (req, res) => {
+router.get("/", protect, async (req, res) => {
   try {
     const { status, flat } = req.query;
     const filter = {};

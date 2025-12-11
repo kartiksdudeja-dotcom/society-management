@@ -16,6 +16,10 @@ export default function BalanceCard({ user }) {
   // Current month's bank data
   const [currentMonthCollection, setCurrentMonthCollection] = useState(0);
   const [currentMonthExpenses, setCurrentMonthExpenses] = useState(0);
+  
+  // Interest tracking
+  const [totalInterest, setTotalInterest] = useState(0);
+  const [interestCount, setInterestCount] = useState(0);
 
   // Member payment status from Monthly Collection (Bank)
   const [currentMonthPaid, setCurrentMonthPaid] = useState(false);
@@ -116,15 +120,22 @@ export default function BalanceCard({ user }) {
 
         // For admin/manager, load full data
         if (isAdminOrManager) {
-          const [maintResponse, expenseResponse, bankResponse, monthlyExpResponse] = await Promise.all([
+          const [maintResponse, expenseResponse, bankResponse, monthlyExpResponse, interestResponse] = await Promise.all([
             API.get("/maintenance/get"),
             API.get("/expense/get"),
             API.get(`/bank?month=${currentMonth}&year=${currentYear}`),
-            API.get(`/monthly-expense/summary?month=${currentMonth}&year=${currentYear}`)
+            API.get(`/monthly-expense/summary?month=${currentMonth}&year=${currentYear}`),
+            API.get(`/interest?year=${currentYear}`)
           ]);
 
           setMaintenanceData(maintResponse.data);
           setExpenseData(expenseResponse.data);
+          
+          // Set interest data
+          if (interestResponse.data.success) {
+            setTotalInterest(interestResponse.data.data.total || 0);
+            setInterestCount(interestResponse.data.data.count || 0);
+          }
           
           // Calculate current month collection from bank (credits)
           const bankData = bankResponse.data.data || [];
@@ -567,6 +578,22 @@ export default function BalanceCard({ user }) {
           </div>
         </div>
       </div>
+
+      {/* Interest Tracking Box */}
+      {totalInterest > 0 && (
+        <div className="interest-box">
+          <h4>💰 Interest ({selectedYear})</h4>
+          <div className="interest-content">
+            <div className="interest-stat">
+              <span className="interest-label">Total Interest Collected</span>
+              <span className="interest-value">₹{totalInterest.toLocaleString()}</span>
+            </div>
+            <div className="interest-count">
+              <span>{interestCount} extra payment{interestCount > 1 ? 's' : ''} received</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* QR Code Section for Admin */}
       <div className="qr-section">

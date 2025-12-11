@@ -3,6 +3,7 @@ import path from "path";
 import { google } from "googleapis";
 import { fileURLToPath } from "url";
 import monthlyStatementService from "./monthlyStatementService.js";
+import { processPayment } from "./paymentProcessor.js";
 import BankTransaction from "../models/BankTransaction.js";
 import SyncState from "../models/SyncState.js";
 import GmailToken from "../models/GmailToken.js";
@@ -114,13 +115,19 @@ export async function readBankEmails() {
 
             txn.messageId = msg.id;
 
-            await BankTransaction.updateOne(
-              { messageId: msg.id },
-              { $set: txn },
-              { upsert: true }
-            );
+            // 🔥 Process payment intelligently (split, sinking fund, interest)
+            const processedTxns = await processPayment(txn);
 
-            total++;
+            // Save all processed transactions
+            for (const processedTxn of processedTxns) {
+              await BankTransaction.updateOne(
+                { messageId: msg.id, flat: processedTxn.flat },
+                { $set: processedTxn },
+                { upsert: true }
+              );
+            }
+
+            total += processedTxns.length;
           } catch (msgErr) {
             console.error(`❌ Error processing message ${msg.id}:`, msgErr.message);
           }
@@ -176,13 +183,19 @@ export async function readBankEmails() {
 
           txn.messageId = m.id;
 
-          await BankTransaction.updateOne(
-            { messageId: m.id },
-            { $set: txn },
-            { upsert: true }
-          );
+          // 🔥 Process payment intelligently (split, sinking fund, interest)
+          const processedTxns = await processPayment(txn);
 
-          totalNew++;
+          // Save all processed transactions
+          for (const processedTxn of processedTxns) {
+            await BankTransaction.updateOne(
+              { messageId: m.id, flat: processedTxn.flat },
+              { $set: processedTxn },
+              { upsert: true }
+            );
+          }
+
+          totalNew += processedTxns.length;
         } catch (msgErr) {
           console.error(`❌ Error processing new message ${m.id}:`, msgErr.message);
         }
