@@ -769,6 +769,8 @@
 
 .all-clear-badge {
   display: flex;
+  flex-direction: column;
+  gap: 8px;
   justify-content: center;
   align-items: center;
   padding: 14px;
@@ -782,6 +784,29 @@
   font-size: 14px;
   font-weight: 600;
   color: white;
+}
+
+.payment-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.payment-badge.verified {
+  background: rgba(33, 150, 243, 0.3);
+  border: 1px solid rgba(33, 150, 243, 0.5);
+  color: #64b5f6;
+}
+
+.payment-badge.bank {
+  background: rgba(76, 175, 80, 0.3);
+  border: 1px solid rgba(76, 175, 80, 0.5);
+  color: #81c784;
 }
 
 /* ================================

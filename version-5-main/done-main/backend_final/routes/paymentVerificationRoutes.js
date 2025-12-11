@@ -255,15 +255,20 @@ router.post("/:id/reject", async (req, res) => {
  */
 router.get("/", async (req, res) => {
   try {
+    const { status, flat } = req.query;
+    const filter = {};
+    
+    if (status) filter.status = status;
+    if (flat) filter.flat = flat;
+    
+    // If user is not admin/manager, only show their own submissions
     const role = (req.user?.role || "user").toString().trim().toLowerCase();
     const isManagerOrAdmin = role === "admin" || role === "manager" || role === "1";
 
     if (!isManagerOrAdmin) {
-      return res.status(403).json({ error: "Only managers and admins can access this" });
+      // Regular users can only see their own submissions
+      filter.userId = req.user._id;
     }
-
-    const { status } = req.query;
-    const filter = status ? { status } : {};
 
     const verifications = await PaymentVerification.find(filter)
       .sort({ submittedAt: -1 })

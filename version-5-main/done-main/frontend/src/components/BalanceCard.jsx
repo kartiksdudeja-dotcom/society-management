@@ -22,6 +22,7 @@ export default function BalanceCard({ user }) {
   const [currentMonthAmount, setCurrentMonthAmount] = useState(0);
   const [memberUnitType, setMemberUnitType] = useState("office");
   const [monthlyDues, setMonthlyDues] = useState(2000);
+  const [paymentSource, setPaymentSource] = useState(""); // "bank" or "verified"
 
   // Payment proof upload states
   const [showProofUpload, setShowProofUpload] = useState(false);
@@ -162,9 +163,23 @@ export default function BalanceCard({ user }) {
           if (memberPayment) {
             setCurrentMonthPaid(true);
             setCurrentMonthAmount(memberPayment.amount || 0);
+            setPaymentSource("bank");
           } else {
-            setCurrentMonthPaid(false);
-            setCurrentMonthAmount(0);
+            // Check if user has approved payment verification for this month
+            const monthYearStr = `${currentMonthName.substring(0, 3)}-${currentYear}`;
+            const verificationResponse = await API.get(`/payment-verifications?status=approved&flat=${userFlat}`);
+            const verifications = verificationResponse.data.data || [];
+            const approvedPayment = verifications.find(v => v.monthYear === monthYearStr);
+            
+            if (approvedPayment) {
+              setCurrentMonthPaid(true);
+              setCurrentMonthAmount(approvedPayment.amount || 0);
+              setPaymentSource("verified");
+            } else {
+              setCurrentMonthPaid(false);
+              setCurrentMonthAmount(0);
+              setPaymentSource("");
+            }
           }
         }
         
@@ -280,6 +295,12 @@ export default function BalanceCard({ user }) {
         {currentMonthPaid && (
           <div className="all-clear-badge">
             <span>🎉 {currentMonthName} maintenance cleared! Thank you!</span>
+            {paymentSource === "verified" && (
+              <span className="payment-badge verified">✓ Verified by Manager</span>
+            )}
+            {paymentSource === "bank" && (
+              <span className="payment-badge bank">✓ Bank Confirmed</span>
+            )}
           </div>
         )}
 
