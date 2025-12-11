@@ -7,6 +7,7 @@ import path from "path";
 import { google } from "googleapis";
 import { fileURLToPath } from "url";
 import SyncState from "./models/SyncState.js";
+import GmailToken from "./models/GmailToken.js";
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
@@ -85,10 +86,16 @@ app.get("/oauth2callback", async (req, res) => {
     const code = req.query.code;
 
     const { tokens } = await oAuth2Client.getToken(code);
-    fs.writeFileSync(TOKEN_PATH, JSON.stringify(tokens));
+    
+    // ✅ SAVE TO MONGODB INSTEAD OF FILE
+    await GmailToken.deleteMany({});
+    await GmailToken.create(tokens);
+    
+    console.log("✅ Gmail token saved to MongoDB");
 
-    res.send("Gmail connected successfully! Token saved.");
+    res.send("Gmail connected successfully! Token saved to database.");
   } catch (err) {
+    console.error("❌ OAuth callback error:", err);
     res.status(500).send("Failed to complete Google authentication.");
   }
 });

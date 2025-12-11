@@ -4,11 +4,11 @@
 
 import fs from "fs";
 import { google } from "googleapis";
+import GmailToken from "../models/GmailToken.js";
 
 // Gmail OAuth Scopes
 const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"];
 const CRED_PATH = "./credentials/google-oauth.json";
-const TOKEN_PATH = "./tokens/gmail-token.json";
 
 // Valid HDFC senders
 export const HDFC_SENDERS = [
@@ -56,13 +56,12 @@ function createOAuthClient() {
 }
 
 // ======================================================
-// Load Saved Token
+// Load Saved Token (FROM MONGODB)
 // ======================================================
-function loadSavedToken() {
+async function loadSavedToken() {
   try {
-    if (fs.existsSync(TOKEN_PATH)) {
-      return JSON.parse(fs.readFileSync(TOKEN_PATH));
-    }
+    const token = await GmailToken.findOne();
+    return token;
   } catch (err) {
     console.log("Token load error:", err.message);
   }
@@ -72,9 +71,9 @@ function loadSavedToken() {
 // ======================================================
 // Gmail API Instance
 // ======================================================
-export function getGmailService() {
+export async function getGmailService() {
   const auth = createOAuthClient();
-  const token = loadSavedToken();
+  const token = await loadSavedToken();
 
   if (!token) throw new Error("No Gmail token — Authenticate at /auth/google");
 

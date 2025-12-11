@@ -5,19 +5,19 @@ import { fileURLToPath } from "url";
 import monthlyStatementService from "./monthlyStatementService.js";
 import BankTransaction from "../models/BankTransaction.js";
 import SyncState from "../models/SyncState.js";
+import GmailToken from "../models/GmailToken.js";
 
 // Fix __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const CRED_PATH = path.join(__dirname, "../credentials/google-oauth.json");
-const TOKEN_PATH = path.join(__dirname, "../tokens/gmail-token.json");
 
 console.log("📌 OAuth Path:", CRED_PATH);
-console.log("📌 Token Path:", TOKEN_PATH);
+console.log("📌 Token: Loading from MongoDB");
 
 // -------------------------------------------------------
-// 1) AUTHORIZE GMAIL
+// 1) AUTHORIZE GMAIL (LOAD TOKEN FROM MONGODB)
 // -------------------------------------------------------
 async function authorize() {
   const creds = JSON.parse(fs.readFileSync(CRED_PATH, "utf8"));
@@ -25,23 +25,18 @@ async function authorize() {
 
   if (!conf) throw new Error("❌ google-oauth.json missing installed/web key.");
 
-  const oAuth2Client = new google.auth.GoogleAuth({
-    credentials: {
-      client_id: conf.client_id,
-      client_secret: conf.client_secret,
-      redirect_uris: conf.redirect_uris
-    },
-    clientId: conf.client_id,
-    clientSecret: conf.client_secret
-  });
-
   const OAuth2 = new google.auth.OAuth2(
     conf.client_id,
     conf.client_secret,
     conf.redirect_uris[0]
   );
 
-  const token = JSON.parse(fs.readFileSync(TOKEN_PATH, "utf8"));
+  // ✅ LOAD TOKEN FROM MONGODB
+  const token = await GmailToken.findOne();
+  if (!token) {
+    throw new Error("❌ No Gmail token found in database. Please authenticate via /auth/google");
+  }
+
   OAuth2.setCredentials(token);
 
   return OAuth2;
