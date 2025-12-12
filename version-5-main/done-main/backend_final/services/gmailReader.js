@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import monthlyStatementService from "./monthlyStatementService.js";
 import { processPayment } from "./paymentProcessor.js";
 import BankTransaction from "../models/BankTransaction.js";
+import BankBalance from "../models/BankBalance.js";
 import SyncState from "../models/SyncState.js";
 import GmailToken from "../models/GmailToken.js";
 
@@ -85,6 +86,68 @@ async function authorize() {
 }
 
 // -------------------------------------------------------
+// PARSE BANK BALANCE FROM EMAIL
+// -------------------------------------------------------
+async function parseAndSaveBalance(snippet, messageId) {
+  try {
+    const lower = snippet.toLowerCase();
+
+    // Check if it's a balance update email
+    const isBalanceEmail = lower.includes("balance") && 
+                          (lower.includes("hdfc") || lower.includes("icici")) &&
+                          lower.includes("rs");
+
+    if (!isBalanceEmail) return null;
+
+    // Extract account ending (e.g., "XX3306" or "3306")
+    const accountMatch = snippet.match(/(?:account ending|account\s+ending|ending)\s+([A-Za-z0-9]{4,})/i);
+    const accountEnding = accountMatch ? accountMatch[1].trim() : "Unknown";
+
+    // Extract balance amount (e.g., "3,75,953.71" or "375953.71")
+    const balanceMatch = snippet.match(/Rs\.?\s*(?:INR\s+)?([0-9,]+\.?\d*)/i);
+    if (!balanceMatch) return null;
+
+    const balanceStr = balanceMatch[1].replace(/,/g, "");
+    const balance = parseFloat(balanceStr);
+
+    if (isNaN(balance) || balance <= 0) return null;
+
+    // Extract date (e.g., "11-DEC-25" or "11-12-2025")
+    const dateMatch = snippet.match(/(?:as of|date:|updated)\s+(\d{1,2}[-\/]\w{3,}[-\/]\d{2,4})/i);
+    let balanceDate = new Date();
+    if (dateMatch) {
+      const dateStr = dateMatch[1];
+      // Try to parse various date formats
+      balanceDate = new Date(dateStr) || new Date();
+    }
+
+    // Extract bank name
+    const bank = snippet.match(/HDFC|ICICI|AXIS|KOTAK|SBI/i)?.[0] || "HDFC";
+
+    // Save to database
+    const balanceRecord = await BankBalance.findOneAndUpdate(
+      { messageId },
+      {
+        messageId,
+        accountEnding,
+        balance,
+        balanceDate,
+        narration: snippet.substring(0, 500),
+        bank,
+        currency: "INR"
+      },
+      { upsert: true, new: true }
+    );
+
+    console.log(`✅ Balance saved: ${bank} - ₹${balance.toLocaleString('en-IN')} (${accountEnding})`);
+    return balanceRecord;
+  } catch (err) {
+    console.error("❌ Error parsing balance:", err.message);
+    return null;
+  }
+}
+
+// -------------------------------------------------------
 // 2) READ BANK EMAILS (ONLY NEW EMAILS)
 // -------------------------------------------------------
 export async function readBankEmails() {
@@ -139,6 +202,9 @@ export async function readBankEmails() {
             });
 
             const snippet = mail.data.snippet || "";
+
+            // 💰 TRY TO PARSE BALANCE FROM EMAIL
+            await parseAndSaveBalance(snippet, msg.id);
 
             // ❗❗ NOW USING AWAIT SO MEMBER MATCHING WORKS ❗❗
             const txn = await monthlyStatementService.parseTransaction(snippet);

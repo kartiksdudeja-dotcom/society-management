@@ -1,10 +1,13 @@
 import express from "express";
-import { syncBankEmails, getBankTransactions, trainMapping, getLearnedMappings, updateTransaction, getMemberList } from "../controllers/bankController.js";
+import { syncBankEmails, getBankTransactions, getBankBalance, trainMapping, getLearnedMappings, updateTransaction, getMemberList } from "../controllers/bankController.js";
 
 const router = express.Router();
 
 // GET /api/bank?month=1&year=2025
 router.get("/", getBankTransactions);
+
+// GET /api/bank/balance
+router.get("/balance", getBankBalance);
 
 // Sync Gmail
 router.get("/sync", syncBankEmails);

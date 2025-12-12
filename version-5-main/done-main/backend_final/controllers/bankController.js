@@ -1,4 +1,5 @@
 import BankTransaction from "../models/BankTransaction.js";
+import BankBalance from "../models/BankBalance.js";
 import LearnedMapping from "../models/LearnedMapping.js";
 import Maintenance from "../models/Maintenance.js";
 import { readBankEmails } from "../services/gmailReader.js";
@@ -191,6 +192,42 @@ export const getBankTransactions = async (req, res) => {
       pagination: {
         limit: limit ? parseInt(limit) : null,
         offset: offset ? parseInt(offset) : null
+      }
+    });
+  } catch (err) {
+    return res.status(500).json({ ok: false, message: err.message });
+  }
+};
+
+// Get latest bank balance
+export const getBankBalance = async (req, res) => {
+  try {
+    console.log(`[GET /bank/balance] Fetching latest balance`);
+
+    // Get the most recent balance
+    const latestBalance = await BankBalance.findOne()
+      .sort({ balanceDate: -1 })
+      .limit(1);
+
+    if (!latestBalance) {
+      console.log(`[GET /bank/balance] No balance found`);
+      return res.json({
+        ok: true,
+        data: null,
+        message: "No balance data available yet"
+      });
+    }
+
+    console.log(`[GET /bank/balance] Found: ₹${latestBalance.balance.toLocaleString('en-IN')} (${latestBalance.accountEnding})`);
+
+    return res.json({
+      ok: true,
+      data: {
+        balance: latestBalance.balance,
+        accountEnding: latestBalance.accountEnding,
+        balanceDate: latestBalance.balanceDate,
+        bank: latestBalance.bank,
+        currency: latestBalance.currency
       }
     });
   } catch (err) {
