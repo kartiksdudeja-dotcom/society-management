@@ -226,7 +226,7 @@ export const getBankBalance = async (req, res) => {
     if (!latestBalance) {
       console.log(`[GET /bank/balance] No balance found`);
       return res.json({
-        ok: true,
+        success: false,
         data: null,
         message: "No balance data available yet"
       });
@@ -235,7 +235,7 @@ export const getBankBalance = async (req, res) => {
     console.log(`[GET /bank/balance] Found: ₹${latestBalance.balance.toLocaleString('en-IN')} (${latestBalance.accountEnding})`);
 
     return res.json({
-      ok: true,
+      success: true,
       data: {
         balance: latestBalance.balance,
         accountEnding: latestBalance.accountEnding,
@@ -245,6 +245,7 @@ export const getBankBalance = async (req, res) => {
       }
     });
   } catch (err) {
-    return res.status(500).json({ ok: false, message: err.message });
+    console.error(`[GET /bank/balance] Error:`, err.message);
+    return res.status(500).json({ success: false, message: err.message });
   }
 };
