@@ -142,11 +142,32 @@ app.use("/api/interest", interestRoutes);
 import { initCronJobs, setSyncing } from "./cron/cronJobs.js";
 initCronJobs();
 
-// MongoDB
+// MongoDB Connection with Better Error Handling
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error("❌ CRITICAL: MONGO_URI environment variable is NOT SET!");
+  console.error("Please set MONGO_URI in your .env or Render environment variables.");
+  process.exit(1);
+}
+
+console.log("📌 Connecting to MongoDB...");
+console.log("📌 Database:", MONGO_URI.split('/').pop() || "(default: test)");
+
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(MONGO_URI, {
+    maxPoolSize: 10,
+    minPoolSize: 5,
+    serverSelectionTimeoutMS: 30000,
+    connectTimeoutMS: 30000,
+    socketTimeoutMS: 45000,
+    retryWrites: true,
+    w: "majority",
+  })
   .then(async () => {
-    console.log("MongoDB Connected");
+    console.log("✅ MongoDB Connected successfully!");
+    console.log(`📊 Connected to database: ${mongoose.connection.db.name}`);
+    
     // Start initial sync after DB connected
     try {
       setSyncing(true);
@@ -159,7 +180,25 @@ mongoose
       setSyncing(false);
     }
   })
-  .catch((err) => console.error("MongoDB Error:", err));
+  .catch((err) => {
+    console.error("❌ MONGODB CONNECTION FAILED!");
+    console.error("Error Message:", err.message);
+    console.error("\n🔧 TROUBLESHOOTING CHECKLIST:");
+    console.error("1. ✅ Is MONGO_URI set in environment variables?");
+    console.error("2. ✅ Does MONGO_URI end with /test or /society-management?");
+    console.error("3. ✅ Is 0.0.0.0/0 whitelisted in MongoDB Atlas Network Access?");
+    console.error("4. ✅ Is the password correct in the connection string?");
+    process.exit(1);
+  });
+
+// Connection event listeners
+mongoose.connection.on('disconnected', () => {
+  console.warn("⚠️  MongoDB disconnected! Will attempt to reconnect...");
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error("⚠️  MongoDB connection error:", err.message);
+});
 
 // Server
 const PORT = process.env.PORT || 5000;

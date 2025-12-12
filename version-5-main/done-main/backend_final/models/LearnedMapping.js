@@ -6,6 +6,7 @@ const LearnedMappingSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      sparse: true,
       // The extracted name from bank email (lowercase for matching)
     },
     

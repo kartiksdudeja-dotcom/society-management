@@ -9,7 +9,6 @@ const BankTransactionSchema = new mongoose.Schema(
   {
     messageId: {
       type: String,
-      index: true,
       unique: true,
       sparse: true, // allows null without duplicate error
     },
