@@ -1,0 +1,82 @@
+/* Bottom Tab Bar Styles */
+
+.bottom-tab-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: white;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  z-index: 100;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.tab-item {
+  flex: 1;
+  height: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #999;
+  transition: all 0.2s ease;
+  padding: 8px 0;
+}
+
+.tab-item:hover {
+  color: #1a3a3a;
+}
+
+.tab-item.active {
+  color: #0f6d57;
+}
+
+.tab-item.active {
+  background: linear-gradient(to top, rgba(15, 109, 87, 0.08), transparent);
+}
+
+.tab-icon {
+  font-size: 20px;
+}
+
+.tab-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .bottom-tab-bar {
+    display: flex;
+  }
+  
+  /* Add padding to body to accommodate bottom bar */
+  body {
+    padding-bottom: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bottom-tab-bar {
+    height: 56px;
+  }
+
+  .tab-label {
+    font-size: 9px;
+  }
+
+  .tab-icon {
+    font-size: 18px;
+  }
+}
