@@ -67,13 +67,14 @@ function createOAuthClient() {
   );
 }
 
-// OAuth URL
+// OAuth URL - Generate Google Login URL
 app.get("/auth/google", (req, res) => {
   try {
     const oAuth2Client = createOAuthClient();
     const url = oAuth2Client.generateAuthUrl({
-      access_type: "offline",
+      access_type: "offline",        // ✅ Tells Google to return refresh_token
       scope: SCOPES,
+      prompt: "consent",             // ✅ CRITICAL: Force consent screen to get refresh_token
     });
     res.send({ url });
   } catch (err) {
@@ -81,7 +82,7 @@ app.get("/auth/google", (req, res) => {
   }
 });
 
-// OAuth callback
+// OAuth callback - Save token to MongoDB
 app.get("/oauth2callback", async (req, res) => {
   try {
     const oAuth2Client = createOAuthClient();
@@ -91,14 +92,29 @@ app.get("/oauth2callback", async (req, res) => {
     
     // ✅ SAVE TO MONGODB INSTEAD OF FILE
     await GmailToken.deleteMany({});
-    await GmailToken.create(tokens);
+    const saved = await GmailToken.create(tokens);
     
     console.log("✅ Gmail token saved to MongoDB");
+    console.log("📋 Token Details:");
+    console.log(`   - access_token: ${tokens.access_token ? "✅ Present" : "❌ Missing"}`);
+    console.log(`   - refresh_token: ${tokens.refresh_token ? "✅ Present (" + tokens.refresh_token.substring(0, 20) + "...)" : "❌ MISSING"}`);
+    console.log(`   - scope: ${tokens.scope}`);
+    console.log(`   - expiry_date: ${tokens.expiry_date}`);
 
-    res.send("Gmail connected successfully! Token saved to database.");
+    res.send(`
+      <h1>✅ Gmail Connected Successfully!</h1>
+      <p>Token saved to database.</p>
+      <p style="color: ${tokens.refresh_token ? 'green' : 'red'};">
+        ${tokens.refresh_token ? "✅ Refresh token present - Auto sync will work!" : "❌ NO refresh token - Auto sync will FAIL"}
+      </p>
+      <p>You can close this window and use the app.</p>
+    `);
   } catch (err) {
-    console.error("❌ OAuth callback error:", err);
-    res.status(500).send("Failed to complete Google authentication.");
+    console.error("❌ OAuth callback error:", err.message);
+    res.status(500).send(`
+      <h1>❌ Authentication Failed</h1>
+      <p>Error: ${err.message}</p>
+    `);
   }
 });
 
