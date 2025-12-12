@@ -1,5 +1,5 @@
 import express from "express";
-import { syncBankEmails, getBankTransactions, getBankBalance, trainMapping, getLearnedMappings, updateTransaction, getMemberList } from "../controllers/bankController.js";
+import { syncBankEmails, syncBalanceEmails, getBankTransactions, getBankBalance, trainMapping, getLearnedMappings, updateTransaction, getMemberList } from "../controllers/bankController.js";
 
 const router = express.Router();
 
@@ -9,8 +9,11 @@ router.get("/", getBankTransactions);
 // GET /api/bank/balance
 router.get("/balance", getBankBalance);
 
-// Sync Gmail
+// GET /api/bank/sync - sync all emails (transactions + balance)
 router.get("/sync", syncBankEmails);
+
+// GET /api/bank/sync-balance - force sync balance from emails
+router.get("/sync-balance", syncBalanceEmails);
 
 // Learned Mappings
 router.get("/mappings", getLearnedMappings);

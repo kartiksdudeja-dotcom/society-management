@@ -337,3 +337,110 @@ export async function readBankEmails() {
     // Don't throw - let the server continue running
   }
 }
+
+// -------------------------------------------------------
+// FORCE SYNC BALANCE FROM ALL RECENT EMAILS
+// -------------------------------------------------------
+export async function syncBalanceFromEmails() {
+  try {
+    const auth = await authorize();
+    const gmail = google.gmail({ version: "v1", auth });
+
+    console.log("💰 Force syncing balance from emails...");
+
+    // Search for balance/statement emails from past 30 days
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const dateStr = thirtyDaysAgo.toISOString().split('T')[0];
+
+    const query = `subject:(balance OR statement OR account) from:(hdfc OR icici OR axis OR kotak OR sbi) after:${dateStr}`;
+
+    console.log(`🔍 Searching: ${query}`);
+
+    let next = null;
+    let totalFound = 0;
+    let totalSaved = 0;
+
+    do {
+      const res = await gmail.users.messages.list({
+        userId: "me",
+        q: query,
+        maxResults: 50,
+        pageToken: next,
+      });
+
+      if (!res.data.messages) {
+        console.log("📭 No balance emails found");
+        break;
+      }
+
+      console.log(`📧 Found ${res.data.messages.length} emails on this page`);
+      totalFound += res.data.messages.length;
+
+      for (const msg of res.data.messages) {
+        try {
+          const mail = await gmail.users.messages.get({
+            userId: "me",
+            id: msg.id,
+            format: "full",
+          });
+
+          const snippet = mail.data.snippet || "";
+          const balance = await parseAndSaveBalance(snippet, msg.id);
+
+          if (balance) {
+            totalSaved++;
+          }
+        } catch (msgErr) {
+          console.error(`❌ Error processing message:`, msgErr.message);
+        }
+      }
+
+      next = res.data.nextPageToken;
+      if (next) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    } while (next);
+
+    console.log(`\n📊 Balance Sync Complete:`);
+    console.log(`   Total emails checked: ${totalFound}`);
+    console.log(`   New balances saved: ${totalSaved}`);
+
+    // Return latest balance
+    const latestBalance = await BankBalance.findOne()
+      .sort({ balanceDate: -1 })
+      .limit(1);
+
+    if (latestBalance) {
+      console.log(`\n✨ Latest Balance:`);
+      console.log(`   Bank: ${latestBalance.bank}`);
+      console.log(`   Amount: ₹${latestBalance.balance.toLocaleString('en-IN')}`);
+      console.log(`   Account: ...${latestBalance.accountEnding}`);
+      console.log(`   Date: ${latestBalance.balanceDate.toLocaleDateString('en-IN')}`);
+
+      return {
+        ok: true,
+        totalEmailsChecked: totalFound,
+        newBalancesSaved: totalSaved,
+        latestBalance: {
+          balance: latestBalance.balance,
+          accountEnding: latestBalance.accountEnding,
+          balanceDate: latestBalance.balanceDate,
+          bank: latestBalance.bank
+        }
+      };
+    }
+
+    return {
+      ok: true,
+      totalEmailsChecked: totalFound,
+      newBalancesSaved: totalSaved,
+      latestBalance: null
+    };
+
+  } catch (err) {
+    console.error("❌ Balance Sync Error:", err.message);
+    console.error(err.stack);
+    throw err;
+  }
+}

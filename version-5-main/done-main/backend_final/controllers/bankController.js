@@ -2,12 +2,26 @@ import BankTransaction from "../models/BankTransaction.js";
 import BankBalance from "../models/BankBalance.js";
 import LearnedMapping from "../models/LearnedMapping.js";
 import Maintenance from "../models/Maintenance.js";
-import { readBankEmails } from "../services/gmailReader.js";
+import { readBankEmails, syncBalanceFromEmails } from "../services/gmailReader.js";
 
 export const syncBankEmails = async (req, res) => {
   try {
     await readBankEmails();
     return res.json({ ok: true, message: "Emails synced successfully" });
+  } catch (err) {
+    return res.status(500).json({ ok: false, message: err.message });
+  }
+};
+
+// Manually sync balance from emails (force update)
+export const syncBalanceEmails = async (req, res) => {
+  try {
+    const result = await syncBalanceFromEmails();
+    return res.json({ 
+      ok: true, 
+      message: "Balance sync completed",
+      result
+    });
   } catch (err) {
     return res.status(500).json({ ok: false, message: err.message });
   }
