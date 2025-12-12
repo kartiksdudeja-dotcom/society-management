@@ -40,13 +40,45 @@ async function authorize() {
 
   console.log("✅ Token loaded from MongoDB");
 
+  // ⚠️ Validate refresh_token is present
+  if (!token.refresh_token) {
+    throw new Error("❌ No refresh token found in database. Please re-authenticate via /auth/google");
+  }
+
   // Convert MongoDB document to plain object for setCredentials
-  OAuth2.setCredentials({
+  const credentials = {
     access_token: token.access_token,
     refresh_token: token.refresh_token,
     scope: token.scope,
     token_type: token.token_type,
     expiry_date: token.expiry_date
+  };
+
+  console.log("🔑 Setting credentials with refresh_token:", token.refresh_token ? "✅ Present" : "❌ Missing");
+
+  OAuth2.setCredentials(credentials);
+
+  // Listen for token refresh events to save updated tokens
+  OAuth2.on('tokens', async (newTokens) => {
+    console.log("🔄 Token refreshed, saving to MongoDB...");
+    try {
+      // Update only if refresh_token is present (it might not be on refresh)
+      const updateData = {
+        access_token: newTokens.access_token,
+        token_type: newTokens.token_type,
+        expiry_date: newTokens.expiry_date
+      };
+
+      // Only update refresh_token if a new one was provided
+      if (newTokens.refresh_token) {
+        updateData.refresh_token = newTokens.refresh_token;
+      }
+
+      await GmailToken.findByIdAndUpdate(token._id, updateData);
+      console.log("✅ Token refreshed and saved to MongoDB");
+    } catch (err) {
+      console.error("❌ Error saving refreshed token:", err.message);
+    }
   });
 
   return OAuth2;
