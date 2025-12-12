@@ -509,6 +509,18 @@
   font-weight: 500;
 }
 
+@media (max-width: 576px) {
+  .balance-label {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 400px) {
+  .balance-label {
+    font-size: 10px;
+  }
+}
+
 .more-btn {
   background: none;
   border: none;
@@ -527,6 +539,20 @@
   font-weight: 700;
   margin-bottom: 8px;
   letter-spacing: -0.5px;
+}
+
+@media (max-width: 768px) {
+  .balance-amount {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+}
+
+@media (max-width: 576px) {
+  .balance-amount {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
 }
 
 /* HDFC Bank Balance Info */
@@ -739,11 +765,28 @@
   gap: 12px;
 }
 
+@media (max-width: 400px) {
+  .summary-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
 .summary-item {
   text-align: center;
   padding: 10px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 400px) {
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 8px;
+  }
 }
 
 .summary-item.collection {

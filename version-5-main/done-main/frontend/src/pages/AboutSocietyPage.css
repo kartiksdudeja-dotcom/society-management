@@ -654,65 +654,51 @@
   .about-nav-bar {
     flex-direction: column;
     gap: 16px;
-    padding: 16px 20px;
-  }
-
-  .about-hero {
-    padding: 40px 20px;
-  }
-
-  .about-hero-text h1 {
-    font-size: 32px;
-  }
-
-  .about-hero-text > p {
-    font-size: 16px;
-  }
-
-  .about-info-section,
-  .about-office-bearers,
-  .about-contact-section,
-  .about-cta-section {
-    padding: 40px 20px;
-  }
-
-  .about-bearers-grid,
-  .about-contact-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about-office-bearers h2,
-  .about-contact-section h2,
-  .about-cta-section h2,
-  .about-info-section h2 {
-    font-size: 24px;
-  }
-
-  .about-login-btn {
-    padding: 10px 20px;
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .about-nav-bar {
     padding: 12px 16px;
+    background: linear-gradient(135deg, #153b36 0%, #0f2a2a 100%);
+  }
+
+  .about-nav-left {
+    gap: 12px;
+    width: 100%;
   }
 
   .about-society-name {
     font-size: 18px;
   }
 
+  .about-nav-right {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .about-login-btn {
+    padding: 10px 18px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
   .about-hero {
-    padding: 30px 16px;
+    padding: 40px 16px;
+  }
+
+  .about-hero-content {
+    gap: 24px;
   }
 
   .about-hero-text h1 {
-    font-size: 24px;
+    font-size: 28px;
+    margin-bottom: 8px;
   }
 
   .about-hero-text > p {
     font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .about-hero-description p {
+    font-size: 13px;
+    line-height: 1.6;
   }
 
   .about-info-section,
@@ -720,30 +706,321 @@
   .about-office-bearers,
   .about-contact-section,
   .about-cta-section {
-    padding: 30px 16px;
+    padding: 32px 16px;
   }
 
+  .about-info-section h2,
+  .about-amenities-section h2,
   .about-office-bearers h2,
   .about-contact-section h2,
-  .about-cta-section h2,
-  .about-info-section h2 {
-    font-size: 20px;
+  .about-cta-section h2 {
+    font-size: 22px;
+    margin-bottom: 16px;
   }
 
-  .about-info-card {
-    padding: 30px 20px;
+  .about-amenities-subtitle,
+  .about-office-subtitle,
+  .about-contact-subtitle {
+    font-size: 13px;
   }
 
-  .about-info-number {
+  .about-bearers-grid,
+  .about-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .about-amenities-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .about-amenities-card {
+    padding: 16px;
+  }
+
+  .amenity-icon {
     font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .about-amenities-card h3 {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .about-amenities-card p {
+    font-size: 11px;
+  }
+
+  .about-bearer-card {
+    padding: 16px;
   }
 
   .about-contact-card {
-    padding: 30px 20px;
+    padding: 20px 16px;
+  }
+
+  .about-contact-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .about-contact-card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .about-contact-card p {
+    font-size: 12px;
+  }
+
+  .about-contact-small {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-nav-bar {
+    padding: 10px 12px;
+  }
+
+  .about-nav-left {
+    gap: 10px;
+  }
+
+  .about-society-name {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .about-login-btn {
+    padding: 8px 14px;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .about-hero {
+    padding: 24px 12px;
+  }
+
+  .about-hero-content {
+    gap: 20px;
+  }
+
+  .about-hero-text h1 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .about-hero-text > p {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .about-hero-description p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .about-hero-image-placeholder {
+    border-radius: 12px;
+    overflow: hidden;
+    max-height: 250px;
+  }
+
+  .about-info-section,
+  .about-amenities-section,
+  .about-office-bearers,
+  .about-contact-section,
+  .about-cta-section {
+    padding: 24px 12px;
+  }
+
+  .about-info-section h2,
+  .about-amenities-section h2,
+  .about-office-bearers h2,
+  .about-contact-section h2,
+  .about-cta-section h2 {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .about-info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .about-info-card {
+    padding: 18px 14px;
+    border-radius: 10px;
+  }
+
+  .about-info-number {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+
+  .about-info-label {
+    font-size: 12px;
+  }
+
+  .about-amenities-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .about-amenities-card {
+    padding: 14px;
+    text-align: center;
+  }
+
+  .amenity-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .about-amenities-card h3 {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .about-amenities-card p {
+    font-size: 10px;
+  }
+
+  .about-bearer-card {
+    padding: 14px;
+  }
+
+  .about-bearer-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .about-bearer-title-badge {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .about-bearer-info h3 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .about-bearer-description {
+    font-size: 11px;
+  }
+
+  .about-contact-grid {
+    gap: 12px;
+  }
+
+  .about-contact-card {
+    padding: 16px 12px;
+    border-radius: 10px;
+  }
+
+  .about-contact-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .about-contact-card h3 {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .about-contact-card p {
+    font-size: 11px;
+    margin: 4px 0;
+  }
+
+  .about-contact-card a {
+    font-size: 11px;
+  }
+
+  .about-contact-small {
+    font-size: 10px;
+    opacity: 0.8;
+  }
+
+  .about-cta-container {
+    text-align: center;
+  }
+
+  .about-cta-container h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .about-cta-container > p {
+    font-size: 12px;
+    margin-bottom: 16px;
   }
 
   .about-cta-button {
-    padding: 12px 28px;
-    font-size: 13px;
+    padding: 10px 20px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .about-footer {
+    padding: 24px 12px;
+    font-size: 11px;
+  }
+
+  .about-footer-content p {
+    margin: 6px 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-nav-bar {
+    padding: 8px 10px;
+  }
+
+  .about-society-name {
+    font-size: 14px;
+  }
+
+  .about-login-btn {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+
+  .about-hero {
+    padding: 18px 10px;
+  }
+
+  .about-info-section,
+  .about-amenities-section,
+  .about-office-bearers,
+  .about-contact-section,
+  .about-cta-section {
+    padding: 18px 10px;
+  }
+
+  .about-info-section h2,
+  .about-amenities-section h2,
+  .about-office-bearers h2,
+  .about-contact-section h2,
+  .about-cta-section h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .about-hero-text h1 {
+    font-size: 18px;
+  }
+
+  .about-hero-text > p {
+    font-size: 12px;
+  }
+
+  .about-info-number {
+    font-size: 24px;
   }
 }
