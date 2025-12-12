@@ -529,6 +529,27 @@
   letter-spacing: -0.5px;
 }
 
+/* HDFC Bank Balance Info */
+.bank-balance-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.bank-balance-info .account-info {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.bank-balance-info .balance-date {
+  opacity: 0.8;
+}
+
 .balance-subtitle {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);

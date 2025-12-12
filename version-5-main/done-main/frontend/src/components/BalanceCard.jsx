@@ -20,6 +20,9 @@ export default function BalanceCard({ user }) {
   // Interest tracking
   const [totalInterest, setTotalInterest] = useState(0);
   const [interestCount, setInterestCount] = useState(0);
+  
+  // HDFC Bank Balance from Gmail
+  const [hdfcBankBalance, setHdfcBankBalance] = useState(null);
 
   // Member payment status from Monthly Collection (Bank)
   const [currentMonthPaid, setCurrentMonthPaid] = useState(false);
@@ -120,16 +123,22 @@ export default function BalanceCard({ user }) {
 
         // For admin/manager, load full data
         if (isAdminOrManager) {
-          const [maintResponse, expenseResponse, bankResponse, monthlyExpResponse, interestResponse] = await Promise.all([
+          const [maintResponse, expenseResponse, bankResponse, monthlyExpResponse, interestResponse, balanceResponse] = await Promise.all([
             API.get("/maintenance/get"),
             API.get("/expense/get"),
             API.get(`/bank?month=${currentMonth}&year=${currentYear}`),
             API.get(`/monthly-expense/summary?month=${currentMonth}&year=${currentYear}`),
-            API.get(`/interest?year=${currentYear}`)
+            API.get(`/interest?year=${currentYear}`),
+            API.get("/bank/balance")
           ]);
 
           setMaintenanceData(maintResponse.data);
           setExpenseData(expenseResponse.data);
+          
+          // Set HDFC Bank Balance from Gmail
+          if (balanceResponse.data.success && balanceResponse.data.data) {
+            setHdfcBankBalance(balanceResponse.data.data);
+          }
           
           // Set interest data
           if (interestResponse.data.success) {
@@ -494,12 +503,23 @@ export default function BalanceCard({ user }) {
   
   return (
     <div className="balance-card">
+      {/* HDFC Bank Balance from Gmail */}
       <div className="balance-header">
-        <span className="balance-label">Society Balance</span>
+        <span className="balance-label">🏦 HDFC Bank Balance</span>
         {isAdminWithFlat && <span className="flat-badge-small">Your Unit: {flatNumber}</span>}
         <button className="more-btn">⋮</button>
       </div>
-      <div className="balance-amount">₹{totalCollectionBalance.toLocaleString()}</div>
+      <div className="balance-amount">
+        {hdfcBankBalance ? `₹${hdfcBankBalance.balance.toLocaleString('en-IN')}` : '₹' + totalCollectionBalance.toLocaleString()}
+      </div>
+      {hdfcBankBalance && (
+        <div className="bank-balance-info">
+          <span className="account-info">A/c ending {hdfcBankBalance.accountEnding}</span>
+          <span className="balance-date">
+            as of {new Date(hdfcBankBalance.balanceDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+          </span>
+        </div>
+      )}
       
       {/* Show personal maintenance status for admins who are also members */}
       {isAdminWithFlat && (
