@@ -45,6 +45,8 @@ export default function Dashboard() {
   const [yearlyMaintenance, setYearlyMaintenance] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState(0);
   const [totalCollectionBalance, setTotalCollectionBalance] = useState(0);
+  const [bankBalance, setBankBalance] = useState(null);
+  const [balanceLoading, setBalanceLoading] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -69,6 +71,21 @@ export default function Dashboard() {
 
         setAdminSummary(a.data);
         setMaintenanceSummary(m.data);
+
+        // Fetch bank balance only for admins
+        if (isAdmin) {
+          setBalanceLoading(true);
+          try {
+            const balanceRes = await API.get("/bank/balance");
+            if (balanceRes.data.ok && balanceRes.data.data) {
+              setBankBalance(balanceRes.data.data);
+            }
+          } catch (err) {
+            console.error("Error fetching bank balance:", err);
+          } finally {
+            setBalanceLoading(false);
+          }
+        }
       } catch (e) {
         console.error("Dashboard load error:", e);
       } finally {
@@ -234,8 +251,50 @@ export default function Dashboard() {
 
         {/* CONTENT AREA */}
         <div className="content">
+        {/* HEADER */}
+        <div className="dashboard-header">
+          <div className="header-left">
+            <button className="hamburger" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+              {isSidebarOpen ? <FaTimes /> : <FaBars />}
+            </button>
+            <h1 className="dashboard-title">Dashboard</h1>
+          </div>
+        </div>
 
-
+        {/* BANK BALANCE CARD - ADMIN ONLY */}
+        {isAdmin && (
+          <div className="balance-card-container">
+            <div className="balance-card">
+              <div className="balance-card-header">
+                <h3 className="balance-label">Bank Balance</h3>
+                {balanceLoading && <span className="balance-loading">Loading...</span>}
+              </div>
+              {bankBalance ? (
+                <div className="balance-content">
+                  <div className="balance-amount">
+                    ₹{bankBalance.balance.toLocaleString('en-IN', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}
+                  </div>
+                  <div className="balance-details">
+                    <span className="balance-account">Account: ...{bankBalance.accountEnding}</span>
+                    <span className="balance-date">
+                      {new Date(bankBalance.balanceDate).toLocaleDateString('en-IN')}
+                    </span>
+                    <span className="balance-bank">{bankBalance.bank}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="balance-placeholder">
+                  <p>No balance data available yet</p>
+                  <small>Balance will be updated when bank email arrives</small>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
 
 
 

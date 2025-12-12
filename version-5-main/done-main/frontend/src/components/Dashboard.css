@@ -420,6 +420,51 @@
   gap: 20px; /* klaam space: Add vertical space between elements */
 }
 
+/* DASHBOARD HEADER */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+  margin-bottom: 8px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #2c3e50;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+}
+
 .klaam-space-separator {
   height: 20px; /* Define explicit height for spacing */
   width: 100%;
@@ -582,6 +627,73 @@
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: -0.3px;
+}
+
+/* BALANCE CARD - NEW STYLES */
+.balance-card-container {
+  margin-bottom: 20px;
+}
+
+.balance-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.balance-loading {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.balance-content {
+  position: relative;
+  z-index: 1;
+}
+
+.balance-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.balance-account,
+.balance-date,
+.balance-bank {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.balance-placeholder {
+  text-align: center;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.balance-placeholder p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.balance-placeholder small {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Current Month Summary */
