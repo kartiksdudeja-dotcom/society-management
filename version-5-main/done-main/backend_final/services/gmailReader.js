@@ -94,52 +94,65 @@ async function parseAndSaveBalance(snippet, messageId) {
 
     // Check if it's a balance update email
     const isBalanceEmail = lower.includes("balance") && 
-                          (lower.includes("hdfc") || lower.includes("icici")) &&
+                          (lower.includes("hdfc") || lower.includes("icici") || lower.includes("axis") || lower.includes("kotak")) &&
                           lower.includes("rs");
 
     if (!isBalanceEmail) return null;
 
     // Extract account ending (e.g., "XX3306" or "3306")
-    const accountMatch = snippet.match(/(?:account ending|account\s+ending|ending)\s+([A-Za-z0-9]{4,})/i);
-    const accountEnding = accountMatch ? accountMatch[1].trim() : "Unknown";
+    // Pattern: "account ending XX3306" or "ending 3306"
+    const accountMatch = snippet.match(/(?:account\s+ending|ending)\s+([A-Za-z0-9]{2,4})/i);
+    if (!accountMatch) return null;
+    
+    const accountEnding = accountMatch[1].trim();
 
     // Extract balance amount (e.g., "3,75,953.71" or "375953.71")
-    const balanceMatch = snippet.match(/Rs\.?\s*(?:INR\s+)?([0-9,]+\.?\d*)/i);
-    if (!balanceMatch) return null;
+    // Pattern: "Rs. INR 3,75,953.71" or "Rs 375953.71"
+    const balanceMatch = snippet.match(/Rs\.?\s*(?:INR\s+)?([0-9,]+(?:\.\d{2})?)/i);
+    if (!balanceMatch) {
+      console.log(`⏭️ No balance amount found in email`);
+      return null;
+    }
 
     const balanceStr = balanceMatch[1].replace(/,/g, "");
     const balance = parseFloat(balanceStr);
 
-    if (isNaN(balance) || balance <= 0) return null;
+    if (isNaN(balance) || balance <= 0) {
+      console.log(`⏭️ Invalid balance amount: ${balance}`);
+      return null;
+    }
 
-    // Extract date (e.g., "11-DEC-25" or "11-12-2025")
-    const dateMatch = snippet.match(/(?:as of|date:|updated)\s+(\d{1,2}[-\/]\w{3,}[-\/]\d{2,4})/i);
+    // Extract date (e.g., "11-DEC-25" or "11-12-2025" after "as of")
+    const dateMatch = snippet.match(/(?:as of|date:|updated)\s+(\d{1,2}-[A-Za-z]{3}-\d{2,4})/i);
     let balanceDate = new Date();
     if (dateMatch) {
       const dateStr = dateMatch[1];
-      // Try to parse various date formats
+      // Parse date like "11-DEC-25"
       balanceDate = new Date(dateStr) || new Date();
     }
 
     // Extract bank name
     const bank = snippet.match(/HDFC|ICICI|AXIS|KOTAK|SBI/i)?.[0] || "HDFC";
 
-    // Save to database
-    const balanceRecord = await BankBalance.findOneAndUpdate(
-      { messageId },
-      {
-        messageId,
-        accountEnding,
-        balance,
-        balanceDate,
-        narration: snippet.substring(0, 500),
-        bank,
-        currency: "INR"
-      },
-      { upsert: true, new: true }
-    );
+    // Check if this balance is already in database
+    const existingBalance = await BankBalance.findOne({ messageId });
+    if (existingBalance) {
+      console.log(`⏭️ Balance already saved for this email`);
+      return existingBalance;
+    }
 
-    console.log(`✅ Balance saved: ${bank} - ₹${balance.toLocaleString('en-IN')} (${accountEnding})`);
+    // Save to database (only if new)
+    const balanceRecord = await BankBalance.create({
+      messageId,
+      accountEnding,
+      balance,
+      balanceDate,
+      narration: snippet.substring(0, 500),
+      bank,
+      currency: "INR"
+    });
+
+    console.log(`✅ Balance saved: ${bank} - ₹${balance.toLocaleString('en-IN')} (Account ending: ${accountEnding}) as of ${balanceDate.toLocaleDateString('en-IN')}`);
     return balanceRecord;
   } catch (err) {
     console.error("❌ Error parsing balance:", err.message);

@@ -72,16 +72,23 @@ export default function Dashboard() {
         setAdminSummary(a.data);
         setMaintenanceSummary(m.data);
 
-        // Fetch bank balance only for admins
+        // Fetch bank balance only for admins - fetch fresh data
         if (isAdmin) {
           setBalanceLoading(true);
           try {
-            const balanceRes = await API.get("/bank/balance");
+            const balanceRes = await API.get("/bank/balance", {
+              params: { _t: Date.now() } // Prevent caching
+            });
             if (balanceRes.data.ok && balanceRes.data.data) {
               setBankBalance(balanceRes.data.data);
+              console.log("✅ Balance loaded:", balanceRes.data.data);
+            } else {
+              console.log("⏭️ No balance data available:", balanceRes.data.message);
+              setBankBalance(null);
             }
           } catch (err) {
-            console.error("Error fetching bank balance:", err);
+            console.error("❌ Error fetching bank balance:", err);
+            setBankBalance(null);
           } finally {
             setBalanceLoading(false);
           }
@@ -95,8 +102,26 @@ export default function Dashboard() {
 
     load();
 
+    // Refresh balance every 30 seconds for admins
+    let balanceRefreshInterval = null;
+    if (isAdmin) {
+      balanceRefreshInterval = setInterval(async () => {
+        try {
+          const balanceRes = await API.get("/bank/balance", {
+            params: { _t: Date.now() }
+          });
+          if (balanceRes.data.ok && balanceRes.data.data) {
+            setBankBalance(balanceRes.data.data);
+          }
+        } catch (err) {
+          console.error("Error refreshing balance:", err);
+        }
+      }, 30000); // Refresh every 30 seconds
+    }
+
     return () => {
       active = false;
+      if (balanceRefreshInterval) clearInterval(balanceRefreshInterval);
     };
   }, [user, isAdmin]);
 
