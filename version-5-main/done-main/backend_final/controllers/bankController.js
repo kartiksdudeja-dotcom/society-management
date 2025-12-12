@@ -127,20 +127,72 @@ export const updateTransaction = async (req, res) => {
 
 export const getBankTransactions = async (req, res) => {
   try {
-    const { month, year } = req.query;
+    const { month, year, flat, type, limit, offset } = req.query;
 
-    if (!month || !year) {
-      return res.status(400).json({ ok: false, message: "Month & year required" });
+    let query = {};
+
+    // Filter by month and year if provided
+    if (month && year) {
+      const monthStart = new Date(year, month - 1, 1);
+      const monthEnd = new Date(year, month, 0, 23, 59, 59);
+      query.date = { $gte: monthStart, $lte: monthEnd };
+      console.log(`[GET /bank] Fetching transactions for ${year}-${String(month).padStart(2, '0')}`);
+    } else {
+      console.log(`[GET /bank] Fetching ALL transactions`);
     }
 
-    const monthStart = new Date(year, month - 1, 1);
-    const monthEnd   = new Date(year, month, 0, 23, 59, 59);
+    // Filter by flat number if provided
+    if (flat) {
+      query.flat = flat;
+      console.log(`[GET /bank] Filtering by flat: ${flat}`);
+    }
 
-    const data = await BankTransaction.find({
-      date: { $gte: monthStart, $lte: monthEnd }
-    }).sort({ date: -1 });
+    // Filter by type (credit/debit) if provided
+    if (type && ['credit', 'debit'].includes(type)) {
+      query.type = type;
+      console.log(`[GET /bank] Filtering by type: ${type}`);
+    }
 
-    return res.json({ ok: true, data });
+    // Total count
+    const totalCount = await BankTransaction.countDocuments(query);
+
+    // Apply pagination if provided
+    let dbQuery = BankTransaction.find(query).sort({ date: -1 });
+    
+    if (limit) {
+      dbQuery = dbQuery.limit(parseInt(limit));
+    }
+    if (offset) {
+      dbQuery = dbQuery.skip(parseInt(offset));
+    }
+
+    const data = await dbQuery;
+
+    // Calculate statistics
+    const creditTxns = data.filter(t => t.type === 'credit');
+    const debitTxns = data.filter(t => t.type === 'debit');
+
+    const creditTotal = creditTxns.reduce((sum, t) => sum + (t.amount || 0), 0);
+    const debitTotal = debitTxns.reduce((sum, t) => sum + (t.amount || 0), 0);
+
+    console.log(`[GET /bank] Total records in DB: ${totalCount}, Year filter: ${year || 'undefined'}`);
+
+    return res.json({
+      ok: true,
+      stats: {
+        totalCount,
+        creditCount: creditTxns.length,
+        debitCount: debitTxns.length,
+        creditTotal,
+        debitTotal,
+        netTotal: creditTotal - debitTotal
+      },
+      data,
+      pagination: {
+        limit: limit ? parseInt(limit) : null,
+        offset: offset ? parseInt(offset) : null
+      }
+    });
   } catch (err) {
     return res.status(500).json({ ok: false, message: err.message });
   }
