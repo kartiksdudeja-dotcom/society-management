@@ -18,8 +18,10 @@ process.on('unhandledRejection', (reason, promise) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load ENV from correct directory
-dotenv.config({ path: path.join(__dirname, ".env") });
+// Load ENV from correct directory (only in development, Render uses env vars directly)
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: path.join(__dirname, ".env") });
+}
 
 const app = express();
 
@@ -145,9 +147,21 @@ initCronJobs();
 // MongoDB Connection with Better Error Handling
 const MONGO_URI = process.env.MONGO_URI;
 
+// Debug: Log the source of config
+console.log("📌 Environment:", process.env.NODE_ENV || "development");
+console.log("📌 MONGO_URI Set:", MONGO_URI ? "YES" : "NO");
+console.log("📌 MONGO_URI Length:", MONGO_URI?.length || 0);
+
+if (MONGO_URI) {
+  // Show only first 50 chars and last 20 chars of URI (for security)
+  const start = MONGO_URI.substring(0, 50);
+  const end = MONGO_URI.substring(MONGO_URI.length - 20);
+  console.log(`📌 MONGO_URI: ${start}...${end}`);
+}
+
 if (!MONGO_URI) {
   console.error("❌ CRITICAL: MONGO_URI environment variable is NOT SET!");
-  console.error("Please set MONGO_URI in your .env or Render environment variables.");
+  console.error("Please set MONGO_URI in your environment variables or .env file");
   process.exit(1);
 }
 
