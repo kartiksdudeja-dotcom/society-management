@@ -36,6 +36,18 @@ export default function Dashboard() {
   const role = (user?.role || "").toString().trim().toLowerCase();
   const isAdmin = role === "admin" || role === "1";
 
+  // Debug logging
+  useEffect(() => {
+    if (user) {
+      console.log("🔍 Dashboard User Info:", {
+        userName: user.Name || "Unknown",
+        userRole: role,
+        isAdmin: isAdmin,
+        userUnit: user.FlatNumber || "N/A"
+      });
+    }
+  }, [user, role, isAdmin]);
+
   const [adminSummary, setAdminSummary] = useState(null);
   const [maintenanceSummary, setMaintenanceSummary] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,26 +84,24 @@ export default function Dashboard() {
         setAdminSummary(a.data);
         setMaintenanceSummary(m.data);
 
-        // Fetch bank balance only for admins - fetch fresh data
-        if (isAdmin) {
-          setBalanceLoading(true);
-          try {
-            const balanceRes = await API.get("/bank/balance", {
-              params: { _t: Date.now() } // Prevent caching
-            });
-            if (balanceRes.data.ok && balanceRes.data.data) {
-              setBankBalance(balanceRes.data.data);
-              console.log("✅ Balance loaded:", balanceRes.data.data);
-            } else {
-              console.log("⏭️ No balance data available:", balanceRes.data.message);
-              setBankBalance(null);
-            }
-          } catch (err) {
-            console.error("❌ Error fetching bank balance:", err);
+        // Fetch bank balance for all users - fetch fresh data
+        setBalanceLoading(true);
+        try {
+          const balanceRes = await API.get("/bank/balance", {
+            params: { _t: Date.now() } // Prevent caching
+          });
+          if (balanceRes.data.ok && balanceRes.data.data) {
+            setBankBalance(balanceRes.data.data);
+            console.log("✅ Balance loaded:", balanceRes.data.data);
+          } else {
+            console.log("⏭️ No balance data available:", balanceRes.data.message);
             setBankBalance(null);
-          } finally {
-            setBalanceLoading(false);
           }
+        } catch (err) {
+          console.error("❌ Error fetching bank balance:", err);
+          setBankBalance(null);
+        } finally {
+          setBalanceLoading(false);
         }
       } catch (e) {
         console.error("Dashboard load error:", e);
@@ -102,22 +112,19 @@ export default function Dashboard() {
 
     load();
 
-    // Refresh balance every 30 seconds for admins
-    let balanceRefreshInterval = null;
-    if (isAdmin) {
-      balanceRefreshInterval = setInterval(async () => {
-        try {
-          const balanceRes = await API.get("/bank/balance", {
-            params: { _t: Date.now() }
-          });
-          if (balanceRes.data.ok && balanceRes.data.data) {
-            setBankBalance(balanceRes.data.data);
-          }
-        } catch (err) {
-          console.error("Error refreshing balance:", err);
+    // Refresh balance every 30 seconds for all users
+    const balanceRefreshInterval = setInterval(async () => {
+      try {
+        const balanceRes = await API.get("/bank/balance", {
+          params: { _t: Date.now() }
+        });
+        if (balanceRes.data.ok && balanceRes.data.data) {
+          setBankBalance(balanceRes.data.data);
         }
-      }, 30000); // Refresh every 30 seconds
-    }
+      } catch (err) {
+        console.error("Error refreshing balance:", err);
+      }
+    }, 30000); // Refresh every 30 seconds
 
     return () => {
       active = false;
@@ -286,8 +293,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* BANK BALANCE CARD - ADMIN ONLY */}
-        {isAdmin && (
+        {/* BANK BALANCE CARD - FOR ALL USERS */}
+        {user && (
           <div className="balance-card-container">
             <div className="balance-card">
               <div className="balance-card-header">
